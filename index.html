@@ -3,835 +3,877 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>থিমছড়ি স্পোর্টস ক্লাব</title>
-<link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
-
+<title>থিমছড়ি স্পোর্টস ক্লাব</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kalpurush', 'Segoe UI', sans-serif; }
-body { background-color: #f4f7f4; color: #2e3d2f; }
+  :root{
+    --bg:#F6FAF5;
+    --panel:#FFFFFF;
+    --panel-tint:#EEF6EC;
+    --green-deep:#0A3D26;
+    --green:#0E6E3C;
+    --green-soft:#DDEFDF;
+    --red:#C8102E;
+    --gold:#C99A2E;
+    --text:#152018;
+    --muted:#5C6B60;
+    --line:#D9E6DB;
+    --radius:14px;
+    --shadow:0 6px 20px rgba(10,61,38,0.08);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Hind Siliguri',sans-serif;
+    line-height:1.6;
+  }
+  h1,h2,h3,.display{
+    font-family:'Tiro Bangla',serif;
+    font-weight:400;
+    color:var(--green-deep);
+  }
+  a{color:var(--green);}
+  .container{max-width:920px;margin:0 auto;padding:0 18px;}
 
-/* Admin Control Header */
-.top-bar { background: #1b4332; color: #ffffff; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 3px solid #d80027; }
-.top-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+  /* ---------- HEADER / HERO ---------- */
+  .hero{
+    position:relative;
+    background:linear-gradient(160deg,var(--green-deep) 0%, var(--green) 100%);
+    color:#fff;
+    padding:36px 18px 30px;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    top:-60px; right:-60px;
+    width:200px;height:200px;
+    background:var(--red);
+    border-radius:50%;
+    opacity:0.9;
+  }
+  .hero-inner{position:relative;z-index:1;max-width:920px;margin:0 auto;text-align:center;}
+  .logo-wrap{width:96px;height:96px;margin:0 auto 12px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,0.25);}
+  .logo-wrap img{width:100%;height:100%;object-fit:cover;}
+  .logo-wrap span{font-size:34px;}
+  .club-name{font-size:1.9rem;margin:6px 0 4px;color:#fff;}
+  .club-slogan{font-size:0.98rem;color:#DFF3E4;margin:0 0 14px;font-style:italic;}
+  .edit-meta-btn{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.4);color:#fff;padding:5px 12px;border-radius:20px;font-size:0.8rem;cursor:pointer;}
 
-/* Cover Header Section */
-.cover-container { position: relative; background: linear-gradient(rgba(27, 67, 50, 0.85), rgba(45, 106, 79, 0.85)), url('https://via.placeholder.com/1200x350?text=TSC+Cover'); background-size: cover; background-position: center; color: white; text-align: center; padding: 40px 20px 30px; }
-.profile-img-box { position: relative; display: inline-block; }
-.profile-img { width: 140px; height: 140px; border-radius: 50%; border: 4px solid #d80027; object-fit: cover; background: #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+  /* ---------- ADMIN BAR ---------- */
+  .admin-status{
+    display:flex;justify-content:space-between;align-items:center;
+    background:var(--green-deep);color:#fff;
+    padding:10px 16px;font-size:0.85rem;
+  }
+  .btn{border:none;border-radius:9px;padding:8px 14px;font-size:0.85rem;cursor:pointer;font-family:inherit;}
+  .btn-red{background:var(--red);color:#fff;}
+  .btn-green{background:var(--green);color:#fff;}
+  .btn-gold{background:var(--gold);color:#fff;}
+  .btn-outline{background:transparent;border:1px solid var(--green);color:var(--green);}
+  .btn-small{padding:4px 10px;font-size:0.75rem;border-radius:7px;}
+  .btn:disabled{opacity:0.5;cursor:not-allowed;}
 
-/* Red Sun Emblem Feature */
-.bd-flag-circle { position: absolute; top: -10px; right: -10px; width: 35px; height: 35px; background: #d80027; border-radius: 50%; border: 2px solid #fff; }
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:20;
+    background:var(--panel);
+    border-bottom:1px solid var(--line);
+    overflow-x:auto;
+    white-space:nowrap;
+    display:flex;
+    box-shadow:var(--shadow);
+  }
+  nav a{
+    display:inline-block;padding:12px 14px;color:var(--green-deep);
+    text-decoration:none;font-size:0.85rem;font-weight:600;border-bottom:3px solid transparent;
+  }
+  nav a:hover{border-bottom-color:var(--red);}
 
-.club-title { font-size: 2.5rem; margin-top: 10px; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
-.slogan { font-style: italic; color: #d8f3dc; font-size: 1.2rem; margin-bottom: 5px; }
-.established { font-size: 0.95rem; background: #d80027; color: #fff; display: inline-block; padding: 3px 15px; border-radius: 20px; margin-top: 5px; font-weight: bold; }
+  /* ---------- SECTIONS ---------- */
+  section{padding:28px 0;}
+  section:nth-of-type(even){background:var(--panel-tint);}
+  .section-title{font-size:1.35rem;margin:0 0 14px;padding-bottom:8px;border-bottom:2px solid var(--green-soft);}
+  .box{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px;
+    margin-bottom:16px;
+    box-shadow:var(--shadow);
+  }
+  textarea,input[type=text],input[type=tel],select{
+    width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;
+    font-family:inherit;font-size:0.9rem;margin-bottom:8px;background:#fff;color:var(--text);
+  }
+  textarea{min-height:80px;resize:vertical;}
+  label{font-size:0.82rem;color:var(--muted);display:block;margin-bottom:3px;}
+  .muted{color:var(--muted);font-size:0.85rem;}
+  .row{display:flex;gap:10px;flex-wrap:wrap;}
+  .row > *{flex:1;min-width:140px;}
 
-/* Navigation */
-nav { background: #2d6a4f; display: flex; justify-content: center; flex-wrap: wrap; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-nav a { color: white; padding: 12px 18px; text-decoration: none; font-weight: bold; transition: 0.3s; font-size: 1.05rem; }
-nav a:hover { background: #1b4332; color: #e9d8a6; }
+  /* ---------- LISTS / CARDS ---------- */
+  .item-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    padding:14px;margin-bottom:12px;position:relative;
+  }
+  .item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+  .item-title{font-weight:600;cursor:pointer;color:var(--green-deep);}
+  .menu-wrap{position:relative;}
+  .dots-btn{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--muted);padding:2px 8px;}
+  .dropdown{
+    position:absolute;right:0;top:26px;background:#fff;border:1px solid var(--line);
+    border-radius:8px;box-shadow:var(--shadow);z-index:5;min-width:110px;overflow:hidden;
+  }
+  .dropdown button{
+    display:block;width:100%;text-align:right;background:none;border:none;padding:9px 12px;
+    font-size:0.82rem;cursor:pointer;font-family:inherit;color:var(--text);
+  }
+  .dropdown button:hover{background:var(--green-soft);}
+  .detail-box{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:0.88rem;display:none;}
+  .detail-box.open{display:block;}
+  .fixture-line{background:var(--green-soft);border-radius:8px;padding:8px 10px;margin:6px 0;font-size:0.85rem;}
 
-/* Main Container & Cards */
-.container { max-width: 1100px; margin: 25px auto; padding: 0 15px; }
-.card { background: white; padding: 22px; border-radius: 10px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); border-left: 5px solid #2d6a4f; position: relative; }
-.card h2 { color: #1b4332; border-bottom: 2px solid #52b788; padding-bottom: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;}
+  .gal-item{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:1/1;border:1px solid var(--line);}
+  .gal-item img{width:100%;height:100%;object-fit:cover;display:block;}
+  .gal-del{position:absolute;top:4px;right:4px;background:rgba(200,16,46,0.9);color:#fff;border:none;
+    border-radius:50%;width:22px;height:22px;font-size:0.8rem;cursor:pointer;line-height:1;}
 
-/* Dynamic Admin Controls */
-.admin-only { display: none !important; }
+  .social-card img{width:100%;border-radius:10px;margin-bottom:8px;max-height:220px;object-fit:cover;}
 
-/* Action Buttons */
-.btn-action { background: #2d6a4f; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.9rem; }
-.btn-action:hover { background: #1b4332; }
-.btn-edit { background: #d80027; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; }
-.btn-add { background: #2d6a4f; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.95rem; }
-.btn-delete { background: #d80027; color: white; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; }
-.btn-cancel { background: #6c757d; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-
-/* Custom Form Design */
-.custom-form { display: none; background: #e8f5e9; padding: 20px; border-radius: 8px; border: 1px solid #b7e4c7; margin-bottom: 20px; }
-.custom-form h3 { color: #1b4332; margin-bottom: 15px; border-bottom: 1px dashed #52b788; padding-bottom: 5px; }
-.form-group { margin-bottom: 12px; }
-.form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #1b4332; }
-.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #74c69d; border-radius: 5px; outline: none; font-size: 1rem; background: #fff; }
-.form-row { display: flex; gap: 15px; flex-wrap: wrap; }
-.form-row .form-group { flex: 1; min-width: 220px; }
-
-/* Members Serial List & 3-Dot Menu */
-.member-list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; border: 1px solid #d8f3dc; background: #f8fdf9; border-radius: 6px; margin-bottom: 8px; }
-.member-name { font-weight: bold; color: #1b4332; cursor: pointer; font-size: 1.1rem; }
-.member-name:hover { text-decoration: underline; color: #d80027; }
-
-.three-dot-menu { position: relative; display: inline-block; }
-.dot-btn { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #1b4332; padding: 0 8px; }
-.dropdown-content { display: none; position: absolute; right: 0; background-color: #ffffff; min-width: 150px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); border-radius: 5px; z-index: 10; border: 1px solid #b7e4c7; }
-.dropdown-content a, .dropdown-content button { color: #1b4332; padding: 10px 14px; text-decoration: none; display: block; text-align: left; width: 100%; background: none; border: none; cursor: pointer; font-size: 0.9rem; }
-.dropdown-content button:hover, .dropdown-content a:hover { background-color: #e8f5e9; color: #d80027; }
-
-/* Gallery & Social Documentaries */
-.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 10px; }
-.gallery-item { position: relative; border-radius: 6px; overflow: hidden; border: 2px solid #b7e4c7; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-.gallery-item img { width: 100%; height: 160px; object-fit: cover; display: block; }
-
-.doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; margin-top: 15px; }
-.doc-card { background: #ffffff; border: 1px solid #b7e4c7; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
-.doc-card img { width: 100%; height: 180px; object-fit: cover; }
-.doc-card-body { padding: 12px; }
-.doc-card-body h4 { color: #1b4332; margin-bottom: 5px; }
-
-/* Match & Fixture Tables */
-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-table, th, td { border: 1px solid #b7e4c7; }
-th, td { padding: 10px; text-align: center; }
-th { background: #2d6a4f; color: white; }
-
-/* Modal / Popup for Biodata */
-.modal { display: none; position: fixed; z-index: 200; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); }
-.modal-content { background-color: #ffffff; margin: 8% auto; padding: 25px; border: 3px solid #2d6a4f; width: 90%; max-width: 550px; border-radius: 10px; position: relative; }
-.close-modal { position: absolute; right: 15px; top: 10px; font-size: 28px; font-weight: bold; color: #d80027; cursor: pointer; }
-
-footer { background: #1b4332; color: white; text-align: center; padding: 18px; margin-top: 40px; border-top: 4px solid #d80027; }
-input[type="file"] { display: none; }
+  footer{background:var(--green-deep);color:#DFF3E4;text-align:center;padding:20px;font-size:0.85rem;}
+  .empty{color:var(--muted);font-size:0.85rem;font-style:italic;}
+  .save-note{font-size:0.75rem;color:var(--muted);margin-top:4px;}
 </style>
 </head>
 <body>
 
-<!-- Top Security & Storage Bar -->
-<div class="top-bar">
-    <span id="admin-status">👤 আপনি সাধারণ ভিজিটর মোডে আছেন।</span>
-    <div class="top-btns">
-        <button class="btn-action" style="background:#d80027;" id="admin-btn" onclick="toggleAdminLogin()">🔑 অ্যাডমিন লগইন</button>
-        <button class="btn-action admin-only" onclick="exportDataBackup()">📥 ব্যাকআপ ডাউনলোড</button>
-        <button class="btn-action admin-only" onclick="document.getElementById('import-backup-file').click()">📤 ব্যাকআপ আপলোড</button>
-        <input type="file" id="import-backup-file" accept=".json" onchange="importDataBackup(event)">
-    </div>
+<!-- ADMIN LOGIN HEADER -->
+<div class="admin-status">
+  <span id="admin-status-text">👤 স্ট্যাটাস: ভিজিটর মোড</span>
+  <button class="btn btn-red" id="admin-btn" onclick="toggleAdmin()">🔑 এডমিন লগইন</button>
 </div>
 
-<!-- Header & Cover Section -->
-<div class="cover-container">
-    <div class="profile-img-box">
-        <img src="https://via.placeholder.com/140?text=TSC+Logo" alt="Club Logo" class="profile-img" id="club-logo">
-        <div class="bd-flag-circle"></div>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="logo-wrap" id="logo-wrap" onclick="handleLogoClick()">
+      <span id="logo-placeholder">🏆</span>
+      <img id="logo-img" style="display:none">
     </div>
-    <div class="admin-only" style="margin-top:10px;">
-        <button class="btn-edit" onclick="document.getElementById('logo-file-input').click()">📷 নতুন লোগো আপলোড</button>
-        <input type="file" id="logo-file-input" accept="image/*" onchange="uploadLogo(event)">
-    </div>
-    
-    <h1 class="club-title" id="disp-title">থিমছড়ি স্পোর্টস ক্লাব</h1>
-    <p class="slogan" id="disp-slogan">"খেলায় বিকশিত হোক তারুণ্য, সুস্থ ও সুন্দর থাকুক প্রজন্ম"</p>
-    <span class="established">প্রতিষ্ঠিত তারিখ: ০১-০৮-২০২০</span>
-    
-    <div class="admin-only" style="margin-top:12px;">
-        <button class="btn-edit" onclick="toggleHeaderForm()">হেডার ও স্লোগান এডিট করুন</button>
-    </div>
+    <input type="file" id="logo-input" accept="image/*" style="display:none" onchange="onLogoChosen(event)">
+    <h1 class="club-name" id="club-name">থিমছড়ি স্পোর্টস ক্লাব</h1>
+    <p class="club-slogan" id="club-slogan">খেলায় বিকশিত হোক তারুণ্য, সুস্থ ও সুন্দর থাকুক প্রজন্ম</p>
+    <button class="edit-meta-btn admin-only" style="display:none" onclick="editMeta()">✏️ নাম/স্লোগান/লোগো এডিট করুন</button>
+  </div>
 </div>
 
-<!-- Header Edit Form (Admin Only) -->
-<div id="header-form" class="custom-form" style="max-width:800px; margin: 15px auto;">
-    <h3>ক্লাবের নাম ও স্লোগান এডিট</h3>
-    <div class="form-group">
-        <label>ক্লাবের নাম:</label>
-        <input type="text" id="edit-title-input" value="থিমছড়ি স্পোর্টস ক্লাব">
-    </div>
-    <div class="form-group">
-        <label>স্লোগান:</label>
-        <input type="text" id="edit-slogan-input" value="খেলায় বিকশিত হোক তারুণ্য, সুস্থ ও সুন্দর থাকুক প্রজন্ম">
-    </div>
-    <div class="form-btns">
-        <button class="btn-add" onclick="saveHeaderData()">সেভ করুন</button>
-        <button class="btn-cancel" onclick="toggleHeaderForm()">বাতিল</button>
-    </div>
-</div>
-
-<!-- Navigation -->
 <nav>
-    <a href="#about">ABOUT TSC</a>
-    <a href="#notice">TSC নোটিশ</a>
-    <a href="#tournament">চলমান টুর্নামেন্ট</a>
-    <a href="#schedule">ম্যাচ শিডিউল</a>
-    <a href="#register">বায়োডাটা ফরম</a>
-    <a href="#members">সদস্য তালিকা</a>
-    <a href="#gallery">TSC গ্যালারি</a>
-    <a href="#social">সামাজিক কার্যক্রম</a>
+  <a href="#about">ক্লাব সম্পর্কে</a>
+  <a href="#notice">নোটিশ</a>
+  <a href="#tournament">টুর্নামেন্ট</a>
+  <a href="#matches">ম্যাচ শিডিউল</a>
+  <a href="#members">সদস্যবৃন্দ</a>
+  <a href="#gallery">গ্যালারি</a>
+  <a href="#social">সামাজিক কার্যক্রম</a>
+  <a href="#contact">যোগাযোগ</a>
+  <a href="#storage">ডাটা স্টোরেজ</a>
 </nav>
 
-<div class="container" id="main-content">
+<div class="container">
 
-    <!-- About TSC Section -->
-    <div id="about" class="card">
-        <h2> ABOUT TSC <button class="btn-edit admin-only" onclick="toggleAboutForm()">এডিট</button></h2>
-        <div id="about-form" class="custom-form">
-            <h3>ABOUT TSC সংশোধন করুন</h3>
-            <div class="form-group">
-                <textarea id="about-textarea" rows="4"></textarea>
-            </div>
-            <div class="form-btns">
-                <button class="btn-add" onclick="saveAbout()">সেভ করুন</button>
-                <button class="btn-cancel" onclick="toggleAboutForm()">বাতিল</button>
-            </div>
-        </div>
-        <p id="about-text" style="line-height:1.8; font-size:1.05rem;">
-            থিমছড়ি স্পোর্টস ক্লাব একটি স্পোর্টস ক্লাব। তার যাত্রা করে ০১-০৮-২০২০ সালে। প্রতিবছর থিমছড়ি স্পোর্টস ক্লাব, ফুটবল, ক্রিকেট, ব্যাডমিন্টন সহ অনন্য ইভেন্ট সফলতার সাথে আয়োজন করে আসছে। পাশাপাশি বিভিন্ন সমাজিক কার্যক্রম, যেমন: মানব সেবা,কবরস্থান পরিস্কার,রক্তদান সহ নানা মানবিক এবং সমাজিক কার্যক্রম পরিচলনা করে আসতেছে।
-        </p>
+  <!-- ABOUT -->
+  <section id="about">
+    <h2 class="section-title">ABOUT TSC</h2>
+    <div class="box">
+      <p id="about-view">থিমছড়ি স্পোর্টস ক্লাব একটি স্পোর্টস ক্লাব। তার যাত্রা শুরু হয় ০১-০৮-২০২০ সালে। প্রতিবছর থিমছড়ি স্পোর্টস ক্লাব ফুটবল, ক্রিকেট, ব্যাডমিন্টন সহ বিভিন্ন ইভেন্ট সফলতার সাথে আয়োজন করে আসছে। পাশাপাশি বিভিন্ন সামাজিক কার্যক্রম, যেমন মানব সেবা, কবরস্থান পরিষ্কার, রক্তদান সহ নানা মানবিক ও সামাজিক কার্যক্রম পরিচালনা করে আসছে।</p>
+      <div id="about-edit" style="display:none">
+        <textarea id="about-textarea"></textarea>
+        <button class="btn btn-green btn-small" onclick="saveAbout()">সংরক্ষণ করুন</button>
+      </div>
+      <button class="btn btn-outline btn-small admin-only" style="display:none" onclick="startEditAbout()">✏️ এডিট করুন</button>
     </div>
+  </section>
 
-    <!-- TSC Notice Board -->
-    <div id="notice" class="card">
-        <h2> TSC নোটিশ বোর্ড <button class="btn-edit admin-only" onclick="toggleNoticeForm()">নোটিশ আপডেট</button></h2>
-        <div id="notice-form" class="custom-form">
-            <h3>নোটিশ লিখুন</h3>
-            <div class="form-group">
-                <textarea id="notice-textarea" rows="3" placeholder="বর্তমান কার্যক্রম সংক্রান্ত নোটিশ..."></textarea>
-            </div>
-            <div class="form-btns">
-                <button class="btn-add" onclick="saveNotice()">পাবলিশ করুন</button>
-                <button class="btn-cancel" onclick="toggleNoticeForm()">বাতিল</button>
-            </div>
-        </div>
-        <div id="notice-display-box" style="background:#e8f5e9; padding:15px; border-radius:6px; border-left:4px solid #2d6a4f;">
-            <p id="notice-text">বর্তমানে ক্লাবের নিয়মিত ফিটনেস অনুশীলন এবং সামাজিক সচেতনতামূলক কাজ চালু রয়েছে।</p>
-        </div>
+  <!-- NOTICE -->
+  <section id="notice">
+    <h2 class="section-title">TSC নোটিশ</h2>
+    <div class="box">
+      <p id="notice-view" class="empty">বর্তমানে কোনো নোটিশ নেই।</p>
+      <div id="notice-edit" style="display:none">
+        <textarea id="notice-textarea" placeholder="নোটিশ লিখুন..."></textarea>
+        <button class="btn btn-green btn-small" onclick="saveNotice()">সংরক্ষণ করুন</button>
+      </div>
+      <button class="btn btn-outline btn-small admin-only" style="display:none" onclick="startEditNotice()">✏️ এডিট করুন</button>
     </div>
+  </section>
 
-    <!-- Ongoing Tournament / Event -->
-    <div id="tournament" class="card">
-        <h2> চলমান টুর্নামেন্ট বা ইভেন্ট <button class="btn-edit admin-only" onclick="toggleTournamentForm()">ইভেন্ট এডিট</button></h2>
-        <div id="tournament-form" class="custom-form">
-            <h3>টুর্নামেন্ট স্ট্যাটাস আপডেট</h3>
-            <div class="form-group">
-                <label>ইভেন্ট চালু আছে কি?</label>
-                <select id="tourn-status" onchange="toggleTournFields()">
-                    <option value="নাই">নাই</option>
-                    <option value="আছে">আছে</option>
-                </select>
-            </div>
-            <div id="tourn-details-fields" style="display:none;">
-                <div class="form-group">
-                    <label>টুর্নামেন্টের নাম:</label>
-                    <input type="text" id="tourn-name-in" placeholder="যেমন: বার্ষিক ফুটবল টুর্নামেন্ট ২০২৬">
-                </div>
-                <div class="form-group">
-                    <label>অংশগ্রহণকারী দলের নামসমূহ:</label>
-                    <input type="text" id="tourn-teams-in" placeholder="যেমন: টিম A, টিম B, টিম C">
-                </div>
-                <div class="form-group">
-                    <label>মোট দলের সংখ্যা:</label>
-                    <input type="number" id="tourn-count-in" placeholder="যেমন: ৮">
-                </div>
-            </div>
-            <div class="form-btns">
-                <button class="btn-add" onclick="saveTournament()">সেভ করুন</button>
-                <button class="btn-cancel" onclick="toggleTournamentForm()">বাতিল</button>
-            </div>
+  <!-- TOURNAMENT STATUS -->
+  <section id="tournament">
+    <h2 class="section-title">চলমান টুর্নামেন্ট বা ইভেন্ট</h2>
+    <div class="box">
+      <div id="tournament-view"><p class="empty">বর্তমানে কোনো ইভেন্ট চালু নেই।</p></div>
+      <div id="tournament-edit" style="display:none">
+        <label>স্ট্যাটাস</label>
+        <select id="t-status">
+          <option value="নাই">নাই — বর্তমানে কোনো ইভেন্ট চালু নেই</option>
+          <option value="আছে">আছে</option>
+        </select>
+        <div id="t-fields">
+          <label>টুর্নামেন্টের নাম</label>
+          <input type="text" id="t-name">
+          <label>দলের নাম (কমা দিয়ে আলাদা করুন)</label>
+          <input type="text" id="t-teams">
+          <label>দলের সংখ্যা</label>
+          <input type="text" id="t-count">
         </div>
-        
-        <div id="tournament-display">
-            <p style="font-size:1.1rem; color:#d80027; font-weight:bold;">বর্তমান কোন ইভেন্ট চালু নেই</p>
-        </div>
+        <button class="btn btn-green btn-small" onclick="saveTournament()">সংরক্ষণ করুন</button>
+      </div>
+      <button class="btn btn-outline btn-small admin-only" style="display:none" onclick="startEditTournament()">✏️ এডিট করুন</button>
     </div>
+  </section>
 
-    <!-- Match Schedule & Fixtures -->
-    <div id="schedule" class="card">
-        <h2> ম্যাচ শিডিউল ও ফিক্সচার <button class="btn-add admin-only" onclick="toggleScheduleForm()">+ নতুন ম্যাচ যোগ করুন</button></h2>
-        <div id="schedule-form" class="custom-form">
-            <h3>নতুন ম্যাচ ফিক্সচার যোগ ফরম</h3>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>টুর্নামেন্টের নাম:</label>
-                    <input type="text" id="sch-tourn" placeholder="টুর্নামেন্ট...">
-                </div>
-                <div class="form-group">
-                    <label>ম্যাচ (দলের ফিক্সচার):</label>
-                    <input type="text" id="sch-teams" placeholder="যেমন: টিম এ বনাম টিম সি">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>তারিখ ও সময়:</label>
-                    <input type="text" id="sch-time" placeholder="যেমন: ১০ অক্টোবর, বিকেল ৪:০০">
-                </div>
-                <div class="form-group">
-                    <label>স্থান:</label>
-                    <input type="text" id="sch-venue" placeholder="যেমন: ক্লাব মাঠ">
-                </div>
-            </div>
-            <div class="form-btns">
-                <button class="btn-add" onclick="addScheduleRow()">ফিক্সচার সেভ করুন</button>
-                <button class="btn-cancel" onclick="toggleScheduleForm()">বাতিল</button>
-            </div>
-        </div>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>টুর্নামেন্ট</th>
-                    <th>ফিক্সচার</th>
-                    <th>তারিখ ও সময়</th>
-                    <th>স্থান</th>
-                    <th class="admin-only">অ্যাকশন</th>
-                </tr>
-            </thead>
-            <tbody id="schedule-table-body">
-                <tr>
-                    <td>আঞ্চলিক ক্রিকেট কাপ</td>
-                    <td>টিম এ বনাম টিম সি</td>
-                    <td>১৫ অক্টোবর, বিকেল ৩:৩০</td>
-                    <td>থিমছড়ি হাইস্কুল মাঠ</td>
-                    <td class="admin-only"><button class="btn-delete" onclick="deleteScheduleRow(this)">ডিলিট</button></td>
-                </tr>
-            </tbody>
-        </table>
+  <!-- MATCH SCHEDULE -->
+  <section id="matches">
+    <h2 class="section-title">ম্যাচ শিডিউল</h2>
+    <div id="matches-list"></div>
+    <div class="box admin-only" style="display:none">
+      <h3 style="margin-top:0">নতুন ম্যাচ শিডিউল যোগ করুন</h3>
+      <label>টুর্নামেন্টের নাম</label>
+      <input type="text" id="m-tournament">
+      <label>দলের নাম</label>
+      <input type="text" id="m-team">
+      <label>স্কোয়াড (খেলোয়াড়দের নাম কমা দিয়ে আলাদা করুন)</label>
+      <textarea id="m-squad"></textarea>
+      <label>ফিক্সার (যেমন: টিম এ বনাম টিম সি)</label>
+      <div id="m-fixtures"></div>
+      <button class="btn btn-outline btn-small" onclick="addFixtureRow()">+ ফিক্সার যোগ করুন</button>
+      <br><br>
+      <button class="btn btn-green" onclick="saveMatch()">ম্যাচ শিডিউল সংরক্ষণ করুন</button>
     </div>
+  </section>
 
-    <!-- Public Member Biodata Entry Form -->
-    <div id="register" class="card">
-        <h2> ক্লাবের সদস্য বায়োডাটা ফরম (সকলের জন্য উন্মুক্ত) </h2>
-        <div style="background: #e8f5e9; padding: 20px; border-radius: 8px; border: 1px solid #b7e4c7;">
-            <div class="form-row">
-                <div class="form-group"><label>নাম *:</label><input type="text" id="bio-name" placeholder="পূর্ণ নাম"></div>
-                <div class="form-group"><label>পিতার নাম *:</label><input type="text" id="bio-father"></div>
-            </div>
-            <div class="form-row">
-                <div class="form-group"><label>ঠিকানা *:</label><input type="text" id="bio-address" placeholder="গ্রাম/পাড়া"></div>
-                <div class="form-group"><label>ওয়ার্ড নম্বর *:</label><input type="text" id="bio-ward" placeholder="ওয়ার্ড নং"></div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>পড়ালেখা:</label>
-                    <select id="bio-edu-option" onchange="toggleEduBox()">
-                        <option value="নাই">নাই</option>
-                        <option value="আছে">আছে</option>
-                    </select>
-                </div>
-                <div class="form-group" id="edu-text-box" style="display:none;">
-                    <label>পড়ালেখার তথ্য লিখুন:</label>
-                    <input type="text" id="bio-edu-detail" placeholder="শ্রেণী / ডিগ্রি / প্রতিষ্ঠানের নাম">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>পেশা:</label>
-                    <select id="bio-job">
-                        <option value="ছাত্র">ছাত্র</option>
-                        <option value="ব্যবসায়ী">ব্যবসায়ী</option>
-                        <option value="অন্যান্য">অন্যান্য</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>মোবাইল নম্বর:</label><input type="text" id="bio-mobile"></div>
-            </div>
-            <div class="form-btns">
-                <button class="btn-add" onclick="submitBiodata()">বায়োডাটা জমা দিন</button>
-            </div>
+  <!-- MEMBERS -->
+  <section id="members">
+    <h2 class="section-title">ক্লাবের সদস্যদের বায়োডাটা</h2>
+    <div id="members-list"></div>
+    <div class="box admin-only" style="display:none">
+      <h3 style="margin-top:0">নতুন সদস্য যোগ করুন</h3>
+      <label>নাম</label>
+      <input type="text" id="mem-name">
+      <label>পিতার নাম</label>
+      <input type="text" id="mem-father">
+      <div class="row">
+        <div>
+          <label>ঠিকানা</label>
+          <input type="text" id="mem-address">
         </div>
+        <div>
+          <label>ওয়ার্ড</label>
+          <input type="text" id="mem-ward">
+        </div>
+      </div>
+      <label>পড়ালেখা</label>
+      <select id="mem-edu-has" onchange="toggleEduBox()">
+        <option value="নাই">নাই</option>
+        <option value="আছে">আছে</option>
+      </select>
+      <input type="text" id="mem-edu-text" placeholder="শিক্ষাগত যোগ্যতা লিখুন" style="display:none">
+      <label>পেশা</label>
+      <select id="mem-profession">
+        <option value="ছাত্র">ছাত্র</option>
+        <option value="ব্যবসায়ী">ব্যবসায়ী</option>
+        <option value="অন্যান্য">অন্যান্য</option>
+      </select>
+      <button class="btn btn-green" onclick="saveMember()">সদস্য যোগ করুন</button>
     </div>
+  </section>
 
-    <!-- Registered Members Serial List -->
-    <div id="members" class="card">
-        <h2> নিবন্ধিত সদস্য তালিকা </h2>
-        <div id="members-container">
-            <!-- Dynamic Serial List -->
-        </div>
+  <!-- GALLERY -->
+  <section id="gallery">
+    <h2 class="section-title">TSC গ্যালারি</h2>
+    <div class="box admin-only" style="display:none">
+      <label>ক্লাবের ছবি আপলোড করুন</label>
+      <input type="file" id="gallery-input" accept="image/*" onchange="onGalleryChosen(event)">
     </div>
+    <div class="grid" id="gallery-grid"></div>
+    <p class="empty" id="gallery-empty">এখনো কোনো ছবি যোগ করা হয়নি।</p>
+  </section>
 
-    <!-- TSC Unlimited Photo Gallery -->
-    <div id="gallery" class="card">
-        <h2> TSC গ্যালারি <button class="btn-add admin-only" onclick="document.getElementById('gallery-file-input').click()">+ ছবি আপলোড</button></h2>
-        <input type="file" id="gallery-file-input" accept="image/*" onchange="uploadGalleryPhoto(event)">
-        <div class="gallery-grid" id="gallery-container">
-            <!-- Gallery Images -->
-        </div>
+  <!-- SOCIAL ACTIVITIES -->
+  <section id="social">
+    <h2 class="section-title">TSC সামাজিক ও মানবিক কার্যক্রম</h2>
+    <p class="muted">বিভিন্ন সামাজিক কার্যক্রম পরিচালনার ডকুমেন্টারি</p>
+    <div id="social-list"></div>
+    <div class="box admin-only" style="display:none">
+      <h3 style="margin-top:0">নতুন কার্যক্রম যোগ করুন</h3>
+      <label>ছবি</label>
+      <input type="file" id="social-input" accept="image/*">
+      <label>বিস্তারিত লেখা</label>
+      <textarea id="social-desc" placeholder="কার্যক্রম সম্পর্কে বিস্তারিত লিখুন..."></textarea>
+      <button class="btn btn-green" onclick="saveSocial()">যোগ করুন</button>
     </div>
+  </section>
 
-    <!-- Social & Humanitarian Activities -->
-    <div id="social" class="card">
-        <h2> TSC সামাজিক এবং মানবিক কার্যক্রম <button class="btn-add admin-only" onclick="toggleSocialForm()">+ নতুন ডকুমেন্টারি যোগ করুন</button></h2>
-        <div id="social-form" class="custom-form">
-            <h3>সামাজিক কার্যক্রমের ডকুমেন্টারি আপলোড</h3>
-            <div class="form-group">
-                <label>কার্যক্রমের শিরোনাম:</label>
-                <input type="text" id="soc-title" placeholder="যেমন: ফ্রি রক্তদান কর্মসূচি">
-            </div>
-            <div class="form-group">
-                <label>ছবি সংযুক্ত করুন:</label>
-                <input type="file" id="soc-img-input" accept="image/*">
-            </div>
-            <div class="form-group">
-                <label>বিবরণ ও তথ্য:</label>
-                <textarea id="soc-desc" rows="3" placeholder="বিস্তারিত বিবরণ..."></textarea>
-            </div>
-            <div class="form-btns">
-                <button class="btn-add" onclick="addSocialDoc()">সংযুক্ত করুন</button>
-                <button class="btn-cancel" onclick="toggleSocialForm()">বাতিল</button>
-            </div>
-        </div>
-
-        <div class="doc-grid" id="social-container">
-            <!-- Social Activities -->
-        </div>
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2 class="section-title">যোগাযোগ</h2>
+    <div class="box">
+      <div id="contact-view">
+        <p>📞 মোবাইল: <span id="contact-m1">01785-819425</span></p>
+        <p>📞 মোবাইল: <span id="contact-m2">যোগ করা হয়নি</span></p>
+      </div>
+      <div id="contact-edit" style="display:none">
+        <label>মোবাইল নম্বর ১</label>
+        <input type="tel" id="c-m1">
+        <label>মোবাইল নম্বর ২</label>
+        <input type="tel" id="c-m2">
+        <button class="btn btn-green btn-small" onclick="saveContact()">সংরক্ষণ করুন</button>
+      </div>
+      <button class="btn btn-outline btn-small admin-only" style="display:none" onclick="startEditContact()">✏️ এডিট করুন</button>
     </div>
+  </section>
 
-</div>
-
-<!-- Biodata Details Modal Popup -->
-<div id="bioModal" class="modal">
-    <div class="modal-content">
-        <span class="close-modal" onclick="closeBioModal()">&times;</span>
-        <h3 style="color:#1b4332; border-bottom:2px solid #2d6a4f; padding-bottom:8px; margin-bottom:15px;">সদস্যের বিস্তারিত বায়োডাটা</h3>
-        <div id="modal-body" style="line-height:2; font-size:1.05rem;">
-            <!-- Dynamic Details -->
-        </div>
+  <!-- ORIGINAL GENERIC DATA STORAGE (open for all visitors) -->
+  <section id="storage">
+    <h2 class="section-title">নতুন ডাটা / ফাইল সেভ করুন (Unlimited Storage)</h2>
+    <p class="muted">এই তালিকা সবার জন্য উন্মুক্ত — যে কেউ এখানে তথ্য যোগ করতে পারবে এবং তা সবাই দেখতে পাবে।</p>
+    <div class="box">
+      <input type="text" id="data-title" placeholder="শিরোনাম লিখুন">
+      <button class="btn btn-green" onclick="saveData()">সেভ করুন</button>
     </div>
+    <div class="box">
+      <h3 style="margin-top:0">সংরক্ষিত ডাটা তালিকা</h3>
+      <div id="data-list"><p class="empty">এখনো কোনো ডাটা যোগ করা হয়নি।</p></div>
+    </div>
+  </section>
+
 </div>
 
 <footer>
-    <p>&copy; ২০২৬ থিমছড়ি স্পোর্টস ক্লাব. সর্বস্বত্ব সংরক্ষিত।</p>
+  © থিমছড়ি স্পোর্টস ক্লাব — প্রতিষ্ঠা: ০১-০৮-২০২০
 </footer>
 
 <script>
-// Admin Authentication PIN System
-const ADMIN_PIN = "320852";
+/* =========================================================
+   ADMIN AUTH
+   NOTE: এটি একটি সাধারণ ক্লায়েন্ট-সাইড পাসওয়ার্ড লক।
+   পুরোপুরি নিরাপদ নয় — নিচের ADMIN_PASSWORD পরিবর্তন করে নিন।
+   ========================================================= */
+const ADMIN_PASSWORD = "tsc2020";
 let isAdmin = false;
 
-function toggleAdminLogin() {
-    if(!isAdmin) {
-        let pin = prompt("অ্যাডমিন পিন কোড প্রবেশ করান:");
-        if(pin === ADMIN_PIN) {
-            isAdmin = true;
-            document.getElementById('admin-status').innerText = "🔑 আপনি অ্যাডমিন মোডে আছেন।";
-            document.getElementById('admin-btn').innerText = "🚪 লগআউট";
-            applyAdminPermissions();
-            renderMembers();
-            renderGallery();
-            renderSocial();
-        } else if(pin !== null) {
-            alert("ভুল পিন নম্বর!");
-        }
-    } else {
-        isAdmin = false;
-        document.getElementById('admin-status').innerText = "👤 আপনি সাধারণ ভিজিটর মোডে আছেন।";
-        document.getElementById('admin-btn').innerText = "🔑 অ্যাডমিন লগইন";
-        applyAdminPermissions();
-        renderMembers();
-        renderGallery();
-        renderSocial();
-    }
+async function toggleAdmin(){
+  if(isAdmin){
+    isAdmin = false;
+    try{ await window.storage.delete('admin-session', false); }catch(e){}
+    updateAdminUI();
+    return;
+  }
+  const pass = prompt("এডমিন পাসওয়ার্ড দিন:");
+  if(pass === ADMIN_PASSWORD){
+    isAdmin = true;
+    try{ await window.storage.set('admin-session', 'yes', false); }catch(e){}
+    updateAdminUI();
+  } else if(pass !== null){
+    alert("পাসওয়ার্ড সঠিক নয়।");
+  }
 }
 
-function applyAdminPermissions() {
-    const adminElems = document.querySelectorAll('.admin-only');
-    adminElems.forEach(el => {
-        if(isAdmin) {
-            el.classList.remove('admin-only');
-        } else {
-            el.classList.add('admin-only');
-        }
-    });
+function updateAdminUI(){
+  document.getElementById('admin-status-text').textContent = isAdmin ? "🛡️ স্ট্যাটাস: এডমিন মোড" : "👤 স্ট্যাটাস: ভিজিটর মোড";
+  const btn = document.getElementById('admin-btn');
+  btn.textContent = isAdmin ? "🚪 লগ আউট" : "🔑 এডমিন লগইন";
+  document.querySelectorAll('.admin-only').forEach(el=>{
+    el.style.display = isAdmin ? '' : 'none';
+  });
+  renderMatches();
+  renderMembers();
+  renderGallery();
+  renderSocial();
 }
 
-// Global Storage State Object
-let appData = {
-    title: "থিমছড়ি স্পোর্টস ক্লাব",
-    slogan: "খেলায় বিকশিত হোক তারুণ্য, সুস্থ ও সুন্দর থাকুক প্রজন্ম",
-    logo: "https://via.placeholder.com/140?text=TSC+Logo",
-    about: "থিমছড়ি স্পোর্টস ক্লাব একটি স্পোর্টস ক্লাব। তার যাত্রা করে ০১-০৮-২০২০ সালে। প্রতিবছর থিমছড়ি স্পোর্টস ক্লাব, ফুটবল, ক্রিকেট, ব্যাডমিন্টন সহ অনন্য ইভেন্ট সফলতার সাথে আয়োজন করে আসছে। পাশাপাশি বিভিন্ন সমাজিক কার্যক্রম, যেমন: মানব সেবা,কবরস্থান পরিস্কার,রক্তদান সহ নানা মানবিক এবং সমাজিক কার্যক্রম পরিচলনা করে আসতেছে।",
-    notice: "বর্তমানে ক্লাবের নিয়মিত ফিটনেস অনুশীলন এবং সামাজিক সচেতনতামূলক কাজ চালু রয়েছে।",
-    tournament: { status: "নাই", name: "", teams: "", count: "" },
-    schedules: [
-        { tourn: "আঞ্চলিক ক্রিকেট কাপ", teams: "টিম এ বনাম টিম সি", time: "১৫ অক্টোবর, বিকেল ৩:৩০", venue: "থিমছড়ি হাইস্কুল মাঠ" }
-    ],
-    members: [],
-    gallery: [],
-    social: []
-};
-
-const STORAGE_KEY = 'tsc_master_data_v2026';
-
-function saveToLocalStorage() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+/* =========================================================
+   STORAGE HELPERS
+   ========================================================= */
+async function getShared(key, fallback){
+  try{
+    const r = await window.storage.get(key, true);
+    return r ? JSON.parse(r.value) : fallback;
+  }catch(e){ return fallback; }
+}
+async function setShared(key, value){
+  try{ await window.storage.set(key, JSON.stringify(value), true); }catch(e){ console.error(e); }
+}
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+function fileToBase64(file){
+  return new Promise((res, rej)=>{
+    const r = new FileReader();
+    r.onload = ()=> res(r.result);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
 }
 
-function loadFromLocalStorage() {
-    let saved = localStorage.getItem(STORAGE_KEY);
-    if(saved) {
-        try {
-            appData = JSON.parse(saved);
-        } catch(e) { console.error("Error loading data", e); }
-    }
-    renderAllData();
+/* =========================================================
+   META (logo / name / slogan)
+   ========================================================= */
+let metaState = { logo:null, name:"থিমছড়ি স্পোর্টস ক্লাব", slogan:"খেলায় বিকশিত হোক তারুণ্য, সুস্থ ও সুন্দর থাকুক প্রজন্ম" };
+
+async function loadMeta(){
+  metaState = await getShared('meta', metaState);
+  document.getElementById('club-name').textContent = metaState.name;
+  document.getElementById('club-slogan').textContent = metaState.slogan;
+  if(metaState.logo){
+    document.getElementById('logo-img').src = metaState.logo;
+    document.getElementById('logo-img').style.display = 'block';
+    document.getElementById('logo-placeholder').style.display = 'none';
+  }
+}
+function editMeta(){
+  const name = prompt("ক্লাবের নাম:", metaState.name);
+  if(name===null) return;
+  const slogan = prompt("স্লোগান:", metaState.slogan);
+  if(slogan===null) return;
+  metaState.name = name; metaState.slogan = slogan;
+  document.getElementById('club-name').textContent = name;
+  document.getElementById('club-slogan').textContent = slogan;
+  setShared('meta', metaState);
+}
+function handleLogoClick(){
+  if(!isAdmin) return;
+  document.getElementById('logo-input').click();
+}
+async function onLogoChosen(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const b64 = await fileToBase64(file);
+  metaState.logo = b64;
+  document.getElementById('logo-img').src = b64;
+  document.getElementById('logo-img').style.display='block';
+  document.getElementById('logo-placeholder').style.display='none';
+  await setShared('meta', metaState);
 }
 
-window.onload = function() {
-    loadFromLocalStorage();
-    applyAdminPermissions();
-};
-
-function renderAllData() {
-    document.getElementById('disp-title').innerText = appData.title;
-    document.getElementById('disp-slogan').innerText = appData.slogan;
-    document.getElementById('club-logo').src = appData.logo;
-    document.getElementById('about-text').innerText = appData.about;
-    document.getElementById('notice-text').innerText = appData.notice;
-    
-    renderTournament();
-    renderSchedule();
-    renderMembers();
-    renderGallery();
-    renderSocial();
+/* =========================================================
+   ABOUT
+   ========================================================= */
+async function loadAbout(){
+  const txt = await getShared('about', document.getElementById('about-view').textContent);
+  document.getElementById('about-view').textContent = txt;
+}
+function startEditAbout(){
+  document.getElementById('about-textarea').value = document.getElementById('about-view').textContent;
+  document.getElementById('about-edit').style.display = 'block';
+}
+async function saveAbout(){
+  const txt = document.getElementById('about-textarea').value.trim();
+  document.getElementById('about-view').textContent = txt;
+  document.getElementById('about-edit').style.display = 'none';
+  await setShared('about', txt);
 }
 
-// Header & Logo Edits
-function toggleHeaderForm() {
-    let f = document.getElementById('header-form');
-    f.style.display = f.style.display === 'block' ? 'none' : 'block';
+/* =========================================================
+   NOTICE
+   ========================================================= */
+async function loadNotice(){
+  const txt = await getShared('notice', "");
+  const view = document.getElementById('notice-view');
+  if(txt){ view.textContent = txt; view.classList.remove('empty'); }
+}
+function startEditNotice(){
+  document.getElementById('notice-textarea').value = document.getElementById('notice-view').classList.contains('empty') ? "" : document.getElementById('notice-view').textContent;
+  document.getElementById('notice-edit').style.display = 'block';
+}
+async function saveNotice(){
+  const txt = document.getElementById('notice-textarea').value.trim();
+  const view = document.getElementById('notice-view');
+  if(txt){ view.textContent = txt; view.classList.remove('empty'); }
+  else { view.textContent = "বর্তমানে কোনো নোটিশ নেই।"; view.classList.add('empty'); }
+  document.getElementById('notice-edit').style.display = 'none';
+  await setShared('notice', txt);
 }
 
-function saveHeaderData() {
-    appData.title = document.getElementById('edit-title-input').value;
-    appData.slogan = document.getElementById('edit-slogan-input').value;
-    saveToLocalStorage();
-    renderAllData();
-    toggleHeaderForm();
+/* =========================================================
+   TOURNAMENT
+   ========================================================= */
+async function loadTournament(){
+  const t = await getShared('tournament', null);
+  renderTournamentView(t);
+}
+function renderTournamentView(t){
+  const view = document.getElementById('tournament-view');
+  if(!t || t.status !== 'আছে'){
+    view.innerHTML = '<p class="empty">বর্তমানে কোনো ইভেন্ট চালু নেই।</p>';
+    return;
+  }
+  view.innerHTML = `
+    <p><strong>টুর্নামেন্ট:</strong> ${escapeHtml(t.name||'')}</p>
+    <p><strong>দলসমূহ:</strong> ${escapeHtml(t.teams||'')}</p>
+    <p><strong>দলের সংখ্যা:</strong> ${escapeHtml(t.count||'')}</p>
+  `;
+}
+async function startEditTournament(){
+  const t = await getShared('tournament', {status:'নাই',name:'',teams:'',count:''});
+  document.getElementById('t-status').value = t.status || 'নাই';
+  document.getElementById('t-name').value = t.name || '';
+  document.getElementById('t-teams').value = t.teams || '';
+  document.getElementById('t-count').value = t.count || '';
+  document.getElementById('tournament-edit').style.display = 'block';
+}
+async function saveTournament(){
+  const t = {
+    status: document.getElementById('t-status').value,
+    name: document.getElementById('t-name').value.trim(),
+    teams: document.getElementById('t-teams').value.trim(),
+    count: document.getElementById('t-count').value.trim()
+  };
+  renderTournamentView(t);
+  document.getElementById('tournament-edit').style.display = 'none';
+  await setShared('tournament', t);
 }
 
-function uploadLogo(event) {
-    let reader = new FileReader();
-    reader.onload = function(){
-        appData.logo = reader.result;
-        saveToLocalStorage();
-        renderAllData();
-    };
-    if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
+/* =========================================================
+   MATCH SCHEDULE
+   ========================================================= */
+let fixtureCount = 0;
+function addFixtureRow(){
+  fixtureCount++;
+  const wrap = document.createElement('div');
+  wrap.className = 'row fixture-row';
+  wrap.style.marginBottom = '6px';
+  wrap.innerHTML = `
+    <input type="text" placeholder="টিম A" class="fx-a">
+    <input type="text" placeholder="টিম B" class="fx-b">
+    <input type="text" placeholder="সময়" class="fx-time">
+    <input type="text" placeholder="তারিখ" class="fx-date">
+    <input type="text" placeholder="স্থান" class="fx-venue">
+  `;
+  document.getElementById('m-fixtures').appendChild(wrap);
+}
+addFixtureRow();
+
+async function saveMatch(){
+  const tournamentName = document.getElementById('m-tournament').value.trim();
+  const teamName = document.getElementById('m-team').value.trim();
+  const squad = document.getElementById('m-squad').value.trim();
+  if(!tournamentName && !teamName){ alert("অন্তত টুর্নামেন্ট বা দলের নাম দিন।"); return; }
+  const fixtures = [];
+  document.querySelectorAll('#m-fixtures .fixture-row').forEach(row=>{
+    const a = row.querySelector('.fx-a').value.trim();
+    const b = row.querySelector('.fx-b').value.trim();
+    const time = row.querySelector('.fx-time').value.trim();
+    const date = row.querySelector('.fx-date').value.trim();
+    const venue = row.querySelector('.fx-venue').value.trim();
+    if(a || b) fixtures.push({a,b,time,date,venue});
+  });
+  const id = uid();
+  const match = {id, tournamentName, teamName, squad, fixtures};
+  const index = await getShared('matches-index', []);
+  index.unshift(id);
+  await setShared('matches-index', index);
+  await setShared('match:'+id, match);
+
+  document.getElementById('m-tournament').value='';
+  document.getElementById('m-team').value='';
+  document.getElementById('m-squad').value='';
+  document.getElementById('m-fixtures').innerHTML='';
+  addFixtureRow();
+
+  renderMatches();
 }
 
-// About Section
-function toggleAboutForm() {
-    let f = document.getElementById('about-form');
-    f.style.display = f.style.display === 'block' ? 'none' : 'block';
-    document.getElementById('about-textarea').value = appData.about;
+async function deleteMatch(id){
+  if(!confirm("এই ম্যাচ শিডিউল মুছে ফেলতে চান?")) return;
+  let index = await getShared('matches-index', []);
+  index = index.filter(x=>x!==id);
+  await setShared('matches-index', index);
+  try{ await window.storage.delete('match:'+id, true); }catch(e){}
+  renderMatches();
 }
 
-function saveAbout() {
-    appData.about = document.getElementById('about-textarea').value;
-    saveToLocalStorage();
-    renderAllData();
-    toggleAboutForm();
+async function renderMatches(){
+  const index = await getShared('matches-index', []);
+  const container = document.getElementById('matches-list');
+  if(index.length===0){ container.innerHTML = '<p class="empty">এখনো কোনো ম্যাচ শিডিউল যোগ করা হয়নি।</p>'; return; }
+  let html = '';
+  for(const id of index){
+    const m = await getShared('match:'+id, null);
+    if(!m) continue;
+    html += `<div class="item-card">
+      <div class="item-top">
+        <div>
+          <div style="font-weight:600;">${escapeHtml(m.tournamentName||'টুর্নামেন্ট')} ${m.teamName? '— '+escapeHtml(m.teamName):''}</div>
+          ${m.squad? `<div class="muted" style="font-size:0.8rem;margin-top:2px;">স্কোয়াড: ${escapeHtml(m.squad)}</div>`:''}
+        </div>
+        ${isAdmin? `<div class="menu-wrap">
+          <button class="dots-btn" onclick="toggleDropdown('mdrop-${m.id}')">⋮</button>
+          <div class="dropdown" id="mdrop-${m.id}" style="display:none">
+            <button onclick="deleteMatch('${m.id}')">🗑️ মুছুন</button>
+          </div>
+        </div>`:''}
+      </div>
+      ${m.fixtures && m.fixtures.length ? m.fixtures.map(f=>`
+        <div class="fixture-line">${escapeHtml(f.a)} বনাম ${escapeHtml(f.b)}${f.time? ' • সময়: '+escapeHtml(f.time):''}${f.date? ' • তারিখ: '+escapeHtml(f.date):''}${f.venue? ' • স্থান: '+escapeHtml(f.venue):''}</div>
+      `).join('') : ''}
+    </div>`;
+  }
+  container.innerHTML = html || '<p class="empty">এখনো কোনো ম্যাচ শিডিউল যোগ করা হয়নি।</p>';
 }
 
-// Notice Section
-function toggleNoticeForm() {
-    let f = document.getElementById('notice-form');
-    f.style.display = f.style.display === 'block' ? 'none' : 'block';
-    document.getElementById('notice-textarea').value = appData.notice;
+/* =========================================================
+   MEMBERS
+   ========================================================= */
+function toggleEduBox(){
+  document.getElementById('mem-edu-text').style.display = document.getElementById('mem-edu-has').value==='আছে' ? 'block':'none';
 }
 
-function saveNotice() {
-    appData.notice = document.getElementById('notice-textarea').value;
-    saveToLocalStorage();
-    renderAllData();
-    toggleNoticeForm();
+async function saveMember(){
+  const name = document.getElementById('mem-name').value.trim();
+  if(!name){ alert("সদস্যের নাম দিন।"); return; }
+  const member = {
+    id: uid(),
+    name,
+    father: document.getElementById('mem-father').value.trim(),
+    address: document.getElementById('mem-address').value.trim(),
+    ward: document.getElementById('mem-ward').value.trim(),
+    eduHas: document.getElementById('mem-edu-has').value,
+    eduText: document.getElementById('mem-edu-text').value.trim(),
+    profession: document.getElementById('mem-profession').value
+  };
+  const index = await getShared('members-index', []);
+  index.push(member.id);
+  await setShared('members-index', index);
+  await setShared('member:'+member.id, member);
+
+  ['mem-name','mem-father','mem-address','mem-ward','mem-edu-text'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('mem-edu-has').value='নাই';
+  toggleEduBox();
+
+  renderMembers();
 }
 
-// Tournament Section
-function toggleTournamentForm() {
-    let f = document.getElementById('tournament-form');
-    f.style.display = f.style.display === 'block' ? 'none' : 'block';
+async function deleteMember(id){
+  if(!confirm("এই সদস্যকে তালিকা থেকে মুছে ফেলতে চান?")) return;
+  let index = await getShared('members-index', []);
+  index = index.filter(x=>x!==id);
+  await setShared('members-index', index);
+  try{ await window.storage.delete('member:'+id, true); }catch(e){}
+  renderMembers();
 }
 
-function toggleTournFields() {
-    let st = document.getElementById('tourn-status').value;
-    document.getElementById('tourn-details-fields').style.display = (st === 'আছে') ? 'block' : 'none';
+async function renderMembers(){
+  const index = await getShared('members-index', []);
+  const container = document.getElementById('members-list');
+  if(index.length===0){ container.innerHTML = '<p class="empty">এখনো কোনো সদস্য যোগ করা হয়নি।</p>'; return; }
+  let html = '';
+  let serial = 1;
+  for(const id of index){
+    const m = await getShared('member:'+id, null);
+    if(!m) continue;
+    html += `<div class="item-card">
+      <div class="item-top">
+        <div class="item-title" onclick="toggleDetail('mdet-${m.id}')">${serial}. ${escapeHtml(m.name)}</div>
+        ${isAdmin? `<div class="menu-wrap">
+          <button class="dots-btn" onclick="toggleDropdown('mmdrop-${m.id}')">⋮</button>
+          <div class="dropdown" id="mmdrop-${m.id}" style="display:none">
+            <button onclick="deleteMember('${m.id}')">🗑️ মুছুন</button>
+          </div>
+        </div>`:''}
+      </div>
+      <div class="detail-box" id="mdet-${m.id}">
+        <p>পিতা: ${escapeHtml(m.father||'—')}</p>
+        <p>ঠিকানা: ${escapeHtml(m.address||'—')}, ওয়ার্ড: ${escapeHtml(m.ward||'—')}</p>
+        <p>পড়ালেখা: ${m.eduHas==='আছে' ? escapeHtml(m.eduText||'উল্লেখ নেই') : 'নাই'}</p>
+        <p>পেশা: ${escapeHtml(m.profession||'—')}</p>
+      </div>
+    </div>`;
+    serial++;
+  }
+  container.innerHTML = html;
 }
 
-function saveTournament() {
-    let st = document.getElementById('tourn-status').value;
-    appData.tournament.status = st;
-    if(st === 'আছে') {
-        appData.tournament.name = document.getElementById('tourn-name-in').value;
-        appData.tournament.teams = document.getElementById('tourn-teams-in').value;
-        appData.tournament.count = document.getElementById('tourn-count-in').value;
-    }
-    saveToLocalStorage();
-    renderTournament();
-    toggleTournamentForm();
+/* =========================================================
+   GALLERY
+   ========================================================= */
+async function onGalleryChosen(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const b64 = await fileToBase64(file);
+  const id = uid();
+  const index = await getShared('gallery-index', []);
+  index.unshift(id);
+  await setShared('gallery-index', index);
+  await setShared('gallery:'+id, b64);
+  e.target.value = '';
+  renderGallery();
+}
+async function deleteGalleryImage(id){
+  if(!confirm("ছবিটি মুছে ফেলতে চান?")) return;
+  let index = await getShared('gallery-index', []);
+  index = index.filter(x=>x!==id);
+  await setShared('gallery-index', index);
+  try{ await window.storage.delete('gallery:'+id, true); }catch(e){}
+  renderGallery();
+}
+async function renderGallery(){
+  const index = await getShared('gallery-index', []);
+  const grid = document.getElementById('gallery-grid');
+  document.getElementById('gallery-empty').style.display = index.length===0 ? 'block':'none';
+  let html='';
+  for(const id of index){
+    const b64 = await getShared('gallery:'+id, null);
+    if(!b64) continue;
+    html += `<div class="gal-item">
+      <img src="${b64}">
+      ${isAdmin? `<button class="gal-del" onclick="deleteGalleryImage('${id}')">×</button>`:''}
+    </div>`;
+  }
+  grid.innerHTML = html;
 }
 
-function renderTournament() {
-    let box = document.getElementById('tournament-display');
-    if(appData.tournament.status === 'আছে') {
-        box.innerHTML = `
-            <div style="background:#e8f5e9; padding:15px; border-radius:6px;">
-                <p><strong>টুর্নামেন্টের নাম:</strong> ${appData.tournament.name}</p>
-                <p><strong>অংশগ্রহণকারী দল:</strong> ${appData.tournament.teams}</p>
-                <p><strong>মোট দল সংখ্যা:</strong> ${appData.tournament.count} টি</p>
-            </div>
-        `;
-    } else {
-        box.innerHTML = `<p style="font-size:1.1rem; color:#d80027; font-weight:bold;">বর্তমান কোন ইভেন্ট চালু নেই</p>`;
-    }
+/* =========================================================
+   SOCIAL ACTIVITIES
+   ========================================================= */
+async function saveSocial(){
+  const fileInput = document.getElementById('social-input');
+  const desc = document.getElementById('social-desc').value.trim();
+  if(!fileInput.files[0] && !desc){ alert("ছবি অথবা বিস্তারিত লেখা দিন।"); return; }
+  let b64 = null;
+  if(fileInput.files[0]) b64 = await fileToBase64(fileInput.files[0]);
+  const id = uid();
+  const item = {id, image:b64, desc};
+  const index = await getShared('social-index', []);
+  index.unshift(id);
+  await setShared('social-index', index);
+  await setShared('social:'+id, item);
+  fileInput.value=''; document.getElementById('social-desc').value='';
+  renderSocial();
+}
+async function deleteSocial(id){
+  if(!confirm("এই কার্যক্রম মুছে ফেলতে চান?")) return;
+  let index = await getShared('social-index', []);
+  index = index.filter(x=>x!==id);
+  await setShared('social-index', index);
+  try{ await window.storage.delete('social:'+id, true); }catch(e){}
+  renderSocial();
+}
+async function renderSocial(){
+  const index = await getShared('social-index', []);
+  const container = document.getElementById('social-list');
+  if(index.length===0){ container.innerHTML = '<p class="empty">এখনো কোনো কার্যক্রম যোগ করা হয়নি।</p>'; return; }
+  let html='';
+  for(const id of index){
+    const s = await getShared('social:'+id, null);
+    if(!s) continue;
+    html += `<div class="box social-card">
+      ${isAdmin? `<div style="text-align:left;margin-bottom:6px;">
+        <button class="btn btn-red btn-small" onclick="deleteSocial('${s.id}')">🗑️ মুছুন</button>
+      </div>`:''}
+      ${s.image? `<img src="${s.image}">`:''}
+      <p>${escapeHtml(s.desc||'')}</p>
+    </div>`;
+  }
+  container.innerHTML = html;
 }
 
-// Schedule Section
-function toggleScheduleForm() {
-    let f = document.getElementById('schedule-form');
-    f.style.display = f.style.display === 'block' ? 'none' : 'block';
+/* =========================================================
+   CONTACT
+   ========================================================= */
+async function loadContact(){
+  const c = await getShared('contact', {m1:'01785-819425', m2:''});
+  document.getElementById('contact-m1').textContent = c.m1 || 'যোগ করা হয়নি';
+  document.getElementById('contact-m2').textContent = c.m2 || 'যোগ করা হয়নি';
+}
+async function startEditContact(){
+  const c = await getShared('contact', {m1:'', m2:''});
+  document.getElementById('c-m1').value = c.m1 || '';
+  document.getElementById('c-m2').value = c.m2 || '';
+  document.getElementById('contact-edit').style.display = 'block';
+}
+async function saveContact(){
+  const c = { m1: document.getElementById('c-m1').value.trim(), m2: document.getElementById('c-m2').value.trim() };
+  document.getElementById('contact-m1').textContent = c.m1 || 'যোগ করা হয়নি';
+  document.getElementById('contact-m2').textContent = c.m2 || 'যোগ করা হয়নি';
+  document.getElementById('contact-edit').style.display = 'none';
+  await setShared('contact', c);
 }
 
-function addScheduleRow() {
-    let tourn = document.getElementById('sch-tourn').value;
-    let teams = document.getElementById('sch-teams').value;
-    let time = document.getElementById('sch-time').value;
-    let venue = document.getElementById('sch-venue').value;
-
-    if(!tourn || !teams) return alert("অনুগ্রহ করে তথ্য পূরণ করুন!");
-
-    appData.schedules.push({ tourn, teams, time, venue });
-    saveToLocalStorage();
-    renderSchedule();
-    toggleScheduleForm();
+/* =========================================================
+   GENERIC DATA STORAGE BOX (open to everyone, shared list)
+   ========================================================= */
+async function saveData(){
+  const title = document.getElementById('data-title').value.trim();
+  if(!title){ alert("শিরোনাম লিখুন।"); return; }
+  const id = uid();
+  const entry = {id, title, time: new Date().toLocaleString('bn-BD')};
+  const index = await getShared('entries-index', []);
+  index.unshift(id);
+  await setShared('entries-index', index);
+  await setShared('entry:'+id, entry);
+  document.getElementById('data-title').value='';
+  renderEntries();
+}
+async function renderEntries(){
+  const index = await getShared('entries-index', []);
+  const container = document.getElementById('data-list');
+  if(index.length===0){ container.innerHTML = '<p class="empty">এখনো কোনো ডাটা যোগ করা হয়নি।</p>'; return; }
+  let html='';
+  for(const id of index){
+    const e = await getShared('entry:'+id, null);
+    if(!e) continue;
+    html += `<div class="item-card"><div class="item-top"><div>${escapeHtml(e.title)}<div class="muted" style="font-size:0.75rem;">${escapeHtml(e.time||'')}</div></div></div></div>`;
+  }
+  container.innerHTML = html;
 }
 
-function deleteSchedule(index) {
-    if(isAdmin && confirm("ফিক্সচারটি মুছে ফেলতে চান?")) {
-        appData.schedules.splice(index, 1);
-        saveToLocalStorage();
-        renderSchedule();
-    }
+/* =========================================================
+   SMALL UI HELPERS
+   ========================================================= */
+function toggleDetail(id){
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+function toggleDropdown(id){
+  document.querySelectorAll('.dropdown').forEach(d=>{ if(d.id!==id) d.style.display='none'; });
+  const el = document.getElementById(id);
+  el.style.display = el.style.display==='block' ? 'none':'block';
+}
+document.addEventListener('click', (e)=>{
+  if(!e.target.closest('.menu-wrap')){
+    document.querySelectorAll('.dropdown').forEach(d=>d.style.display='none');
+  }
+});
+function escapeHtml(str){
+  if(!str) return '';
+  return str.replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
 
-function renderSchedule() {
-    let tbody = document.getElementById('schedule-table-body');
-    tbody.innerHTML = '';
-    appData.schedules.forEach((s, idx) => {
-        let delBtn = isAdmin ? `<button class="btn-delete" onclick="deleteSchedule(${idx})">ডিলিট</button>` : '';
-        let row = `<tr>
-            <td>${s.tourn}</td>
-            <td>${s.teams}</td>
-            <td>${s.time}</td>
-            <td>${s.venue}</td>
-            <td class="${isAdmin ? '' : 'admin-only'}">${delBtn}</td>
-        </tr>`;
-        tbody.innerHTML += row;
-    });
+/* =========================================================
+   INIT
+   ========================================================= */
+async function init(){
+  try{
+    const s = await window.storage.get('admin-session', false);
+    if(s) isAdmin = true;
+  }catch(e){}
+  updateAdminUI();
+  await loadMeta();
+  await loadAbout();
+  await loadNotice();
+  await loadTournament();
+  await loadContact();
+  await renderMatches();
+  await renderMembers();
+  await renderGallery();
+  await renderSocial();
+  await renderEntries();
 }
-
-// Biodata & Members Section
-function toggleEduBox() {
-    let opt = document.getElementById('bio-edu-option').value;
-    document.getElementById('edu-text-box').style.display = (opt === 'আছে') ? 'block' : 'none';
-}
-
-function submitBiodata() {
-    let name = document.getElementById('bio-name').value;
-    let father = document.getElementById('bio-father').value;
-    let address = document.getElementById('bio-address').value;
-    let ward = document.getElementById('bio-ward').value;
-
-    if(!name || !father || !address || !ward) {
-        return alert("জরুরি তথ্যগুলো প্রদান করুন!");
-    }
-
-    let eduOpt = document.getElementById('bio-edu-option').value;
-    let eduVal = (eduOpt === 'আছে') ? document.getElementById('bio-edu-detail').value : 'নাই';
-
-    let newMember = {
-        id: Date.now(),
-        name: name,
-        father: father,
-        address: address,
-        ward: ward,
-        edu: eduVal,
-        job: document.getElementById('bio-job').value,
-        mobile: document.getElementById('bio-mobile').value || 'দেওয়া হয়নি'
-    };
-
-    appData.members.push(newMember);
-    saveToLocalStorage();
-    renderMembers();
-    alert("আপনার বায়োডাটা সফলভাবে নিবন্ধিত হয়েছে!");
-
-    document.getElementById('bio-name').value = '';
-    document.getElementById('bio-father').value = '';
-    document.getElementById('bio-address').value = '';
-    document.getElementById('bio-ward').value = '';
-    document.getElementById('bio-edu-detail').value = '';
-}
-
-function renderMembers() {
-    let container = document.getElementById('members-container');
-    container.innerHTML = '';
-    
-    if(appData.members.length === 0) {
-        container.innerHTML = '<p>এখনো কোনো সদস্য নিবন্ধিত হয়নি।</p>';
-        return;
-    }
-
-    appData.members.forEach((m, idx) => {
-        let delOption = isAdmin ? `<button onclick="deleteMember(${m.id})">❌ সদস্য ডিলিট করুন</button>` : '';
-        let item = `
-            <div class="member-list-item">
-                <span class="member-name" onclick="showBiodataModal(${m.id})">${idx + 1}. ${m.name}</span>
-                <div class="three-dot-menu">
-                    <button class="dot-btn" onclick="toggleDropdown('dropdown-${m.id}')">⋮</button>
-                    <div id="dropdown-${m.id}" class="dropdown-content">
-                        <a href="javascript:void(0)" onclick="showBiodataModal(${m.id})">👁️ বিস্তারিত বায়োডাটা</a>
-                        ${delOption}
-                    </div>
-                </div>
-            </div>
-        `;
-        container.innerHTML += item;
-    });
-}
-
-function toggleDropdown(id) {
-    document.querySelectorAll('.dropdown-content').forEach(d => {
-        if(d.id !== id) d.style.display = 'none';
-    });
-    let drop = document.getElementById(id);
-    drop.style.display = drop.style.display === 'block' ? 'none' : 'block';
-}
-
-window.onclick = function(event) {
-    if (!event.target.matches('.dot-btn')) {
-        document.querySelectorAll('.dropdown-content').forEach(d => d.style.display = 'none');
-    }
-}
-
-function showBiodataModal(id) {
-    let m = appData.members.find(item => item.id === id);
-    if(m) {
-        document.getElementById('modal-body').innerHTML = `
-            <p><strong>নাম:</strong> ${m.name}</p>
-            <p><strong>পিতার নাম:</strong> ${m.father}</p>
-            <p><strong>ঠিকানা:</strong> ${m.address}</p>
-            <p><strong>ওয়ার্ড নম্বর:</strong> ${m.ward}</p>
-            <p><strong>পড়ালেখা:</strong> ${m.edu}</p>
-            <p><strong>পেশা:</strong> ${m.job}</p>
-            <p><strong>মোবাইল নম্বর:</strong> ${m.mobile}</p>
-        `;
-        document.getElementById('bioModal').style.display = 'block';
-    }
-}
-
-function closeBioModal() {
-    document.getElementById('bioModal').style.display = 'none';
-}
-
-function deleteMember(id) {
-    if(isAdmin && confirm("আপনি কি নিশ্চিত এই সদস্যের তথ্য মুছে ফেলবেন?")) {
-        appData.members = appData.members.filter(m => m.id !== id);
-        saveToLocalStorage();
-        renderMembers();
-    }
-}
-
-// Gallery System
-function uploadGalleryPhoto(event) {
-    let reader = new FileReader();
-    reader.onload = function(){
-        appData.gallery.push({ id: Date.now(), img: reader.result });
-        saveToLocalStorage();
-        renderGallery();
-    };
-    if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
-}
-
-function deleteGallery(id) {
-    if(isAdmin && confirm("ছবিটি মুছে ফেলতে চান?")) {
-        appData.gallery = appData.gallery.filter(g => g.id !== id);
-        saveToLocalStorage();
-        renderGallery();
-    }
-}
-
-function renderGallery() {
-    let container = document.getElementById('gallery-container');
-    container.innerHTML = '';
-    appData.gallery.forEach(g => {
-        let delBtn = isAdmin ? `<button class="btn-delete" style="position:absolute; top:5px; right:5px;" onclick="deleteGallery(${g.id})">✕</button>` : '';
-        let item = `<div class="gallery-item"><img src="${g.img}">${delBtn}</div>`;
-        container.innerHTML += item;
-    });
-}
-
-// Social Documentaries System
-function toggleSocialForm() {
-    let f = document.getElementById('social-form');
-    f.style.display = f.style.display === 'block' ? 'none' : 'block';
-}
-
-function addSocialDoc() {
-    let title = document.getElementById('soc-title').value;
-    let desc = document.getElementById('soc-desc').value;
-    let fileInput = document.getElementById('soc-img-input');
-
-    if(!title || !fileInput.files[0]) return alert("ছবি এবং শিরোনাম প্রদান আবশ্যক!");
-
-    let reader = new FileReader();
-    reader.onload = function(){
-        appData.social.push({ id: Date.now(), title, desc, img: reader.result });
-        saveToLocalStorage();
-        renderSocial();
-        toggleSocialForm();
-    };
-    reader.readAsDataURL(fileInput.files[0]);
-}
-
-function deleteSocial(id) {
-    if(isAdmin && confirm("কার্যক্রমের তথ্যটি মুছে ফেলতে চান?")) {
-        appData.social = appData.social.filter(s => s.id !== id);
-        saveToLocalStorage();
-        renderSocial();
-    }
-}
-
-function renderSocial() {
-    let container = document.getElementById('social-container');
-    container.innerHTML = '';
-    appData.social.forEach(s => {
-        let delBtn = isAdmin ? `<button class="btn-delete" style="margin-top:8px;" onclick="deleteSocial(${s.id})">মুছে ফেলুন</button>` : '';
-        let card = `
-            <div class="doc-card">
-                <img src="${s.img}">
-                <div class="doc-card-body">
-                    <h4>${s.title}</h4>
-                    <p style="font-size:0.95rem; color:#555;">${s.desc}</p>
-                    ${delBtn}
-                </div>
-            </div>
-        `;
-        container.innerHTML += card;
-    });
-}
-
-// Backup JSON Download/Upload (Admin Feature)
-function exportDataBackup() {
-    let blob = new Blob([JSON.stringify(appData, null, 2)], { type: 'application/json' });
-    let a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `TSC_Master_Backup_${new Date().toISOString().slice(0,10)}.json`;
-    a.click();
-}
-
-function importDataBackup(event) {
-    let file = event.target.files[0];
-    if (!file) return;
-    let reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            let imported = JSON.parse(e.target.result);
-            if (imported) {
-                appData = imported;
-                saveToLocalStorage();
-                renderAllData();
-                alert('সকল তথ্য সফলভাবে রিস্টোর করা হয়েছে!');
-            }
-        } catch (err) {
-            alert('ভুল বা ক্ষতিগ্রস্ত ফাইল!');
-        }
-    };
-    reader.readAsText(file);
-}
+init();
 </script>
 </body>
 </html>
