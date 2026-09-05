@@ -63,7 +63,7 @@ nav a:hover { background: #2e7d32; }
 .form-row .form-group { flex: 1; min-width: 220px; } 
 .form-btns { display: flex; gap: 10px; margin-top: 10px; } 
 
-/* Admin Visibility Filter */
+/* Admin Control Filter */
 .admin-only { display: none !important; }
 
 /* Three Dot Menu System */ 
@@ -142,7 +142,7 @@ footer { background: #1b5e20; color: white; text-align: center; padding: 15px; m
 
 <div class="container" id="main-content"> 
 
-    <!-- Breaking Form -->
+    <!-- Breaking Form (Admin Only) -->
     <div id="breaking-form" class="custom-form"> 
         <h3>বিগ ব্রেকিং আপডেট করুন</h3> 
         <div class="form-group"> 
@@ -280,10 +280,10 @@ footer { background: #1b5e20; color: white; text-align: center; padding: 15px; m
         </div> 
     </div> 
 
-    <!-- Public Registration Form -->
+    <!-- Public Member Registration Form (সবার জন্য সর্বদা সম্পূর্ণ উন্মুক্ত) -->
     <div id="register" class="card"> 
         <h2> ক্লাবের নতুন সদস্য নিবন্ধন ফরম </h2> 
-        <div class="custom-form" style="display: block;"> 
+        <div style="background: #e8f5e9; padding: 20px; border-radius: 8px; border: 1px solid #c8e6c9;"> 
             <div class="form-row"> 
                 <div class="form-group"><label>নাম *:</label><input type="text" id="m-name" placeholder="আপনার নাম লিখুন"></div> 
                 <div class="form-group"><label>গ্রাম:</label><input type="text" id="m-village" placeholder="গ্রামের নাম"></div> 
@@ -299,12 +299,12 @@ footer { background: #1b5e20; color: white; text-align: center; padding: 15px; m
                 <div class="form-group"><label>ব্লাড গ্রুপ:</label><input type="text" id="m-blood" placeholder="যেমন: B+"></div> 
             </div> 
             <div class="form-btns"> 
-                <button class="btn-add" onclick="submitFirebaseMember()">আবেদন জমা দিন</button> 
+                <button class="btn-add" style="display:inline-block;" onclick="submitFirebaseMember()">আবেদন জমা দিন</button> 
             </div> 
         </div> 
     </div> 
 
-    <!-- Firebase Dynamic Members List -->
+    <!-- Registered Members List -->
     <div id="members" class="card"> 
         <h2> নিবন্ধিত সদস্য তালিকা </h2> 
         <div class="grid" id="firebase-member-list"> 
@@ -329,7 +329,7 @@ footer { background: #1b5e20; color: white; text-align: center; padding: 15px; m
         <p>আমাদের ক্লাব ক্রীড়ার পাশাপাশি সামাজিক উন্নয়নমূলক কাজে জড়িত। আপনিও আমাদের ফান্ডে অনুদান দিতে পারেন।</p> 
         <br> 
         <p><strong>বিকাশ/নগদ (পার্সোনাল):</strong> ০১৮XXXXXXXX</p> 
-        <p><strong>ব্যাংক অ্যাকাউন্ট:</strong> থিমছড়ি স্পোর্টস ক্লাব, অ্যাকাউন্ট নং: ১২৩৪৫৬৭৮৯</p> 
+        <p><strong>ব্যাংক অ্যাকাউন্ট:</strong> থিমছড়ি স্পোর্টস ক্লাব, অ্যাকাউন্ট নং: ১২৩৪৫৬ট৮৯</p> 
     </div> 
 
 </div> 
@@ -354,7 +354,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-const ADMIN_PIN = "320852"; // নতুন এডমিন পিন
+const ADMIN_PIN = "320852"; 
 let isAdmin = false;
 
 // Admin Login System
@@ -386,7 +386,6 @@ function applyAdminPermissions() {
     adminElems.forEach(el => {
         if(isAdmin) {
             el.classList.remove('admin-only');
-            el.dataset.adminShow = "true";
         } else {
             el.classList.add('admin-only');
         }
@@ -635,7 +634,7 @@ function deleteGalleryPhoto(id) {
     }
 }
 
-/* Firebase Public Member System */ 
+/* Firebase Public Member System (সবাই ব্যবহার করতে পারবে) */ 
 function submitFirebaseMember() { 
     let name = document.getElementById('m-name').value; 
     let mobile = document.getElementById('m-mobile').value; 
@@ -714,7 +713,7 @@ function deleteFirebaseMember(id) {
     } 
 } 
 
-/* Export Backup */ 
+/* Export Backup (Admin Only) */ 
 function exportDataBackup() { 
     const data = localStorage.getItem(STORAGE_KEY); 
     if (!data) return alert('ডাউনলোড করার মতো কোনো ডাটা পাওয়া যায়নি!'); 
@@ -728,7 +727,7 @@ function exportDataBackup() {
     a.click(); 
 } 
 
-/* Import Backup */ 
+/* Import Backup (Admin Only) */ 
 function importDataBackup(event) { 
     const file = event.target.files[0]; 
     if (!file) return; 
