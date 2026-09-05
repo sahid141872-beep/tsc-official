@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>থিমছড়ি স্পোর্টস ক্লাব</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
 <style>
   :root{
     --bg:#F6FAF5;
@@ -27,12 +26,12 @@
     margin:0;
     background:var(--bg);
     color:var(--text);
-    font-family:'Hind Siliguri',sans-serif;
-    line-height:1.6;
+    font-family:'Kalpurush','Hind Siliguri',sans-serif;
+    line-height:1.7;
   }
   h1,h2,h3,.display{
-    font-family:'Tiro Bangla',serif;
-    font-weight:400;
+    font-family:'Kalpurush','Hind Siliguri',sans-serif;
+    font-weight:700;
     color:var(--green-deep);
   }
   a{color:var(--green);}
@@ -89,7 +88,7 @@
   }
   nav a{
     display:inline-block;padding:12px 14px;color:var(--green-deep);
-    text-decoration:none;font-size:0.85rem;font-weight:600;border-bottom:3px solid transparent;
+    text-decoration:none;font-size:0.85rem;font-weight:700;border-bottom:3px solid transparent;
   }
   nav a:hover{border-bottom-color:var(--red);}
 
@@ -107,7 +106,7 @@
   }
   textarea,input[type=text],input[type=tel],select{
     width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;
-    font-family:inherit;font-size:0.9rem;margin-bottom:8px;background:#fff;color:var(--text);
+    font-family:inherit;font-size:0.92rem;margin-bottom:8px;background:#fff;color:var(--text);
   }
   textarea{min-height:80px;resize:vertical;}
   label{font-size:0.82rem;color:var(--muted);display:block;margin-bottom:3px;}
@@ -121,7 +120,7 @@
     padding:14px;margin-bottom:12px;position:relative;
   }
   .item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
-  .item-title{font-weight:600;cursor:pointer;color:var(--green-deep);}
+  .item-title{font-weight:700;cursor:pointer;color:var(--green-deep);}
   .menu-wrap{position:relative;}
   .dots-btn{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--muted);padding:2px 8px;}
   .dropdown{
@@ -148,6 +147,13 @@
   footer{background:var(--green-deep);color:#DFF3E4;text-align:center;padding:20px;font-size:0.85rem;}
   .empty{color:var(--muted);font-size:0.85rem;font-style:italic;}
   .save-note{font-size:0.75rem;color:var(--muted);margin-top:4px;}
+  .toast{
+    position:fixed;left:50%;bottom:20px;transform:translateX(-50%);
+    background:var(--green-deep);color:#fff;padding:10px 18px;border-radius:20px;
+    font-size:0.85rem;box-shadow:var(--shadow);z-index:100;opacity:0;pointer-events:none;transition:opacity .25s;
+  }
+  .toast.show{opacity:1;}
+  .toast.error{background:var(--red);}
 </style>
 </head>
 <body>
@@ -251,9 +257,9 @@
       <textarea id="m-squad"></textarea>
       <label>ফিক্সার (যেমন: টিম এ বনাম টিম সি)</label>
       <div id="m-fixtures"></div>
-      <button class="btn btn-outline btn-small" onclick="addFixtureRow()">+ ফিক্সার যোগ করুন</button>
+      <button type="button" class="btn btn-outline btn-small" onclick="addFixtureRow()">+ ফিক্সার যোগ করুন</button>
       <br><br>
-      <button class="btn btn-green" onclick="saveMatch()">ম্যাচ শিডিউল সংরক্ষণ করুন</button>
+      <button type="button" class="btn btn-green" onclick="saveMatch()">ম্যাচ শিডিউল সংরক্ষণ করুন</button>
     </div>
   </section>
 
@@ -261,8 +267,11 @@
   <section id="members">
     <h2 class="section-title">ক্লাবের সদস্যদের বায়োডাটা</h2>
     <div id="members-list"></div>
-    <div class="box admin-only" style="display:none">
-      <h3 style="margin-top:0">নতুন সদস্য যোগ করুন</h3>
+
+    <!-- PUBLIC SIGNUP FORM: open for everyone, goes to admin approval -->
+    <div class="box">
+      <h3 style="margin-top:0">সদস্য হতে আবেদন করুন</h3>
+      <p class="muted" style="margin-top:-6px;">ফরম পূরণ করে জমা দিন। এডমিন অনুমোদন করার পর আপনার নাম সদস্য তালিকায় দেখা যাবে।</p>
       <label>নাম</label>
       <input type="text" id="mem-name">
       <label>পিতার নাম</label>
@@ -289,7 +298,13 @@
         <option value="ব্যবসায়ী">ব্যবসায়ী</option>
         <option value="অন্যান্য">অন্যান্য</option>
       </select>
-      <button class="btn btn-green" onclick="saveMember()">সদস্য যোগ করুন</button>
+      <button type="button" class="btn btn-green" onclick="submitMemberApplication()">আবেদন জমা দিন</button>
+    </div>
+
+    <!-- ADMIN ONLY: pending approval list -->
+    <div class="box admin-only" style="display:none">
+      <h3 style="margin-top:0">অপেক্ষমাণ সদস্য আবেদন</h3>
+      <div id="pending-list"><p class="empty">কোনো নতুন আবেদন নেই।</p></div>
     </div>
   </section>
 
@@ -315,7 +330,7 @@
       <input type="file" id="social-input" accept="image/*">
       <label>বিস্তারিত লেখা</label>
       <textarea id="social-desc" placeholder="কার্যক্রম সম্পর্কে বিস্তারিত লিখুন..."></textarea>
-      <button class="btn btn-green" onclick="saveSocial()">যোগ করুন</button>
+      <button type="button" class="btn btn-green" onclick="saveSocial()">যোগ করুন</button>
     </div>
   </section>
 
@@ -344,7 +359,7 @@
     <p class="muted">এই তালিকা সবার জন্য উন্মুক্ত — যে কেউ এখানে তথ্য যোগ করতে পারবে এবং তা সবাই দেখতে পাবে।</p>
     <div class="box">
       <input type="text" id="data-title" placeholder="শিরোনাম লিখুন">
-      <button class="btn btn-green" onclick="saveData()">সেভ করুন</button>
+      <button type="button" class="btn btn-green" onclick="saveData()">সেভ করুন</button>
     </div>
     <div class="box">
       <h3 style="margin-top:0">সংরক্ষিত ডাটা তালিকা</h3>
@@ -358,7 +373,21 @@
   © থিমছড়ি স্পোর্টস ক্লাব — প্রতিষ্ঠা: ০১-০৮-২০২০
 </footer>
 
+<div class="toast" id="toast"></div>
+
 <script>
+/* =========================================================
+   TOAST (feedback so save/errors are always visible)
+   ========================================================= */
+let toastTimer = null;
+function showToast(msg, isError){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' error' : '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{ t.className = 'toast'; }, 2500);
+}
+
 /* =========================================================
    ADMIN AUTH
    NOTE: এটি একটি সাধারণ ক্লায়েন্ট-সাইড পাসওয়ার্ড লক।
@@ -393,6 +422,7 @@ function updateAdminUI(){
   });
   renderMatches();
   renderMembers();
+  renderPending();
   renderGallery();
   renderSocial();
 }
@@ -407,7 +437,7 @@ async function getShared(key, fallback){
   }catch(e){ return fallback; }
 }
 async function setShared(key, value){
-  try{ await window.storage.set(key, JSON.stringify(value), true); }catch(e){ console.error(e); }
+  await window.storage.set(key, JSON.stringify(value), true);
 }
 function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 function fileToBase64(file){
@@ -418,6 +448,23 @@ function fileToBase64(file){
     r.readAsDataURL(file);
   });
 }
+function escapeHtml(str){
+  if(!str) return '';
+  return String(str).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+/* =========================================================
+   IN-MEMORY CACHES
+   প্রতিটি তালিকা (ম্যাচ, সদস্য, গ্যালারি, সামাজিক কার্যক্রম, জেনেরিক ডাটা)
+   একবার লোড হয়ে মেমোরিতে থাকে — তাই এড/ডিলিট সাথে সাথে স্ক্রিনে দেখা যায়,
+   এবং স্টোরেজে সেভ ব্যাকগ্রাউন্ডে হয়। এতে বড় তালিকাতেও লোড দ্রুত ও নির্ভরযোগ্য হয়।
+   ========================================================= */
+let matchesCache = [];
+let membersCache = [];
+let pendingCache = [];
+let galleryCache = [];
+let socialCache = [];
+let entriesCache = [];
 
 /* =========================================================
    META (logo / name / slogan)
@@ -442,7 +489,7 @@ function editMeta(){
   metaState.name = name; metaState.slogan = slogan;
   document.getElementById('club-name').textContent = name;
   document.getElementById('club-slogan').textContent = slogan;
-  setShared('meta', metaState);
+  setShared('meta', metaState).then(()=>showToast('সংরক্ষণ হয়েছে')).catch(()=>showToast('সংরক্ষণ ব্যর্থ হয়েছে',true));
 }
 function handleLogoClick(){
   if(!isAdmin) return;
@@ -456,7 +503,8 @@ async function onLogoChosen(e){
   document.getElementById('logo-img').src = b64;
   document.getElementById('logo-img').style.display='block';
   document.getElementById('logo-placeholder').style.display='none';
-  await setShared('meta', metaState);
+  try{ await setShared('meta', metaState); showToast('লোগো সংরক্ষণ হয়েছে'); }
+  catch(err){ showToast('লোগো সংরক্ষণ ব্যর্থ হয়েছে', true); }
 }
 
 /* =========================================================
@@ -474,7 +522,8 @@ async function saveAbout(){
   const txt = document.getElementById('about-textarea').value.trim();
   document.getElementById('about-view').textContent = txt;
   document.getElementById('about-edit').style.display = 'none';
-  await setShared('about', txt);
+  try{ await setShared('about', txt); showToast('সংরক্ষণ হয়েছে'); }
+  catch(e){ showToast('সংরক্ষণ ব্যর্থ হয়েছে', true); }
 }
 
 /* =========================================================
@@ -495,7 +544,8 @@ async function saveNotice(){
   if(txt){ view.textContent = txt; view.classList.remove('empty'); }
   else { view.textContent = "বর্তমানে কোনো নোটিশ নেই।"; view.classList.add('empty'); }
   document.getElementById('notice-edit').style.display = 'none';
-  await setShared('notice', txt);
+  try{ await setShared('notice', txt); showToast('সংরক্ষণ হয়েছে'); }
+  catch(e){ showToast('সংরক্ষণ ব্যর্থ হয়েছে', true); }
 }
 
 /* =========================================================
@@ -534,15 +584,14 @@ async function saveTournament(){
   };
   renderTournamentView(t);
   document.getElementById('tournament-edit').style.display = 'none';
-  await setShared('tournament', t);
+  try{ await setShared('tournament', t); showToast('সংরক্ষণ হয়েছে'); }
+  catch(e){ showToast('সংরক্ষণ ব্যর্থ হয়েছে', true); }
 }
 
 /* =========================================================
-   MATCH SCHEDULE
+   MATCH SCHEDULE  (single-key array: 'matches')
    ========================================================= */
-let fixtureCount = 0;
 function addFixtureRow(){
-  fixtureCount++;
   const wrap = document.createElement('div');
   wrap.className = 'row fixture-row';
   wrap.style.marginBottom = '6px';
@@ -555,13 +604,12 @@ function addFixtureRow(){
   `;
   document.getElementById('m-fixtures').appendChild(wrap);
 }
-addFixtureRow();
 
 async function saveMatch(){
   const tournamentName = document.getElementById('m-tournament').value.trim();
   const teamName = document.getElementById('m-team').value.trim();
   const squad = document.getElementById('m-squad').value.trim();
-  if(!tournamentName && !teamName){ alert("অন্তত টুর্নামেন্ট বা দলের নাম দিন।"); return; }
+  if(!tournamentName && !teamName){ showToast('অন্তত টুর্নামেন্ট বা দলের নাম দিন', true); return; }
   const fixtures = [];
   document.querySelectorAll('#m-fixtures .fixture-row').forEach(row=>{
     const a = row.querySelector('.fx-a').value.trim();
@@ -571,12 +619,10 @@ async function saveMatch(){
     const venue = row.querySelector('.fx-venue').value.trim();
     if(a || b) fixtures.push({a,b,time,date,venue});
   });
-  const id = uid();
-  const match = {id, tournamentName, teamName, squad, fixtures};
-  const index = await getShared('matches-index', []);
-  index.unshift(id);
-  await setShared('matches-index', index);
-  await setShared('match:'+id, match);
+  const match = {id: uid(), tournamentName, teamName, squad, fixtures};
+
+  matchesCache.unshift(match);
+  renderMatches();
 
   document.getElementById('m-tournament').value='';
   document.getElementById('m-team').value='';
@@ -584,30 +630,27 @@ async function saveMatch(){
   document.getElementById('m-fixtures').innerHTML='';
   addFixtureRow();
 
-  renderMatches();
+  try{ await setShared('matches', matchesCache); showToast('ম্যাচ শিডিউল যোগ হয়েছে'); }
+  catch(e){ showToast('সংরক্ষণ ব্যর্থ হয়েছে, আবার চেষ্টা করুন', true); }
 }
 
 async function deleteMatch(id){
   if(!confirm("এই ম্যাচ শিডিউল মুছে ফেলতে চান?")) return;
-  let index = await getShared('matches-index', []);
-  index = index.filter(x=>x!==id);
-  await setShared('matches-index', index);
-  try{ await window.storage.delete('match:'+id, true); }catch(e){}
+  matchesCache = matchesCache.filter(x=>x.id!==id);
   renderMatches();
+  try{ await setShared('matches', matchesCache); }
+  catch(e){ showToast('মুছতে সমস্যা হয়েছে', true); }
 }
 
-async function renderMatches(){
-  const index = await getShared('matches-index', []);
+function renderMatches(){
   const container = document.getElementById('matches-list');
-  if(index.length===0){ container.innerHTML = '<p class="empty">এখনো কোনো ম্যাচ শিডিউল যোগ করা হয়নি।</p>'; return; }
+  if(matchesCache.length===0){ container.innerHTML = '<p class="empty">এখনো কোনো ম্যাচ শিডিউল যোগ করা হয়নি।</p>'; return; }
   let html = '';
-  for(const id of index){
-    const m = await getShared('match:'+id, null);
-    if(!m) continue;
+  for(const m of matchesCache){
     html += `<div class="item-card">
       <div class="item-top">
         <div>
-          <div style="font-weight:600;">${escapeHtml(m.tournamentName||'টুর্নামেন্ট')} ${m.teamName? '— '+escapeHtml(m.teamName):''}</div>
+          <div style="font-weight:700;">${escapeHtml(m.tournamentName||'টুর্নামেন্ট')} ${m.teamName? '— '+escapeHtml(m.teamName):''}</div>
           ${m.squad? `<div class="muted" style="font-size:0.8rem;margin-top:2px;">স্কোয়াড: ${escapeHtml(m.squad)}</div>`:''}
         </div>
         ${isAdmin? `<div class="menu-wrap">
@@ -622,20 +665,20 @@ async function renderMatches(){
       `).join('') : ''}
     </div>`;
   }
-  container.innerHTML = html || '<p class="empty">এখনো কোনো ম্যাচ শিডিউল যোগ করা হয়নি।</p>';
+  container.innerHTML = html;
 }
 
 /* =========================================================
-   MEMBERS
+   MEMBERS  (single-key array: 'members')
    ========================================================= */
 function toggleEduBox(){
   document.getElementById('mem-edu-text').style.display = document.getElementById('mem-edu-has').value==='আছে' ? 'block':'none';
 }
 
-async function saveMember(){
+async function submitMemberApplication(){
   const name = document.getElementById('mem-name').value.trim();
-  if(!name){ alert("সদস্যের নাম দিন।"); return; }
-  const member = {
+  if(!name){ showToast('সদস্যের নাম দিন', true); return; }
+  const application = {
     id: uid(),
     name,
     father: document.getElementById('mem-father').value.trim(),
@@ -645,36 +688,83 @@ async function saveMember(){
     eduText: document.getElementById('mem-edu-text').value.trim(),
     profession: document.getElementById('mem-profession').value
   };
-  const index = await getShared('members-index', []);
-  index.push(member.id);
-  await setShared('members-index', index);
-  await setShared('member:'+member.id, member);
 
-  ['mem-name','mem-father','mem-address','mem-ward','mem-edu-text'].forEach(id=>document.getElementById(id).value='');
+  pendingCache.push(application);
+  renderPending();
+
+  document.getElementById('mem-name').value='';
+  document.getElementById('mem-father').value='';
+  document.getElementById('mem-address').value='';
+  document.getElementById('mem-ward').value='';
+  document.getElementById('mem-edu-text').value='';
   document.getElementById('mem-edu-has').value='নাই';
   toggleEduBox();
 
+  try{ await setShared('members-pending', pendingCache); showToast('আবেদন জমা হয়েছে, এডমিন অনুমোদনের অপেক্ষায় আছে'); }
+  catch(e){ showToast('জমা দিতে সমস্যা হয়েছে, আবার চেষ্টা করুন', true); }
+}
+
+async function approveMember(id){
+  const app = pendingCache.find(x=>x.id===id);
+  if(!app) return;
+  pendingCache = pendingCache.filter(x=>x.id!==id);
+  membersCache.push(app);
+  renderPending();
   renderMembers();
+  try{
+    await setShared('members-pending', pendingCache);
+    await setShared('members', membersCache);
+    showToast('সদস্য অনুমোদিত হয়েছে');
+  }catch(e){ showToast('অনুমোদন সংরক্ষণে সমস্যা হয়েছে', true); }
+}
+
+async function rejectPending(id){
+  if(!confirm("এই আবেদনটি বাতিল করতে চান?")) return;
+  pendingCache = pendingCache.filter(x=>x.id!==id);
+  renderPending();
+  try{ await setShared('members-pending', pendingCache); }
+  catch(e){ showToast('বাতিল করতে সমস্যা হয়েছে', true); }
+}
+
+function renderPending(){
+  const container = document.getElementById('pending-list');
+  if(!container) return;
+  if(pendingCache.length===0){ container.innerHTML = '<p class="empty">কোনো নতুন আবেদন নেই।</p>'; return; }
+  let html = '';
+  for(const a of pendingCache){
+    html += `<div class="item-card">
+      <div class="item-top">
+        <div class="item-title" onclick="toggleDetail('pdet-${a.id}')">${escapeHtml(a.name)}</div>
+        <div class="row" style="flex:0;gap:6px;">
+          <button class="btn btn-green btn-small" onclick="approveMember('${a.id}')">✔️ অনুমোদন</button>
+          <button class="btn btn-red btn-small" onclick="rejectPending('${a.id}')">✖️ বাতিল</button>
+        </div>
+      </div>
+      <div class="detail-box" id="pdet-${a.id}">
+        <p>পিতা: ${escapeHtml(a.father||'—')}</p>
+        <p>ঠিকানা: ${escapeHtml(a.address||'—')}, ওয়ার্ড: ${escapeHtml(a.ward||'—')}</p>
+        <p>পড়ালেখা: ${a.eduHas==='আছে' ? escapeHtml(a.eduText||'উল্লেখ নেই') : 'নাই'}</p>
+        <p>পেশা: ${escapeHtml(a.profession||'—')}</p>
+      </div>
+    </div>`;
+  }
+  container.innerHTML = html;
 }
 
 async function deleteMember(id){
   if(!confirm("এই সদস্যকে তালিকা থেকে মুছে ফেলতে চান?")) return;
-  let index = await getShared('members-index', []);
-  index = index.filter(x=>x!==id);
-  await setShared('members-index', index);
-  try{ await window.storage.delete('member:'+id, true); }catch(e){}
+  membersCache = membersCache.filter(x=>x.id!==id);
   renderMembers();
+  try{ await setShared('members', membersCache); }
+  catch(e){ showToast('মুছতে সমস্যা হয়েছে', true); }
 }
 
-async function renderMembers(){
-  const index = await getShared('members-index', []);
+function renderMembers(){
   const container = document.getElementById('members-list');
-  if(index.length===0){ container.innerHTML = '<p class="empty">এখনো কোনো সদস্য যোগ করা হয়নি।</p>'; return; }
+  if(membersCache.length===0){ container.innerHTML = '<p class="empty">এখনো কোনো সদস্য যোগ করা হয়নি।</p>'; return; }
   let html = '';
   let serial = 1;
-  for(const id of index){
-    const m = await getShared('member:'+id, null);
-    if(!m) continue;
+  for(const m of membersCache){
     html += `<div class="item-card">
       <div class="item-top">
         <div class="item-title" onclick="toggleDetail('mdet-${m.id}')">${serial}. ${escapeHtml(m.name)}</div>
@@ -698,78 +788,91 @@ async function renderMembers(){
 }
 
 /* =========================================================
-   GALLERY
+   GALLERY  (index + per-image keys, all cached in memory once)
    ========================================================= */
 async function onGalleryChosen(e){
   const file = e.target.files[0];
   if(!file) return;
   const b64 = await fileToBase64(file);
   const id = uid();
-  const index = await getShared('gallery-index', []);
-  index.unshift(id);
-  await setShared('gallery-index', index);
-  await setShared('gallery:'+id, b64);
-  e.target.value = '';
+
+  galleryCache.unshift({id, data:b64});
   renderGallery();
+  e.target.value = '';
+
+  try{
+    const index = galleryCache.map(g=>g.id);
+    await setShared('gallery-index', index);
+    await setShared('gallery:'+id, b64);
+    showToast('ছবি যোগ হয়েছে');
+  }catch(err){ showToast('ছবি সংরক্ষণ ব্যর্থ হয়েছে', true); }
 }
 async function deleteGalleryImage(id){
   if(!confirm("ছবিটি মুছে ফেলতে চান?")) return;
-  let index = await getShared('gallery-index', []);
-  index = index.filter(x=>x!==id);
-  await setShared('gallery-index', index);
-  try{ await window.storage.delete('gallery:'+id, true); }catch(e){}
+  galleryCache = galleryCache.filter(g=>g.id!==id);
   renderGallery();
+  try{
+    await setShared('gallery-index', galleryCache.map(g=>g.id));
+    await window.storage.delete('gallery:'+id, true);
+  }catch(e){ showToast('মুছতে সমস্যা হয়েছে', true); }
 }
-async function renderGallery(){
-  const index = await getShared('gallery-index', []);
+function renderGallery(){
   const grid = document.getElementById('gallery-grid');
-  document.getElementById('gallery-empty').style.display = index.length===0 ? 'block':'none';
+  document.getElementById('gallery-empty').style.display = galleryCache.length===0 ? 'block':'none';
   let html='';
-  for(const id of index){
-    const b64 = await getShared('gallery:'+id, null);
-    if(!b64) continue;
+  for(const g of galleryCache){
     html += `<div class="gal-item">
-      <img src="${b64}">
-      ${isAdmin? `<button class="gal-del" onclick="deleteGalleryImage('${id}')">×</button>`:''}
+      <img src="${g.data}">
+      ${isAdmin? `<button class="gal-del" onclick="deleteGalleryImage('${g.id}')">×</button>`:''}
     </div>`;
   }
   grid.innerHTML = html;
 }
+async function loadGallery(){
+  const index = await getShared('gallery-index', []);
+  const items = [];
+  for(const id of index){
+    const data = await getShared('gallery:'+id, null);
+    if(data) items.push({id, data});
+  }
+  galleryCache = items;
+}
 
 /* =========================================================
-   SOCIAL ACTIVITIES
+   SOCIAL ACTIVITIES (index + per-item keys, cached once)
    ========================================================= */
 async function saveSocial(){
   const fileInput = document.getElementById('social-input');
   const desc = document.getElementById('social-desc').value.trim();
-  if(!fileInput.files[0] && !desc){ alert("ছবি অথবা বিস্তারিত লেখা দিন।"); return; }
+  if(!fileInput.files[0] && !desc){ showToast('ছবি অথবা বিস্তারিত লেখা দিন', true); return; }
   let b64 = null;
   if(fileInput.files[0]) b64 = await fileToBase64(fileInput.files[0]);
-  const id = uid();
-  const item = {id, image:b64, desc};
-  const index = await getShared('social-index', []);
-  index.unshift(id);
-  await setShared('social-index', index);
-  await setShared('social:'+id, item);
-  fileInput.value=''; document.getElementById('social-desc').value='';
+  const item = {id: uid(), image:b64, desc};
+
+  socialCache.unshift(item);
   renderSocial();
+  fileInput.value=''; document.getElementById('social-desc').value='';
+
+  try{
+    await setShared('social-index', socialCache.map(s=>s.id));
+    await setShared('social:'+item.id, item);
+    showToast('কার্যক্রম যোগ হয়েছে');
+  }catch(e){ showToast('সংরক্ষণ ব্যর্থ হয়েছে', true); }
 }
 async function deleteSocial(id){
   if(!confirm("এই কার্যক্রম মুছে ফেলতে চান?")) return;
-  let index = await getShared('social-index', []);
-  index = index.filter(x=>x!==id);
-  await setShared('social-index', index);
-  try{ await window.storage.delete('social:'+id, true); }catch(e){}
+  socialCache = socialCache.filter(s=>s.id!==id);
   renderSocial();
+  try{
+    await setShared('social-index', socialCache.map(s=>s.id));
+    await window.storage.delete('social:'+id, true);
+  }catch(e){ showToast('মুছতে সমস্যা হয়েছে', true); }
 }
-async function renderSocial(){
-  const index = await getShared('social-index', []);
+function renderSocial(){
   const container = document.getElementById('social-list');
-  if(index.length===0){ container.innerHTML = '<p class="empty">এখনো কোনো কার্যক্রম যোগ করা হয়নি।</p>'; return; }
+  if(socialCache.length===0){ container.innerHTML = '<p class="empty">এখনো কোনো কার্যক্রম যোগ করা হয়নি।</p>'; return; }
   let html='';
-  for(const id of index){
-    const s = await getShared('social:'+id, null);
-    if(!s) continue;
+  for(const s of socialCache){
     html += `<div class="box social-card">
       ${isAdmin? `<div style="text-align:left;margin-bottom:6px;">
         <button class="btn btn-red btn-small" onclick="deleteSocial('${s.id}')">🗑️ মুছুন</button>
@@ -779,6 +882,15 @@ async function renderSocial(){
     </div>`;
   }
   container.innerHTML = html;
+}
+async function loadSocial(){
+  const index = await getShared('social-index', []);
+  const items = [];
+  for(const id of index){
+    const item = await getShared('social:'+id, null);
+    if(item) items.push(item);
+  }
+  socialCache = items;
 }
 
 /* =========================================================
@@ -800,32 +912,30 @@ async function saveContact(){
   document.getElementById('contact-m1').textContent = c.m1 || 'যোগ করা হয়নি';
   document.getElementById('contact-m2').textContent = c.m2 || 'যোগ করা হয়নি';
   document.getElementById('contact-edit').style.display = 'none';
-  await setShared('contact', c);
+  try{ await setShared('contact', c); showToast('সংরক্ষণ হয়েছে'); }
+  catch(e){ showToast('সংরক্ষণ ব্যর্থ হয়েছে', true); }
 }
 
 /* =========================================================
-   GENERIC DATA STORAGE BOX (open to everyone, shared list)
+   GENERIC DATA STORAGE BOX  (single-key array: 'entries')
    ========================================================= */
 async function saveData(){
   const title = document.getElementById('data-title').value.trim();
-  if(!title){ alert("শিরোনাম লিখুন।"); return; }
-  const id = uid();
-  const entry = {id, title, time: new Date().toLocaleString('bn-BD')};
-  const index = await getShared('entries-index', []);
-  index.unshift(id);
-  await setShared('entries-index', index);
-  await setShared('entry:'+id, entry);
-  document.getElementById('data-title').value='';
+  if(!title){ showToast('শিরোনাম লিখুন', true); return; }
+  const entry = {id: uid(), title, time: new Date().toLocaleString('bn-BD')};
+
+  entriesCache.unshift(entry);
   renderEntries();
+  document.getElementById('data-title').value='';
+
+  try{ await setShared('entries', entriesCache); showToast('সংরক্ষণ হয়েছে'); }
+  catch(e){ showToast('সংরক্ষণ ব্যর্থ হয়েছে', true); }
 }
-async function renderEntries(){
-  const index = await getShared('entries-index', []);
+function renderEntries(){
   const container = document.getElementById('data-list');
-  if(index.length===0){ container.innerHTML = '<p class="empty">এখনো কোনো ডাটা যোগ করা হয়নি।</p>'; return; }
+  if(entriesCache.length===0){ container.innerHTML = '<p class="empty">এখনো কোনো ডাটা যোগ করা হয়নি।</p>'; return; }
   let html='';
-  for(const id of index){
-    const e = await getShared('entry:'+id, null);
-    if(!e) continue;
+  for(const e of entriesCache){
     html += `<div class="item-card"><div class="item-top"><div>${escapeHtml(e.title)}<div class="muted" style="font-size:0.75rem;">${escapeHtml(e.time||'')}</div></div></div></div>`;
   }
   container.innerHTML = html;
@@ -848,10 +958,6 @@ document.addEventListener('click', (e)=>{
     document.querySelectorAll('.dropdown').forEach(d=>d.style.display='none');
   }
 });
-function escapeHtml(str){
-  if(!str) return '';
-  return str.replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-}
 
 /* =========================================================
    INIT
@@ -861,17 +967,22 @@ async function init(){
     const s = await window.storage.get('admin-session', false);
     if(s) isAdmin = true;
   }catch(e){}
-  updateAdminUI();
+
   await loadMeta();
   await loadAbout();
   await loadNotice();
   await loadTournament();
   await loadContact();
-  await renderMatches();
-  await renderMembers();
-  await renderGallery();
-  await renderSocial();
-  await renderEntries();
+
+  matchesCache = await getShared('matches', []);
+  membersCache = await getShared('members', []);
+  pendingCache = await getShared('members-pending', []);
+  entriesCache = await getShared('entries', []);
+  await loadGallery();
+  await loadSocial();
+
+  addFixtureRow();
+  updateAdminUI();
 }
 init();
 </script>
