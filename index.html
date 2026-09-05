@@ -319,10 +319,7 @@ footer { background: #1b5e20; color: white; text-align: center; padding: 15px; m
             <input type="file" id="gallery-file-input" accept="image/*" onchange="addGalleryPhoto(event)"> 
         </h2> 
         <div class="gallery-grid" id="gallery-container"> 
-            <div class="gallery-item"> 
-                <img src="https://via.placeholder.com/300x200?text=Match+Photo+1" alt="Gallery"> 
-                <button class="btn-delete admin-only" onclick="deleteGalleryItem(this)">✕</button> 
-            </div> 
+            <!-- Firebase images will load here -->
         </div> 
     </div> 
 
@@ -370,6 +367,7 @@ function toggleAdminLogin() {
             document.getElementById('admin-btn').innerText = "🚪 লগআউট";
             applyAdminPermissions();
             loadFirebaseMembers();
+            loadGalleryPhotos();
         } else if(pin !== null) {
             alert("ভুল পিন নম্বর!");
         }
@@ -379,6 +377,7 @@ function toggleAdminLogin() {
         document.getElementById('admin-btn').innerText = "🔑 অ্যাডমিন লগইন";
         applyAdminPermissions();
         loadFirebaseMembers();
+        loadGalleryPhotos();
     }
 }
 
@@ -404,10 +403,6 @@ function saveState() {
     redoStack = []; 
     try {
         localStorage.setItem(STORAGE_KEY, document.getElementById('main-content').innerHTML); 
-        const cover = document.getElementById('cover-header').style.backgroundImage;
-        const logo = document.getElementById('club-logo').src;
-        const breaking = document.getElementById('breaking-text').innerText;
-        localStorage.setItem(STORAGE_KEY + '_assets', JSON.stringify({ cover, logo, breaking }));
     } catch(e) { console.error("সেভ করতে সমস্যা:", e); }
 } 
 
@@ -416,15 +411,10 @@ window.onload = function() {
     if(savedData) { 
         document.getElementById('main-content').innerHTML = savedData; 
     } 
-    let savedAssets = localStorage.getItem(STORAGE_KEY + '_assets');
-    if(savedAssets) {
-        let assets = JSON.parse(savedAssets);
-        if(assets.cover) document.getElementById('cover-header').style.backgroundImage = assets.cover;
-        if(assets.logo) document.getElementById('club-logo').src = assets.logo;
-        if(assets.breaking) document.getElementById('breaking-text').innerText = assets.breaking;
-    }
     applyAdminPermissions();
     loadFirebaseMembers();
+    loadFirebaseHeaderAssets();
+    loadGalleryPhotos();
 } 
 
 function undo() { 
@@ -473,8 +463,8 @@ function toggleBreakingForm() {
 function saveBreaking() { 
     let val = document.getElementById('breaking-input').value; 
     if(val) { 
-        saveState(); 
         document.getElementById('breaking-text').innerText = val; 
+        db.ref('site_assets/breaking').set(val);
         document.getElementById('breaking-input').value = ''; 
         toggleBreakingForm(); 
     } 
@@ -576,45 +566,74 @@ function deleteSquad(btn) {
     btn.closest('.squad-card').remove(); 
 } 
 
-/* Images System */ 
+/* Firebase Header Assets (Logo & Cover) */ 
 function changeLogoPhoto(event) { 
-    saveState(); 
     let reader = new FileReader(); 
     reader.onload = function(){ 
-        document.getElementById('club-logo').src = reader.result; 
-        saveState();
+        let base64 = reader.result;
+        document.getElementById('club-logo').src = base64; 
+        db.ref('site_assets/logo').set(base64);
     }; 
     if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]); 
 } 
 
 function changeCoverPhoto(event) { 
-    saveState(); 
     let reader = new FileReader(); 
     reader.onload = function(){ 
-        document.getElementById('cover-header').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('${reader.result}')`; 
-        saveState();
+        let base64 = reader.result;
+        document.getElementById('cover-header').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('${base64}')`; 
+        db.ref('site_assets/cover').set(base64);
     }; 
     if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]); 
 } 
 
+function loadFirebaseHeaderAssets() {
+    db.ref('site_assets').on('value', (snapshot) => {
+        let assets = snapshot.val();
+        if(assets) {
+            if(assets.logo) document.getElementById('club-logo').src = assets.logo;
+            if(assets.cover) document.getElementById('cover-header').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('${assets.cover}')`;
+            if(assets.breaking) document.getElementById('breaking-text').innerText = assets.breaking;
+        }
+    });
+}
+
+/* Firebase Gallery System */ 
 function addGalleryPhoto(event) { 
-    saveState(); 
     let reader = new FileReader(); 
     reader.onload = function(){ 
-        let div = document.createElement('div'); 
-        div.className = 'gallery-item'; 
-        let delBtnClass = isAdmin ? 'btn-delete' : 'btn-delete admin-only';
-        div.innerHTML = `<img src="${reader.result}"><button class="${delBtnClass}" onclick="deleteGalleryItem(this)">✕</button>`; 
-        document.getElementById('gallery-container').appendChild(div); 
-        saveState();
+        let base64 = reader.result;
+        db.ref('gallery').push({ image: base64 });
     }; 
     if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]); 
 } 
 
-function deleteGalleryItem(btn) { 
-    saveState(); 
-    btn.parentElement.remove(); 
-} 
+function loadGalleryPhotos() {
+    db.ref('gallery').on('value', (snapshot) => {
+        let container = document.getElementById('gallery-container');
+        if(!container) return;
+        container.innerHTML = '';
+        let photos = snapshot.val();
+        if(photos) {
+            for(let id in photos) {
+                let p = photos[id];
+                let div = document.createElement('div');
+                div.className = 'gallery-item';
+                let delBtnClass = isAdmin ? 'btn-delete' : 'btn-delete admin-only';
+                div.innerHTML = `<img src="${p.image}"><button class="${delBtnClass}" onclick="deleteGalleryPhoto('${id}')">✕</button>`;
+                container.appendChild(div);
+            }
+        }
+    });
+}
+
+function deleteGalleryPhoto(id) {
+    if(isAdmin) {
+        if(confirm("আপনি কি নিশ্চিত এই ছবিটি মুছে ফেলতে চান?")) {
+            db.ref('gallery/' + id).remove();
+        }
+    }
+}
 
 /* Firebase Public Member System */ 
 function submitFirebaseMember() { 
@@ -698,10 +717,9 @@ function deleteFirebaseMember(id) {
 /* Export Backup */ 
 function exportDataBackup() { 
     const data = localStorage.getItem(STORAGE_KEY); 
-    const assets = localStorage.getItem(STORAGE_KEY + '_assets'); 
     if (!data) return alert('ডাউনলোড করার মতো কোনো ডাটা পাওয়া যায়নি!'); 
 
-    const backupObj = { content: data, assets: assets }; 
+    const backupObj = { content: data }; 
     const blob = new Blob([JSON.stringify(backupObj)], { type: 'application/json' }); 
     const url = URL.createObjectURL(blob); 
     const a = document.createElement('a'); 
@@ -721,7 +739,6 @@ function importDataBackup(event) {
             const backup = JSON.parse(e.target.result); 
             if (backup.content) { 
                 localStorage.setItem(STORAGE_KEY, backup.content); 
-                if(backup.assets) localStorage.setItem(STORAGE_KEY + '_assets', backup.assets); 
                 alert('ডাটা সফলভাবে রিস্টোর হয়েছে!'); 
                 location.reload(); 
             } 
