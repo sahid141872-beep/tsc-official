@@ -1,373 +1,408 @@
-<!DOCTYPE html> 
-<html lang="bn"> 
-<head> 
-<meta charset="UTF-8"> 
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-<title>থিমছড়ি স্পোর্টস ক্লাব</title> 
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>থিমছড়ি স্পোর্টস ক্লাব</title>
 <link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
 
-<!-- Firebase SDK Scripts -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kalpurush', 'Segoe UI', sans-serif; }
+body { background-color: #f4f7f4; color: #2e3d2f; }
 
-<style> 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kalpurush', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; } 
-body { background-color: #f0f2f5; color: #333; } 
+/* Admin Control Header */
+.top-bar { background: #1b4332; color: #ffffff; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-bottom: 3px solid #d80027; }
+.top-btns { display: flex; gap: 10px; flex-wrap: wrap; }
 
-/* Admin & Control Bar */
-.top-bar { background: #1b5e20; color: white; padding: 8px 15px; display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; flex-wrap: wrap; gap: 10px; }
-.top-btns { display: flex; gap: 8px; }
+/* Cover Header Section */
+.cover-container { position: relative; background: linear-gradient(rgba(27, 67, 50, 0.85), rgba(45, 106, 79, 0.85)), url('https://via.placeholder.com/1200x350?text=TSC+Cover'); background-size: cover; background-position: center; color: white; text-align: center; padding: 40px 20px 30px; }
+.profile-img-box { position: relative; display: inline-block; }
+.profile-img { width: 140px; height: 140px; border-radius: 50%; border: 4px solid #d80027; object-fit: cover; background: #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
-.action-bar { background: #263238; color: white; padding: 8px 15px; display: flex; justify-content: flex-end; gap: 10px; } 
-.btn-action { background: #455a64; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: bold; font-family: 'Kalpurush', sans-serif; } 
-.btn-action:hover { background: #607d8b; } 
+/* Red Sun Emblem Feature */
+.bd-flag-circle { position: absolute; top: -10px; right: -10px; width: 35px; height: 35px; background: #d80027; border-radius: 50%; border: 2px solid #fff; }
 
-/* Breaking News Ticker */ 
-.breaking-news { background: #d32f2f; color: white; display: flex; align-items: center; padding: 8px 15px; font-weight: bold; } 
-.breaking-label { background: #9a0007; padding: 4px 10px; border-radius: 4px; margin-right: 15px; white-space: nowrap; } 
-marquee { font-size: 1.05rem; } 
+.club-title { font-size: 2.5rem; margin-top: 10px; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+.slogan { font-style: italic; color: #d8f3dc; font-size: 1.2rem; margin-bottom: 5px; }
+.established { font-size: 0.95rem; background: #d80027; color: #fff; display: inline-block; padding: 3px 15px; border-radius: 20px; margin-top: 5px; font-weight: bold; }
 
-/* Cover Header */ 
-.cover-container { position: relative; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('https://via.placeholder.com/1200x350?text=Thimchory+Sports+Club+Cover'); background-size: cover; background-position: center; color: white; text-align: center; padding: 50px 20px 30px; } 
-.cover-edit-btn { position: absolute; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.7); color: white; border: 1px solid #fff; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: bold; } 
-.profile-img-box { position: relative; display: inline-block; } 
-.profile-img { width: 130px; height: 130px; border-radius: 50%; border: 4px solid #fff; margin-bottom: 10px; object-fit: cover; background: #fff; } 
-.logo-edit-btn { position: absolute; bottom: 15px; right: -10px; background: #ff9800; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: bold; } 
-.club-title { font-size: 2.3rem; margin-bottom: 5px; } 
-.slogan { font-style: italic; color: #e8f5e9; font-size: 1.15rem; margin-bottom: 5px; } 
-.established { font-size: 0.95rem; background: rgba(255,255,255,0.2); display: inline-block; padding: 3px 12px; border-radius: 15px; } 
-input[type="file"] { display: none; } 
+/* Navigation */
+nav { background: #2d6a4f; display: flex; justify-content: center; flex-wrap: wrap; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+nav a { color: white; padding: 12px 18px; text-decoration: none; font-weight: bold; transition: 0.3s; font-size: 1.05rem; }
+nav a:hover { background: #1b4332; color: #e9d8a6; }
 
-/* Navigation */ 
-nav { background: #1b5e20; display: flex; justify-content: center; flex-wrap: wrap; position: sticky; top: 0; z-index: 100; } 
-nav a { color: white; padding: 12px 18px; text-decoration: none; font-weight: bold; transition: 0.3s; font-size: 1.05rem; } 
-nav a:hover { background: #2e7d32; } 
+/* Main Container & Cards */
+.container { max-width: 1100px; margin: 25px auto; padding: 0 15px; }
+.card { background: white; padding: 22px; border-radius: 10px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); border-left: 5px solid #2d6a4f; position: relative; }
+.card h2 { color: #1b4332; border-bottom: 2px solid #52b788; padding-bottom: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
 
-/* Layout & Cards */ 
-.container { max-width: 1100px; margin: 20px auto; padding: 0 15px; } 
-.card { background: white; padding: 20px; border-radius: 8px; margin-bottom: 25px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; } 
-.card h2 { color: #1b5e20; border-bottom: 3px solid #2e7d32; padding-bottom: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; } 
-
-/* Buttons & Forms */ 
-.btn-edit { background: #ff9800; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; } 
-.btn-add { background: #1b5e20; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.95rem; font-family: 'Kalpurush', sans-serif; } 
-.btn-delete { background: #d32f2f; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: bold; font-family: 'Kalpurush', sans-serif; } 
-.btn-cancel { background: #757575; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.95rem; font-family: 'Kalpurush', sans-serif; } 
-
-.custom-form { display: none; background: #e8f5e9; padding: 20px; border-radius: 8px; border: 1px solid #c8e6c9; margin-bottom: 20px; } 
-.custom-form h3 { color: #1b5e20; margin-bottom: 15px; } 
-.form-group { margin-bottom: 12px; } 
-.form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #2e7d32; } 
-.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #a5d6a7; border-radius: 4px; outline: none; font-size: 1rem; } 
-.form-row { display: flex; gap: 15px; flex-wrap: wrap; } 
-.form-row .form-group { flex: 1; min-width: 220px; } 
-.form-btns { display: flex; gap: 10px; margin-top: 10px; } 
-
-/* Admin Control Filter */
+/* Dynamic Admin Controls */
 .admin-only { display: none !important; }
 
-/* Three Dot Menu System */ 
-.three-dots { cursor: pointer; font-size: 1.3rem; padding: 0 8px; position: relative; } 
-.menu-dropdown { display: none; position: absolute; right: 0; top: 25px; background: white; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 10; min-width: 120px; } 
-.menu-dropdown button { display: block; width: 100%; text-align: left; padding: 8px 12px; background: none; border: none; cursor: pointer; font-size: 0.9rem; } 
-.menu-dropdown button:hover { background: #f0f0f0; } 
+/* Action Buttons */
+.btn-action { background: #2d6a4f; color: white; border: none; padding: 6px 14px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.9rem; }
+.btn-action:hover { background: #1b4332; }
+.btn-edit { background: #d80027; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; }
+.btn-add { background: #2d6a4f; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.95rem; }
+.btn-delete { background: #d80027; color: white; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; }
+.btn-cancel { background: #6c757d; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: bold; }
 
-/* Tables & Grids */ 
-table { width: 100%; border-collapse: collapse; margin-top: 10px; } 
-table, th, td { border: 1px solid #ddd; } 
-th, td { padding: 10px; text-align: center; font-size: 1rem; } 
-th { background: #e8f5e9; color: #1b5e20; } 
+/* Custom Form Design */
+.custom-form { display: none; background: #e8f5e9; padding: 20px; border-radius: 8px; border: 1px solid #b7e4c7; margin-bottom: 20px; }
+.custom-form h3 { color: #1b4332; margin-bottom: 15px; border-bottom: 1px dashed #52b788; padding-bottom: 5px; }
+.form-group { margin-bottom: 12px; }
+.form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #1b4332; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #74c69d; border-radius: 5px; outline: none; font-size: 1rem; background: #fff; }
+.form-row { display: flex; gap: 15px; flex-wrap: wrap; }
+.form-row .form-group { flex: 1; min-width: 220px; }
 
-.squad-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; margin-top: 15px; } 
-.squad-card { border: 2px solid #2e7d32; border-radius: 8px; background: #ffffff; padding: 15px; position: relative; } 
-.squad-card h3 { background: #1b5e20; color: white; margin: -15px -15px 15px -15px; padding: 10px; border-radius: 6px 6px 0 0; display: flex; justify-content: space-between; align-items: center; } 
-.squad-list { list-style: decimal inside; line-height: 1.8; } 
+/* Members Serial List & 3-Dot Menu */
+.member-list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; border: 1px solid #d8f3dc; background: #f8fdf9; border-radius: 6px; margin-bottom: 8px; }
+.member-name { font-weight: bold; color: #1b4332; cursor: pointer; font-size: 1.1rem; }
+.member-name:hover { text-decoration: underline; color: #d80027; }
 
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; } 
-.member-card { border: 1px solid #e0e0e0; padding: 15px; border-radius: 6px; background: #fafafa; position: relative; } 
-.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; } 
-.gallery-item { position: relative; } 
-.gallery-item img { width: 100%; height: 150px; object-fit: cover; border-radius: 6px; } 
-.gallery-item .btn-delete { position: absolute; top: 5px; right: 5px; } 
+.three-dot-menu { position: relative; display: inline-block; }
+.dot-btn { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #1b4332; padding: 0 8px; }
+.dropdown-content { display: none; position: absolute; right: 0; background-color: #ffffff; min-width: 150px; box-shadow: 0px 8px 16px rgba(0,0,0,0.2); border-radius: 5px; z-index: 10; border: 1px solid #b7e4c7; }
+.dropdown-content a, .dropdown-content button { color: #1b4332; padding: 10px 14px; text-decoration: none; display: block; text-align: left; width: 100%; background: none; border: none; cursor: pointer; font-size: 0.9rem; }
+.dropdown-content button:hover, .dropdown-content a:hover { background-color: #e8f5e9; color: #d80027; }
 
-footer { background: #1b5e20; color: white; text-align: center; padding: 15px; margin-top: 30px; font-size: 0.95rem; } 
-</style> 
-</head> 
-<body> 
+/* Gallery & Social Documentaries */
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 10px; }
+.gallery-item { position: relative; border-radius: 6px; overflow: hidden; border: 2px solid #b7e4c7; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.gallery-item img { width: 100%; height: 160px; object-fit: cover; display: block; }
 
-<!-- Top Status & Control Bar -->
+.doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; margin-top: 15px; }
+.doc-card { background: #ffffff; border: 1px solid #b7e4c7; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+.doc-card img { width: 100%; height: 180px; object-fit: cover; }
+.doc-card-body { padding: 12px; }
+.doc-card-body h4 { color: #1b4332; margin-bottom: 5px; }
+
+/* Match & Fixture Tables */
+table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+table, th, td { border: 1px solid #b7e4c7; }
+th, td { padding: 10px; text-align: center; }
+th { background: #2d6a4f; color: white; }
+
+/* Modal / Popup for Biodata */
+.modal { display: none; position: fixed; z-index: 200; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); }
+.modal-content { background-color: #ffffff; margin: 8% auto; padding: 25px; border: 3px solid #2d6a4f; width: 90%; max-width: 550px; border-radius: 10px; position: relative; }
+.close-modal { position: absolute; right: 15px; top: 10px; font-size: 28px; font-weight: bold; color: #d80027; cursor: pointer; }
+
+footer { background: #1b4332; color: white; text-align: center; padding: 18px; margin-top: 40px; border-top: 4px solid #d80027; }
+input[type="file"] { display: none; }
+</style>
+</head>
+<body>
+
+<!-- Top Security & Storage Bar -->
 <div class="top-bar">
     <span id="admin-status">👤 আপনি সাধারণ ভিজিটর মোডে আছেন।</span>
     <div class="top-btns">
-        <button class="btn-action" id="admin-btn" onclick="toggleAdminLogin()">🔑 অ্যাডমিন লগইন</button>
+        <button class="btn-action" style="background:#d80027;" id="admin-btn" onclick="toggleAdminLogin()">🔑 অ্যাডমিন লগইন</button>
         <button class="btn-action admin-only" onclick="exportDataBackup()">📥 ব্যাকআপ ডাউনলোড</button>
         <button class="btn-action admin-only" onclick="document.getElementById('import-backup-file').click()">📤 ব্যাকআপ আপলোড</button>
         <input type="file" id="import-backup-file" accept=".json" onchange="importDataBackup(event)">
     </div>
 </div>
 
-<div class="action-bar admin-only"> 
-    <button class="btn-action" onclick="undo()">↩ Undo</button> 
-    <button class="btn-action" onclick="redo()">↪ Redo</button> 
-</div> 
+<!-- Header & Cover Section -->
+<div class="cover-container">
+    <div class="profile-img-box">
+        <img src="https://via.placeholder.com/140?text=TSC+Logo" alt="Club Logo" class="profile-img" id="club-logo">
+        <div class="bd-flag-circle"></div>
+    </div>
+    <div class="admin-only" style="margin-top:10px;">
+        <button class="btn-edit" onclick="document.getElementById('logo-file-input').click()">📷 নতুন লোগো আপলোড</button>
+        <input type="file" id="logo-file-input" accept="image/*" onchange="uploadLogo(event)">
+    </div>
+    
+    <h1 class="club-title" id="disp-title">থিমছড়ি স্পোর্টস ক্লাব</h1>
+    <p class="slogan" id="disp-slogan">"খেলায় বিকশিত হোক তারুণ্য, সুস্থ ও সুন্দর থাকুক প্রজন্ম"</p>
+    <span class="established">প্রতিষ্ঠিত তারিখ: ০১-০৮-২০২০</span>
+    
+    <div class="admin-only" style="margin-top:12px;">
+        <button class="btn-edit" onclick="toggleHeaderForm()">হেডার ও স্লোগান এডিট করুন</button>
+    </div>
+</div>
 
-<div class="breaking-news"> 
-    <span class="breaking-label">বিগ ব্রেকিং</span> 
-    <marquee id="breaking-text">থিমছড়ি স্পোর্টস ক্লাবের পক্ষ থেকে সকলকে শুভেচ্ছা! বার্ষিক ফুটবল টুর্নামেন্টের রেজিস্ট্রেশন শীঘ্রই শুরু হবে।</marquee> 
-    <button class="btn-edit admin-only" onclick="toggleBreakingForm()">এডিট</button> 
-</div> 
+<!-- Header Edit Form (Admin Only) -->
+<div id="header-form" class="custom-form" style="max-width:800px; margin: 15px auto;">
+    <h3>ক্লাবের নাম ও স্লোগান এডিট</h3>
+    <div class="form-group">
+        <label>ক্লাবের নাম:</label>
+        <input type="text" id="edit-title-input" value="থিমছড়ি স্পোর্টস ক্লাব">
+    </div>
+    <div class="form-group">
+        <label>স্লোগান:</label>
+        <input type="text" id="edit-slogan-input" value="খেলায় বিকশিত হোক তারুণ্য, সুস্থ ও সুন্দর থাকুক প্রজন্ম">
+    </div>
+    <div class="form-btns">
+        <button class="btn-add" onclick="saveHeaderData()">সেভ করুন</button>
+        <button class="btn-cancel" onclick="toggleHeaderForm()">বাতিল</button>
+    </div>
+</div>
 
-<div class="cover-container" id="cover-header"> 
-    <button class="cover-edit-btn admin-only" onclick="document.getElementById('cover-file-input').click()">📷 কভার ফটো পাল্টান</button> 
-    <input type="file" id="cover-file-input" accept="image/*" onchange="changeCoverPhoto(event)"> 
-    <div class="profile-img-box"> 
-        <img src="https://via.placeholder.com/130?text=TSC+Logo" alt="Club Logo" class="profile-img" id="club-logo"> 
-        <button class="logo-edit-btn admin-only" onclick="document.getElementById('logo-file-input').click()">লোগো পাল্টান</button> 
-        <input type="file" id="logo-file-input" accept="image/*" onchange="changeLogoPhoto(event)"> 
-    </div> 
-    <h1 class="club-title">থিমছড়ি স্পোর্টস ক্লাব</h1> 
-    <p class="slogan">"খেলায় বিকশিত হউক তারুণ্য <br> সুস্থ ও সুন্দর থাকুক প্রজন্ম"</p> 
-    <span class="established">প্রতিষ্ঠিত তারিখ: ০১-০৮-২০২০</span> 
-</div> 
+<!-- Navigation -->
+<nav>
+    <a href="#about">ABOUT TSC</a>
+    <a href="#notice">TSC নোটিশ</a>
+    <a href="#tournament">চলমান টুর্নামেন্ট</a>
+    <a href="#schedule">ম্যাচ শিডিউল</a>
+    <a href="#register">বায়োডাটা ফরম</a>
+    <a href="#members">সদস্য তালিকা</a>
+    <a href="#gallery">TSC গ্যালারি</a>
+    <a href="#social">সামাজিক কার্যক্রম</a>
+</nav>
 
-<nav> 
-    <a href="#notice">নোটিশ বোর্ড</a> 
-    <a href="#schedule">ম্যাচ শিডিউল</a> 
-    <a href="#squads">দল ও স্কোয়াড</a> 
-    <a href="#register">সদস্য আবেদন</a> 
-    <a href="#members">সদস্য তালিকা</a> 
-    <a href="#gallery">গ্যালারি</a> 
-    <a href="#donation">ডোনেশন ও সেবা</a> 
-</nav> 
+<div class="container" id="main-content">
 
-<div class="container" id="main-content"> 
+    <!-- About TSC Section -->
+    <div id="about" class="card">
+        <h2> ABOUT TSC <button class="btn-edit admin-only" onclick="toggleAboutForm()">এডিট</button></h2>
+        <div id="about-form" class="custom-form">
+            <h3>ABOUT TSC সংশোধন করুন</h3>
+            <div class="form-group">
+                <textarea id="about-textarea" rows="4"></textarea>
+            </div>
+            <div class="form-btns">
+                <button class="btn-add" onclick="saveAbout()">সেভ করুন</button>
+                <button class="btn-cancel" onclick="toggleAboutForm()">বাতিল</button>
+            </div>
+        </div>
+        <p id="about-text" style="line-height:1.8; font-size:1.05rem;">
+            থিমছড়ি স্পোর্টস ক্লাব একটি স্পোর্টস ক্লাব। তার যাত্রা করে ০১-০৮-২০২০ সালে। প্রতিবছর থিমছড়ি স্পোর্টস ক্লাব, ফুটবল, ক্রিকেট, ব্যাডমিন্টন সহ অনন্য ইভেন্ট সফলতার সাথে আয়োজন করে আসছে। পাশাপাশি বিভিন্ন সমাজিক কার্যক্রম, যেমন: মানব সেবা,কবরস্থান পরিস্কার,রক্তদান সহ নানা মানবিক এবং সমাজিক কার্যক্রম পরিচলনা করে আসতেছে।
+        </p>
+    </div>
 
-    <!-- Breaking Form (Admin Only) -->
-    <div id="breaking-form" class="custom-form"> 
-        <h3>বিগ ব্রেকিং আপডেট করুন</h3> 
-        <div class="form-group"> 
-            <input type="text" id="breaking-input" placeholder="নতুন ব্রেকিং নিউজ লিখুন"> 
-        </div> 
-        <div class="form-btns"> 
-            <button class="btn-add" onclick="saveBreaking()">সেভ করুন</button> 
-            <button class="btn-cancel" onclick="toggleBreakingForm()">বাতিল</button> 
-        </div> 
-    </div> 
+    <!-- TSC Notice Board -->
+    <div id="notice" class="card">
+        <h2> TSC নোটিশ বোর্ড <button class="btn-edit admin-only" onclick="toggleNoticeForm()">নোটিশ আপডেট</button></h2>
+        <div id="notice-form" class="custom-form">
+            <h3>নোটিশ লিখুন</h3>
+            <div class="form-group">
+                <textarea id="notice-textarea" rows="3" placeholder="বর্তমান কার্যক্রম সংক্রান্ত নোটিশ..."></textarea>
+            </div>
+            <div class="form-btns">
+                <button class="btn-add" onclick="saveNotice()">পাবলিশ করুন</button>
+                <button class="btn-cancel" onclick="toggleNoticeForm()">বাতিল</button>
+            </div>
+        </div>
+        <div id="notice-display-box" style="background:#e8f5e9; padding:15px; border-radius:6px; border-left:4px solid #2d6a4f;">
+            <p id="notice-text">বর্তমানে ক্লাবের নিয়মিত ফিটনেস অনুশীলন এবং সামাজিক সচেতনতামূলক কাজ চালু রয়েছে।</p>
+        </div>
+    </div>
 
-    <!-- Notice Section -->
-    <div id="notice" class="card"> 
-        <h2> চলমান ইভেন্ট ও নোটিশ বোর্ড 
-            <button class="btn-edit admin-only" onclick="toggleNoticeForm()">নোটিশ পরিবর্তন করুন</button> 
-        </h2> 
-        <div id="notice-form" class="custom-form"> 
-            <h3>নোটিশ বোর্ড আপডেট করুন</h3> 
-            <div class="form-group"> 
-                <label>বর্তমান ইভেন্ট:</label> 
-                <input type="text" id="notice-curr-input" placeholder="যেমন: অভ্যন্তরীণ ফুটবল টুর্নামেন্ট চলছে।"> 
-            </div> 
-            <div class="form-group"> 
-                <label>ভবিষ্যৎ ইভেন্ট:</label> 
-                <input type="text" id="notice-fut-input" placeholder="যেমন: বার্ষিক ক্রিকেট কাপ আগামী মাসে শুরু হবে।"> 
-            </div> 
-            <div class="form-btns"> 
-                <button class="btn-add" onclick="saveNotice()">সেভ করুন</button> 
-                <button class="btn-cancel" onclick="toggleNoticeForm()">বাতিল</button> 
-            </div> 
-        </div> 
-        <div id="notice-content"> 
-            <p><strong>বর্তমান ইভেন্ট:</strong> অভ্যন্তরীণ ফুটবল টুর্নামেন্ট চলছে।</p> 
-            <p><strong>ভবিষ্যৎ ইভেন্ট:</strong> (নাই)</p> 
-        </div> 
-    </div> 
+    <!-- Ongoing Tournament / Event -->
+    <div id="tournament" class="card">
+        <h2> চলমান টুর্নামেন্ট বা ইভেন্ট <button class="btn-edit admin-only" onclick="toggleTournamentForm()">ইভেন্ট এডিট</button></h2>
+        <div id="tournament-form" class="custom-form">
+            <h3>টুর্নামেন্ট স্ট্যাটাস আপডেট</h3>
+            <div class="form-group">
+                <label>ইভেন্ট চালু আছে কি?</label>
+                <select id="tourn-status" onchange="toggleTournFields()">
+                    <option value="নাই">নাই</option>
+                    <option value="আছে">আছে</option>
+                </select>
+            </div>
+            <div id="tourn-details-fields" style="display:none;">
+                <div class="form-group">
+                    <label>টুর্নামেন্টের নাম:</label>
+                    <input type="text" id="tourn-name-in" placeholder="যেমন: বার্ষিক ফুটবল টুর্নামেন্ট ২০২৬">
+                </div>
+                <div class="form-group">
+                    <label>অংশগ্রহণকারী দলের নামসমূহ:</label>
+                    <input type="text" id="tourn-teams-in" placeholder="যেমন: টিম A, টিম B, টিম C">
+                </div>
+                <div class="form-group">
+                    <label>মোট দলের সংখ্যা:</label>
+                    <input type="number" id="tourn-count-in" placeholder="যেমন: ৮">
+                </div>
+            </div>
+            <div class="form-btns">
+                <button class="btn-add" onclick="saveTournament()">সেভ করুন</button>
+                <button class="btn-cancel" onclick="toggleTournamentForm()">বাতিল</button>
+            </div>
+        </div>
+        
+        <div id="tournament-display">
+            <p style="font-size:1.1rem; color:#d80027; font-weight:bold;">বর্তমান কোন ইভেন্ট চালু নেই</p>
+        </div>
+    </div>
 
-    <!-- Match Schedule -->
-    <div id="schedule" class="card"> 
-        <h2> চলমান টুর্নামেন্ট ও ম্যাচ শিডিউল 
-            <button class="btn-add admin-only" onclick="toggleScheduleForm()">+ ম্যাচ যোগ করুন</button> 
-        </h2> 
-        <div id="schedule-form" class="custom-form"> 
-            <h3>নতুন ম্যাচ শিডিউল এনট্রি ফর্ম</h3> 
-            <div class="form-row"> 
-                <div class="form-group"> 
-                    <label>টুর্নামেন্টের নাম:</label> 
-                    <input type="text" id="sched-tournament" placeholder="যেমন: থিমছড়ি কাপ ২০২৬"> 
-                </div> 
-                <div class="form-group"> 
-                    <label>খেলার ধরন:</label> 
-                    <select id="sched-game"> 
-                        <option value="ফুটবল">ফুটবল</option> 
-                        <option value="ক্রিকেট">ক্রিকেট</option> 
-                        <option value="ব্যাডমিন্টন">ব্যাডমিন্টন</option> 
-                        <option value="অন্যান্য">অন্যান্য</option> 
-                    </select> 
-                </div> 
-            </div> 
-            <div class="form-row"> 
-                <div class="form-group"> 
-                    <label>দলের নাম (কার বিপক্ষে কার ম্যাচ):</label> 
-                    <input type="text" id="sched-teams" placeholder="যেমন: দল A বনাম দল B"> 
-                </div> 
-                <div class="form-group"> 
-                    <label>ম্যাচের তারিখ ও সময়:</label> 
-                    <input type="text" id="sched-time" placeholder="যেমন: ১০ সেপ্টেম্বর, বিকেল ৪:০০"> 
-                </div> 
-            </div> 
-            <div class="form-group"> 
-                <label>স্থান / খেলার মাঠ:</label> 
-                <input type="text" id="sched-venue" placeholder="যেমন: থিমছড়ি স্পোর্টস ক্লাব মাঠ"> 
-            </div> 
-            <div class="form-btns"> 
-                <button class="btn-add" onclick="saveSchedule()">সেভ করুন</button> 
-                <button class="btn-cancel" onclick="toggleScheduleForm()">বাতিল</button> 
-            </div> 
-        </div> 
-        <table id="schedule-table"> 
-            <thead> 
-                <tr> 
-                    <th>খেলা</th> <th>টুর্নামেন্ট</th> <th>দলসমূহ</th> <th>তারিখ ও সময়</th> <th>স্থান</th> <th class="admin-only">অ্যাকশন</th> 
-                </tr> 
-            </thead> 
-            <tbody> 
-                <tr> 
-                    <td>ফুটবল</td> <td>থিমছড়ি কাপ</td> <td>থিমছড়ি একাদশ বনাম রামুর দল</td> <td>১০ সেপ্টেম্বর, বিকেল ৪:০০</td> <td>ক্লাব মাঠ</td> <td class="admin-only"><button class="btn-delete" onclick="deleteRow(this)">ডিলিট</button></td> 
-                </tr> 
-            </tbody> 
-        </table> 
-    </div> 
+    <!-- Match Schedule & Fixtures -->
+    <div id="schedule" class="card">
+        <h2> ম্যাচ শিডিউল ও ফিক্সচার <button class="btn-add admin-only" onclick="toggleScheduleForm()">+ নতুন ম্যাচ যোগ করুন</button></h2>
+        <div id="schedule-form" class="custom-form">
+            <h3>নতুন ম্যাচ ফিক্সচার যোগ ফরম</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>টুর্নামেন্টের নাম:</label>
+                    <input type="text" id="sch-tourn" placeholder="টুর্নামেন্ট...">
+                </div>
+                <div class="form-group">
+                    <label>ম্যাচ (দলের ফিক্সচার):</label>
+                    <input type="text" id="sch-teams" placeholder="যেমন: টিম এ বনাম টিম সি">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>তারিখ ও সময়:</label>
+                    <input type="text" id="sch-time" placeholder="যেমন: ১০ অক্টোবর, বিকেল ৪:০০">
+                </div>
+                <div class="form-group">
+                    <label>স্থান:</label>
+                    <input type="text" id="sch-venue" placeholder="যেমন: ক্লাব মাঠ">
+                </div>
+            </div>
+            <div class="form-btns">
+                <button class="btn-add" onclick="addScheduleRow()">ফিক্সচার সেভ করুন</button>
+                <button class="btn-cancel" onclick="toggleScheduleForm()">বাতিল</button>
+            </div>
+        </div>
 
-    <!-- Squads -->
-    <div id="squads" class="card"> 
-        <h2> অংশগ্রহণকারী দল ও খেলোয়াড় স্কোয়াড 
-            <button class="btn-add admin-only" onclick="toggleSquadForm()">+ নতুন স্কোয়াড যোগ করুন</button> 
-        </h2> 
-        <div id="squad-form" class="custom-form"> 
-            <h3>নতুন স্কোয়াড এনট্রি ফর্ম</h3> 
-            <div class="form-row"> 
-                <div class="form-group"> 
-                    <label>দলের নাম:</label> 
-                    <input type="text" id="sq-team-name" placeholder="যেমন: থিমছড়ি ভাইকিংস"> 
-                </div> 
-                <div class="form-group"> 
-                    <label>স্কোয়াড সদস্য সংখ্যা:</label> 
-                    <input type="number" id="sq-member-count" placeholder="যেমন: ১১"> 
-                </div> 
-            </div> 
-            <div class="form-group"> 
-                <label>খেলোয়াড়দের নাম (কমা দিয়ে আলাদা করুন):</label> 
-                <textarea id="sq-players" rows="3" placeholder="যেমন: সাকিব (অধিনায়ক), তামিম, রফিক, শফিক"></textarea> 
-            </div> 
-            <div class="form-btns"> 
-                <button class="btn-add" onclick="saveSquad()">সেভ করুন</button> 
-                <button class="btn-cancel" onclick="toggleSquadForm()">বাতিল</button> 
-            </div> 
-        </div> 
-        <div class="squad-grid" id="squad-container"> 
-            <div class="squad-card"> 
-                <h3> 
-                    <span>দল A (সদস্য: ১১ জন)</span> 
-                    <div class="three-dots admin-only" onclick="toggleMenu(this)">⋮ 
-                        <div class="menu-dropdown"> 
-                            <button onclick="deleteSquad(this)">ডিলিট করুন</button> 
-                        </div> 
-                    </div> 
-                </h3> 
-                <ol class="squad-list"> 
-                    <li>রফিক (অধিনায়ক)</li> 
-                    <li>শফিক</li> 
-                    <li>করিম</li> 
-                </ol> 
-            </div> 
-        </div> 
-    </div> 
+        <table>
+            <thead>
+                <tr>
+                    <th>টুর্নামেন্ট</th>
+                    <th>ফিক্সচার</th>
+                    <th>তারিখ ও সময়</th>
+                    <th>স্থান</th>
+                    <th class="admin-only">অ্যাকশন</th>
+                </tr>
+            </thead>
+            <tbody id="schedule-table-body">
+                <tr>
+                    <td>আঞ্চলিক ক্রিকেট কাপ</td>
+                    <td>টিম এ বনাম টিম সি</td>
+                    <td>১৫ অক্টোবর, বিকেল ৩:৩০</td>
+                    <td>থিমছড়ি হাইস্কুল মাঠ</td>
+                    <td class="admin-only"><button class="btn-delete" onclick="deleteScheduleRow(this)">ডিলিট</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-    <!-- Public Member Registration Form (সবার জন্য সর্বদা সম্পূর্ণ উন্মুক্ত) -->
-    <div id="register" class="card"> 
-        <h2> ক্লাবের নতুন সদস্য নিবন্ধন ফরম </h2> 
-        <div style="background: #e8f5e9; padding: 20px; border-radius: 8px; border: 1px solid #c8e6c9;"> 
-            <div class="form-row"> 
-                <div class="form-group"><label>নাম *:</label><input type="text" id="m-name" placeholder="আপনার নাম লিখুন"></div> 
-                <div class="form-group"><label>গ্রাম:</label><input type="text" id="m-village" placeholder="গ্রামের নাম"></div> 
-                <div class="form-group"><label>পিতার নাম:</label><input type="text" id="m-father"></div> 
-            </div> 
-            <div class="form-row"> 
-                <div class="form-group"><label>মাতার নাম:</label><input type="text" id="m-mother"></div> 
-                <div class="form-group"><label>মোবাইল নম্বর *:</label><input type="text" id="m-mobile" placeholder="০১৮XXXXXXXX"></div> 
-                <div class="form-group"><label>পড়ালেখা:</label><input type="text" id="m-edu"></div> 
-            </div> 
-            <div class="form-row"> 
-                <div class="form-group"><label>পেশা:</label><input type="text" id="m-job"></div> 
-                <div class="form-group"><label>ব্লাড গ্রুপ:</label><input type="text" id="m-blood" placeholder="যেমন: B+"></div> 
-            </div> 
-            <div class="form-btns"> 
-                <button class="btn-add" style="display:inline-block;" onclick="submitFirebaseMember()">আবেদন জমা দিন</button> 
-            </div> 
-        </div> 
-    </div> 
+    <!-- Public Member Biodata Entry Form -->
+    <div id="register" class="card">
+        <h2> ক্লাবের সদস্য বায়োডাটা ফরম (সকলের জন্য উন্মুক্ত) </h2>
+        <div style="background: #e8f5e9; padding: 20px; border-radius: 8px; border: 1px solid #b7e4c7;">
+            <div class="form-row">
+                <div class="form-group"><label>নাম *:</label><input type="text" id="bio-name" placeholder="পূর্ণ নাম"></div>
+                <div class="form-group"><label>পিতার নাম *:</label><input type="text" id="bio-father"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group"><label>ঠিকানা *:</label><input type="text" id="bio-address" placeholder="গ্রাম/পাড়া"></div>
+                <div class="form-group"><label>ওয়ার্ড নম্বর *:</label><input type="text" id="bio-ward" placeholder="ওয়ার্ড নং"></div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>পড়ালেখা:</label>
+                    <select id="bio-edu-option" onchange="toggleEduBox()">
+                        <option value="নাই">নাই</option>
+                        <option value="আছে">আছে</option>
+                    </select>
+                </div>
+                <div class="form-group" id="edu-text-box" style="display:none;">
+                    <label>পড়ালেখার তথ্য লিখুন:</label>
+                    <input type="text" id="bio-edu-detail" placeholder="শ্রেণী / ডিগ্রি / প্রতিষ্ঠানের নাম">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>পেশা:</label>
+                    <select id="bio-job">
+                        <option value="ছাত্র">ছাত্র</option>
+                        <option value="ব্যবসায়ী">ব্যবসায়ী</option>
+                        <option value="অন্যান্য">অন্যান্য</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>মোবাইল নম্বর:</label><input type="text" id="bio-mobile"></div>
+            </div>
+            <div class="form-btns">
+                <button class="btn-add" onclick="submitBiodata()">বায়োডাটা জমা দিন</button>
+            </div>
+        </div>
+    </div>
 
-    <!-- Registered Members List -->
-    <div id="members" class="card"> 
-        <h2> নিবন্ধিত সদস্য তালিকা </h2> 
-        <div class="grid" id="firebase-member-list"> 
-            <!-- Firebase data will load here -->
-        </div> 
-    </div> 
+    <!-- Registered Members Serial List -->
+    <div id="members" class="card">
+        <h2> নিবন্ধিত সদস্য তালিকা </h2>
+        <div id="members-container">
+            <!-- Dynamic Serial List -->
+        </div>
+    </div>
 
-    <!-- Gallery -->
-    <div id="gallery" class="card"> 
-        <h2> ছবি গ্যালারি 
-            <button class="btn-add admin-only" onclick="document.getElementById('gallery-file-input').click()">+ ছবি যোগ করুন</button> 
-            <input type="file" id="gallery-file-input" accept="image/*" onchange="addGalleryPhoto(event)"> 
-        </h2> 
-        <div class="gallery-grid" id="gallery-container"> 
-            <!-- Firebase images will load here -->
-        </div> 
-    </div> 
+    <!-- TSC Unlimited Photo Gallery -->
+    <div id="gallery" class="card">
+        <h2> TSC গ্যালারি <button class="btn-add admin-only" onclick="document.getElementById('gallery-file-input').click()">+ ছবি আপলোড</button></h2>
+        <input type="file" id="gallery-file-input" accept="image/*" onchange="uploadGalleryPhoto(event)">
+        <div class="gallery-grid" id="gallery-container">
+            <!-- Gallery Images -->
+        </div>
+    </div>
 
-    <!-- Donation -->
-    <div id="donation" class="card"> 
-        <h2>ডোনেশন ও সামাজিক কার্যক্রম</h2> 
-        <p>আমাদের ক্লাব ক্রীড়ার পাশাপাশি সামাজিক উন্নয়নমূলক কাজে জড়িত। আপনিও আমাদের ফান্ডে অনুদান দিতে পারেন।</p> 
-        <br> 
-        <p><strong>বিকাশ/নগদ (পার্সোনাল):</strong> ০১৮XXXXXXXX</p> 
-        <p><strong>ব্যাংক অ্যাকাউন্ট:</strong> থিমছড়ি স্পোর্টস ক্লাব, অ্যাকাউন্ট নং: ১২৩৪৫৬ট৮৯</p> 
-    </div> 
+    <!-- Social & Humanitarian Activities -->
+    <div id="social" class="card">
+        <h2> TSC সামাজিক এবং মানবিক কার্যক্রম <button class="btn-add admin-only" onclick="toggleSocialForm()">+ নতুন ডকুমেন্টারি যোগ করুন</button></h2>
+        <div id="social-form" class="custom-form">
+            <h3>সামাজিক কার্যক্রমের ডকুমেন্টারি আপলোড</h3>
+            <div class="form-group">
+                <label>কার্যক্রমের শিরোনাম:</label>
+                <input type="text" id="soc-title" placeholder="যেমন: ফ্রি রক্তদান কর্মসূচি">
+            </div>
+            <div class="form-group">
+                <label>ছবি সংযুক্ত করুন:</label>
+                <input type="file" id="soc-img-input" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label>বিবরণ ও তথ্য:</label>
+                <textarea id="soc-desc" rows="3" placeholder="বিস্তারিত বিবরণ..."></textarea>
+            </div>
+            <div class="form-btns">
+                <button class="btn-add" onclick="addSocialDoc()">সংযুক্ত করুন</button>
+                <button class="btn-cancel" onclick="toggleSocialForm()">বাতিল</button>
+            </div>
+        </div>
 
-</div> 
+        <div class="doc-grid" id="social-container">
+            <!-- Social Activities -->
+        </div>
+    </div>
 
-<footer> 
-    <p>&copy; ২০২৬ থিমছড়ি স্পোর্টস ক্লাব. সর্বস্বত্ব সংরক্ষিত।</p> 
-</footer> 
+</div>
 
-<script> 
-// Firebase Configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyCjvsv206_vnti4h-inKicKVKSMNMKvVwQ",
-    authDomain: "tsc-data-43a9b.firebaseapp.com",
-    databaseURL: "https://tsc-data-43a9b-default-rtdb.firebaseio.com",
-    projectId: "tsc-data-43a9b",
-    storageBucket: "tsc-data-43a9b.appspot.com",
-    messagingSenderId: "798903389206",
-    appId: "1:798903389206:web:debb776e72cbb4bab3b937"
-};
+<!-- Biodata Details Modal Popup -->
+<div id="bioModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeBioModal()">&times;</span>
+        <h3 style="color:#1b4332; border-bottom:2px solid #2d6a4f; padding-bottom:8px; margin-bottom:15px;">সদস্যের বিস্তারিত বায়োডাটা</h3>
+        <div id="modal-body" style="line-height:2; font-size:1.05rem;">
+            <!-- Dynamic Details -->
+        </div>
+    </div>
+</div>
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+<footer>
+    <p>&copy; ২০২৬ থিমছড়ি স্পোর্টস ক্লাব. সর্বস্বত্ব সংরক্ষিত।</p>
+</footer>
 
-const ADMIN_PIN = "320852"; 
+<script>
+// Admin Authentication PIN System
+const ADMIN_PIN = "320852";
 let isAdmin = false;
 
-// Admin Login System
 function toggleAdminLogin() {
     if(!isAdmin) {
-        let pin = prompt("অ্যাডমিন সিকিউরিটি পিন নম্বর লিখুন:");
+        let pin = prompt("অ্যাডমিন পিন কোড প্রবেশ করান:");
         if(pin === ADMIN_PIN) {
             isAdmin = true;
             document.getElementById('admin-status').innerText = "🔑 আপনি অ্যাডমিন মোডে আছেন।";
             document.getElementById('admin-btn').innerText = "🚪 লগআউট";
             applyAdminPermissions();
-            loadFirebaseMembers();
-            loadGalleryPhotos();
+            renderMembers();
+            renderGallery();
+            renderSocial();
         } else if(pin !== null) {
             alert("ভুল পিন নম্বর!");
         }
@@ -376,8 +411,9 @@ function toggleAdminLogin() {
         document.getElementById('admin-status').innerText = "👤 আপনি সাধারণ ভিজিটর মোডে আছেন।";
         document.getElementById('admin-btn').innerText = "🔑 অ্যাডমিন লগইন";
         applyAdminPermissions();
-        loadFirebaseMembers();
-        loadGalleryPhotos();
+        renderMembers();
+        renderGallery();
+        renderSocial();
     }
 }
 
@@ -392,361 +428,410 @@ function applyAdminPermissions() {
     });
 }
 
-// Local Storage Undo/Redo System
-const STORAGE_KEY = 'tsc_site_data_v1';
-let historyStack = []; 
-let redoStack = []; 
+// Global Storage State Object
+let appData = {
+    title: "থিমছড়ি স্পোর্টস ক্লাব",
+    slogan: "খেলায় বিকশিত হোক তারুণ্য, সুস্থ ও সুন্দর থাকুক প্রজন্ম",
+    logo: "https://via.placeholder.com/140?text=TSC+Logo",
+    about: "থিমছড়ি স্পোর্টস ক্লাব একটি স্পোর্টস ক্লাব। তার যাত্রা করে ০১-০৮-২০২০ সালে। প্রতিবছর থিমছড়ি স্পোর্টস ক্লাব, ফুটবল, ক্রিকেট, ব্যাডমিন্টন সহ অনন্য ইভেন্ট সফলতার সাথে আয়োজন করে আসছে। পাশাপাশি বিভিন্ন সমাজিক কার্যক্রম, যেমন: মানব সেবা,কবরস্থান পরিস্কার,রক্তদান সহ নানা মানবিক এবং সমাজিক কার্যক্রম পরিচলনা করে আসতেছে।",
+    notice: "বর্তমানে ক্লাবের নিয়মিত ফিটনেস অনুশীলন এবং সামাজিক সচেতনতামূলক কাজ চালু রয়েছে।",
+    tournament: { status: "নাই", name: "", teams: "", count: "" },
+    schedules: [
+        { tourn: "আঞ্চলিক ক্রিকেট কাপ", teams: "টিম এ বনাম টিম সি", time: "১৫ অক্টোবর, বিকেল ৩:৩০", venue: "থিমছড়ি হাইস্কুল মাঠ" }
+    ],
+    members: [],
+    gallery: [],
+    social: []
+};
 
-function saveState() { 
-    historyStack.push(document.getElementById('main-content').innerHTML); 
-    redoStack = []; 
-    try {
-        localStorage.setItem(STORAGE_KEY, document.getElementById('main-content').innerHTML); 
-    } catch(e) { console.error("সেভ করতে সমস্যা:", e); }
-} 
+const STORAGE_KEY = 'tsc_master_data_v2026';
 
-window.onload = function() { 
-    let savedData = localStorage.getItem(STORAGE_KEY); 
-    if(savedData) { 
-        document.getElementById('main-content').innerHTML = savedData; 
-    } 
+function saveToLocalStorage() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
+}
+
+function loadFromLocalStorage() {
+    let saved = localStorage.getItem(STORAGE_KEY);
+    if(saved) {
+        try {
+            appData = JSON.parse(saved);
+        } catch(e) { console.error("Error loading data", e); }
+    }
+    renderAllData();
+}
+
+window.onload = function() {
+    loadFromLocalStorage();
     applyAdminPermissions();
-    loadFirebaseMembers();
-    loadFirebaseHeaderAssets();
-    loadGalleryPhotos();
-} 
+};
 
-function undo() { 
-    if (historyStack.length > 0) { 
-        redoStack.push(document.getElementById('main-content').innerHTML); 
-        let prevState = historyStack.pop(); 
-        document.getElementById('main-content').innerHTML = prevState; 
-        localStorage.setItem(STORAGE_KEY, prevState); 
-        applyAdminPermissions();
-    } else { 
-        alert("আর কোনো পূর্বাবস্থা নেই!"); 
-    } 
-} 
-
-function redo() { 
-    if (redoStack.length > 0) { 
-        historyStack.push(document.getElementById('main-content').innerHTML); 
-        let nextState = redoStack.pop(); 
-        document.getElementById('main-content').innerHTML = nextState; 
-        localStorage.setItem(STORAGE_KEY, nextState); 
-        applyAdminPermissions();
-    } else { 
-        alert("আর কোনো রিডু করার অবস্থা নেই!"); 
-    } 
-} 
-
-function toggleMenu(elem) { 
-    let menu = elem.querySelector('.menu-dropdown'); 
-    let isVisible = menu.style.display === 'block'; 
-    document.querySelectorAll('.menu-dropdown').forEach(m => m.style.display = 'none'); 
-    menu.style.display = isVisible ? 'none' : 'block'; 
-} 
-
-window.onclick = function(event) { 
-    if (!event.target.matches('.three-dots')) { 
-        document.querySelectorAll('.menu-dropdown').forEach(m => m.style.display = 'none'); 
-    } 
-} 
-
-/* Breaking News */ 
-function toggleBreakingForm() { 
-    let form = document.getElementById('breaking-form'); 
-    form.style.display = form.style.display === 'block' ? 'none' : 'block'; 
-} 
-
-function saveBreaking() { 
-    let val = document.getElementById('breaking-input').value; 
-    if(val) { 
-        document.getElementById('breaking-text').innerText = val; 
-        db.ref('site_assets/breaking').set(val);
-        document.getElementById('breaking-input').value = ''; 
-        toggleBreakingForm(); 
-    } 
-} 
-
-/* Notice Board */ 
-function toggleNoticeForm() { 
-    let form = document.getElementById('notice-form'); 
-    form.style.display = form.style.display === 'block' ? 'none' : 'block'; 
-} 
-
-function saveNotice() { 
-    let curr = document.getElementById('notice-curr-input').value; 
-    let fut = document.getElementById('notice-fut-input').value; 
-    if(curr || fut) { 
-        saveState(); 
-        document.getElementById('notice-content').innerHTML = ` 
-            <p><strong>বর্তমান ইভেন্ট:</strong> ${curr || '(নাই)'}</p> 
-            <p><strong>ভবিষ্যৎ ইভেন্ট:</strong> ${fut || '(নাই)'}</p> 
-        `; 
-        toggleNoticeForm(); 
-    } 
-} 
-
-/* Schedule Form */ 
-function toggleScheduleForm() { 
-    let form = document.getElementById('schedule-form'); 
-    form.style.display = form.style.display === 'block' ? 'none' : 'block'; 
-} 
-
-function saveSchedule() { 
-    let tournament = document.getElementById('sched-tournament').value; 
-    let game = document.getElementById('sched-game').value; 
-    let teams = document.getElementById('sched-teams').value; 
-    let time = document.getElementById('sched-time').value; 
-    let venue = document.getElementById('sched-venue').value; 
-    if(!teams || !tournament) { 
-        alert("অনুগ্রহ করে টুর্নামেন্ট ও দলের নাম লিখুন!"); 
-        return; 
-    } 
-    saveState(); 
-    let table = document.getElementById('schedule-table').getElementsByTagName('tbody')[0]; 
-    let row = table.insertRow(); 
-    let actionCellClass = isAdmin ? '' : 'admin-only';
-    row.innerHTML = `<td>${game}</td><td>${tournament}</td><td>${teams}</td><td>${time}</td><td>${venue}</td><td class="${actionCellClass}"><button class="btn-delete" onclick="deleteRow(this)">ডিলিট</button></td>`; 
-    document.getElementById('sched-tournament').value = ''; 
-    document.getElementById('sched-teams').value = ''; 
-    document.getElementById('sched-time').value = ''; 
-    document.getElementById('sched-venue').value = ''; 
-    toggleScheduleForm(); 
-} 
-
-function deleteRow(btn) { 
-    saveState(); 
-    let row = btn.parentNode.parentNode; 
-    row.parentNode.removeChild(row); 
-} 
-
-/* Squad Form */ 
-function toggleSquadForm() { 
-    let form = document.getElementById('squad-form'); 
-    form.style.display = form.style.display === 'block' ? 'none' : 'block'; 
-} 
-
-function saveSquad() { 
-    let teamName = document.getElementById('sq-team-name').value; 
-    let memberCount = document.getElementById('sq-member-count').value; 
-    let playersInput = document.getElementById('sq-players').value; 
-    if(!teamName || !playersInput) { 
-        alert("অনুগ্রহ করে দলের নাম ও খেলোয়াড়দের নাম লিখুন!"); 
-        return; 
-    } 
-    saveState(); 
-    let players = playersInput.split(','); 
-    let playerListHtml = players.map(p => `<li>${p.trim()}</li>`).join(''); 
-    let squadCard = document.createElement('div'); 
-    squadCard.className = 'squad-card'; 
-    let dotClass = isAdmin ? 'three-dots' : 'three-dots admin-only';
-    squadCard.innerHTML = ` 
-        <h3> 
-            <span>${teamName} (সদস্য: ${memberCount || players.length} জন)</span> 
-            <div class="${dotClass}" onclick="toggleMenu(this)">⋮ 
-                <div class="menu-dropdown"> 
-                    <button onclick="deleteSquad(this)">ডিলিট করুন</button> 
-                </div> 
-            </div> 
-        </h3> 
-        <ol class="squad-list">${playerListHtml}</ol> 
-    `; 
-    document.getElementById('squad-container').appendChild(squadCard); 
-    document.getElementById('sq-team-name').value = ''; 
-    document.getElementById('sq-member-count').value = ''; 
-    document.getElementById('sq-players').value = ''; 
-    toggleSquadForm(); 
-} 
-
-function deleteSquad(btn) { 
-    saveState(); 
-    btn.closest('.squad-card').remove(); 
-} 
-
-/* Firebase Header Assets (Logo & Cover) */ 
-function changeLogoPhoto(event) { 
-    let reader = new FileReader(); 
-    reader.onload = function(){ 
-        let base64 = reader.result;
-        document.getElementById('club-logo').src = base64; 
-        db.ref('site_assets/logo').set(base64);
-    }; 
-    if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]); 
-} 
-
-function changeCoverPhoto(event) { 
-    let reader = new FileReader(); 
-    reader.onload = function(){ 
-        let base64 = reader.result;
-        document.getElementById('cover-header').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('${base64}')`; 
-        db.ref('site_assets/cover').set(base64);
-    }; 
-    if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]); 
-} 
-
-function loadFirebaseHeaderAssets() {
-    db.ref('site_assets').on('value', (snapshot) => {
-        let assets = snapshot.val();
-        if(assets) {
-            if(assets.logo) document.getElementById('club-logo').src = assets.logo;
-            if(assets.cover) document.getElementById('cover-header').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('${assets.cover}')`;
-            if(assets.breaking) document.getElementById('breaking-text').innerText = assets.breaking;
-        }
-    });
+function renderAllData() {
+    document.getElementById('disp-title').innerText = appData.title;
+    document.getElementById('disp-slogan').innerText = appData.slogan;
+    document.getElementById('club-logo').src = appData.logo;
+    document.getElementById('about-text').innerText = appData.about;
+    document.getElementById('notice-text').innerText = appData.notice;
+    
+    renderTournament();
+    renderSchedule();
+    renderMembers();
+    renderGallery();
+    renderSocial();
 }
 
-/* Firebase Gallery System */ 
-function addGalleryPhoto(event) { 
-    let reader = new FileReader(); 
-    reader.onload = function(){ 
-        let base64 = reader.result;
-        db.ref('gallery').push({ image: base64 });
-    }; 
-    if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]); 
-} 
-
-function loadGalleryPhotos() {
-    db.ref('gallery').on('value', (snapshot) => {
-        let container = document.getElementById('gallery-container');
-        if(!container) return;
-        container.innerHTML = '';
-        let photos = snapshot.val();
-        if(photos) {
-            for(let id in photos) {
-                let p = photos[id];
-                let div = document.createElement('div');
-                div.className = 'gallery-item';
-                let delBtnClass = isAdmin ? 'btn-delete' : 'btn-delete admin-only';
-                div.innerHTML = `<img src="${p.image}"><button class="${delBtnClass}" onclick="deleteGalleryPhoto('${id}')">✕</button>`;
-                container.appendChild(div);
-            }
-        }
-    });
+// Header & Logo Edits
+function toggleHeaderForm() {
+    let f = document.getElementById('header-form');
+    f.style.display = f.style.display === 'block' ? 'none' : 'block';
 }
 
-function deleteGalleryPhoto(id) {
-    if(isAdmin) {
-        if(confirm("আপনি কি নিশ্চিত এই ছবিটি মুছে ফেলতে চান?")) {
-            db.ref('gallery/' + id).remove();
-        }
+function saveHeaderData() {
+    appData.title = document.getElementById('edit-title-input').value;
+    appData.slogan = document.getElementById('edit-slogan-input').value;
+    saveToLocalStorage();
+    renderAllData();
+    toggleHeaderForm();
+}
+
+function uploadLogo(event) {
+    let reader = new FileReader();
+    reader.onload = function(){
+        appData.logo = reader.result;
+        saveToLocalStorage();
+        renderAllData();
+    };
+    if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
+}
+
+// About Section
+function toggleAboutForm() {
+    let f = document.getElementById('about-form');
+    f.style.display = f.style.display === 'block' ? 'none' : 'block';
+    document.getElementById('about-textarea').value = appData.about;
+}
+
+function saveAbout() {
+    appData.about = document.getElementById('about-textarea').value;
+    saveToLocalStorage();
+    renderAllData();
+    toggleAboutForm();
+}
+
+// Notice Section
+function toggleNoticeForm() {
+    let f = document.getElementById('notice-form');
+    f.style.display = f.style.display === 'block' ? 'none' : 'block';
+    document.getElementById('notice-textarea').value = appData.notice;
+}
+
+function saveNotice() {
+    appData.notice = document.getElementById('notice-textarea').value;
+    saveToLocalStorage();
+    renderAllData();
+    toggleNoticeForm();
+}
+
+// Tournament Section
+function toggleTournamentForm() {
+    let f = document.getElementById('tournament-form');
+    f.style.display = f.style.display === 'block' ? 'none' : 'block';
+}
+
+function toggleTournFields() {
+    let st = document.getElementById('tourn-status').value;
+    document.getElementById('tourn-details-fields').style.display = (st === 'আছে') ? 'block' : 'none';
+}
+
+function saveTournament() {
+    let st = document.getElementById('tourn-status').value;
+    appData.tournament.status = st;
+    if(st === 'আছে') {
+        appData.tournament.name = document.getElementById('tourn-name-in').value;
+        appData.tournament.teams = document.getElementById('tourn-teams-in').value;
+        appData.tournament.count = document.getElementById('tourn-count-in').value;
+    }
+    saveToLocalStorage();
+    renderTournament();
+    toggleTournamentForm();
+}
+
+function renderTournament() {
+    let box = document.getElementById('tournament-display');
+    if(appData.tournament.status === 'আছে') {
+        box.innerHTML = `
+            <div style="background:#e8f5e9; padding:15px; border-radius:6px;">
+                <p><strong>টুর্নামেন্টের নাম:</strong> ${appData.tournament.name}</p>
+                <p><strong>অংশগ্রহণকারী দল:</strong> ${appData.tournament.teams}</p>
+                <p><strong>মোট দল সংখ্যা:</strong> ${appData.tournament.count} টি</p>
+            </div>
+        `;
+    } else {
+        box.innerHTML = `<p style="font-size:1.1rem; color:#d80027; font-weight:bold;">বর্তমান কোন ইভেন্ট চালু নেই</p>`;
     }
 }
 
-/* Firebase Public Member System (সবাই ব্যবহার করতে পারবে) */ 
-function submitFirebaseMember() { 
-    let name = document.getElementById('m-name').value; 
-    let mobile = document.getElementById('m-mobile').value; 
+// Schedule Section
+function toggleScheduleForm() {
+    let f = document.getElementById('schedule-form');
+    f.style.display = f.style.display === 'block' ? 'none' : 'block';
+}
 
-    if(!name || !mobile) { 
-        alert("অনুগ্রহ করে নাম এবং মোবাইল নম্বর প্রদান করুন!"); 
-        return; 
-    } 
+function addScheduleRow() {
+    let tourn = document.getElementById('sch-tourn').value;
+    let teams = document.getElementById('sch-teams').value;
+    let time = document.getElementById('sch-time').value;
+    let venue = document.getElementById('sch-venue').value;
 
-    let newMember = { 
-        name: name, 
-        village: document.getElementById('m-village').value, 
-        father: document.getElementById('m-father').value, 
-        mother: document.getElementById('m-mother').value, 
-        mobile: mobile, 
-        edu: document.getElementById('m-edu').value, 
-        job: document.getElementById('m-job').value, 
-        blood: document.getElementById('m-blood').value 
-    }; 
+    if(!tourn || !teams) return alert("অনুগ্রহ করে তথ্য পূরণ করুন!");
 
-    db.ref('members').push(newMember, (error) => { 
-        if (error) { 
-            alert("ডাটা সেভ হতে সমস্যা হয়েছে।"); 
-        } else { 
-            alert("আপনার আবেদনটি সফলভাবে ক্লাউড ডাটাবেজে জমা হয়েছে!"); 
-            document.getElementById('m-name').value = ''; 
-            document.getElementById('m-village').value = ''; 
-            document.getElementById('m-father').value = ''; 
-            document.getElementById('m-mother').value = ''; 
-            document.getElementById('m-mobile').value = ''; 
-            document.getElementById('m-edu').value = ''; 
-            document.getElementById('m-job').value = ''; 
-            document.getElementById('m-blood').value = ''; 
-        } 
-    }); 
-} 
+    appData.schedules.push({ tourn, teams, time, venue });
+    saveToLocalStorage();
+    renderSchedule();
+    toggleScheduleForm();
+}
 
-function loadFirebaseMembers() { 
-    db.ref('members').on('value', (snapshot) => { 
-        let container = document.getElementById('firebase-member-list'); 
-        if(!container) return;
-        container.innerHTML = ''; 
-        let data = snapshot.val(); 
-        
-        if(data) { 
-            for (let id in data) { 
-                let m = data[id]; 
-                let deleteBtn = isAdmin ? `<button class="btn-delete" style="margin-top:10px;" onclick="deleteFirebaseMember('${id}')">ডিলিট করুন</button>` : ''; 
-                
-                let card = ` 
-                    <div class="member-card"> 
-                        <h3>${m.name}</h3> 
-                        <p><strong>গ্রাম:</strong> ${m.village || '-'}</p> 
-                        <p><strong>পিতা:</strong> ${m.father || '-'}</p> 
-                        <p><strong>মাতা:</strong> ${m.mother || '-'}</p> 
-                        <p><strong>মোবাইল:</strong> ${m.mobile || '-'}</p> 
-                        <p><strong>পড়ালেখা:</strong> ${m.edu || '-'}</p> 
-                        <p><strong>পেশা:</strong> ${m.job || '-'}</p> 
-                        <p><strong>ব্লাড গ্রুপ:</strong> ${m.blood || '-'}</p> 
-                        ${deleteBtn} 
-                    </div> 
-                `; 
-                container.innerHTML += card; 
-            } 
-        } else { 
-            container.innerHTML = '<p>কোনো সদস্যের তথ্য পাওয়া যায়নি।</p>'; 
-        } 
-    }); 
-} 
+function deleteSchedule(index) {
+    if(isAdmin && confirm("ফিক্সচারটি মুছে ফেলতে চান?")) {
+        appData.schedules.splice(index, 1);
+        saveToLocalStorage();
+        renderSchedule();
+    }
+}
 
-function deleteFirebaseMember(id) { 
-    if(isAdmin) { 
-        if(confirm("আপনি কি নিশ্চিত এই সদস্যকে ক্লাউড ডাটাবেজ থেকে মুছে ফেলতে চান?")) { 
-            db.ref('members/' + id).remove(); 
-        } 
-    } 
-} 
+function renderSchedule() {
+    let tbody = document.getElementById('schedule-table-body');
+    tbody.innerHTML = '';
+    appData.schedules.forEach((s, idx) => {
+        let delBtn = isAdmin ? `<button class="btn-delete" onclick="deleteSchedule(${idx})">ডিলিট</button>` : '';
+        let row = `<tr>
+            <td>${s.tourn}</td>
+            <td>${s.teams}</td>
+            <td>${s.time}</td>
+            <td>${s.venue}</td>
+            <td class="${isAdmin ? '' : 'admin-only'}">${delBtn}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+    });
+}
 
-/* Export Backup (Admin Only) */ 
-function exportDataBackup() { 
-    const data = localStorage.getItem(STORAGE_KEY); 
-    if (!data) return alert('ডাউনলোড করার মতো কোনো ডাটা পাওয়া যায়নি!'); 
+// Biodata & Members Section
+function toggleEduBox() {
+    let opt = document.getElementById('bio-edu-option').value;
+    document.getElementById('edu-text-box').style.display = (opt === 'আছে') ? 'block' : 'none';
+}
 
-    const backupObj = { content: data }; 
-    const blob = new Blob([JSON.stringify(backupObj)], { type: 'application/json' }); 
-    const url = URL.createObjectURL(blob); 
-    const a = document.createElement('a'); 
-    a.href = url; 
-    a.download = `TSC_Backup_${new Date().toISOString().slice(0,10)}.json`; 
-    a.click(); 
-} 
+function submitBiodata() {
+    let name = document.getElementById('bio-name').value;
+    let father = document.getElementById('bio-father').value;
+    let address = document.getElementById('bio-address').value;
+    let ward = document.getElementById('bio-ward').value;
 
-/* Import Backup (Admin Only) */ 
-function importDataBackup(event) { 
-    const file = event.target.files[0]; 
-    if (!file) return; 
+    if(!name || !father || !address || !ward) {
+        return alert("জরুরি তথ্যগুলো প্রদান করুন!");
+    }
 
-    const reader = new FileReader(); 
-    reader.onload = function(e) { 
-        try { 
-            const backup = JSON.parse(e.target.result); 
-            if (backup.content) { 
-                localStorage.setItem(STORAGE_KEY, backup.content); 
-                alert('ডাটা সফলভাবে রিস্টোর হয়েছে!'); 
-                location.reload(); 
-            } 
-        } catch (err) { 
-            alert('ভুল বা ক্ষতিগ্রস্ত ব্যাকআপ ফাইল!'); 
-        } 
-    }; 
-    reader.readAsText(file); 
-} 
-</script> 
-</body> 
+    let eduOpt = document.getElementById('bio-edu-option').value;
+    let eduVal = (eduOpt === 'আছে') ? document.getElementById('bio-edu-detail').value : 'নাই';
+
+    let newMember = {
+        id: Date.now(),
+        name: name,
+        father: father,
+        address: address,
+        ward: ward,
+        edu: eduVal,
+        job: document.getElementById('bio-job').value,
+        mobile: document.getElementById('bio-mobile').value || 'দেওয়া হয়নি'
+    };
+
+    appData.members.push(newMember);
+    saveToLocalStorage();
+    renderMembers();
+    alert("আপনার বায়োডাটা সফলভাবে নিবন্ধিত হয়েছে!");
+
+    document.getElementById('bio-name').value = '';
+    document.getElementById('bio-father').value = '';
+    document.getElementById('bio-address').value = '';
+    document.getElementById('bio-ward').value = '';
+    document.getElementById('bio-edu-detail').value = '';
+}
+
+function renderMembers() {
+    let container = document.getElementById('members-container');
+    container.innerHTML = '';
+    
+    if(appData.members.length === 0) {
+        container.innerHTML = '<p>এখনো কোনো সদস্য নিবন্ধিত হয়নি।</p>';
+        return;
+    }
+
+    appData.members.forEach((m, idx) => {
+        let delOption = isAdmin ? `<button onclick="deleteMember(${m.id})">❌ সদস্য ডিলিট করুন</button>` : '';
+        let item = `
+            <div class="member-list-item">
+                <span class="member-name" onclick="showBiodataModal(${m.id})">${idx + 1}. ${m.name}</span>
+                <div class="three-dot-menu">
+                    <button class="dot-btn" onclick="toggleDropdown('dropdown-${m.id}')">⋮</button>
+                    <div id="dropdown-${m.id}" class="dropdown-content">
+                        <a href="javascript:void(0)" onclick="showBiodataModal(${m.id})">👁️ বিস্তারিত বায়োডাটা</a>
+                        ${delOption}
+                    </div>
+                </div>
+            </div>
+        `;
+        container.innerHTML += item;
+    });
+}
+
+function toggleDropdown(id) {
+    document.querySelectorAll('.dropdown-content').forEach(d => {
+        if(d.id !== id) d.style.display = 'none';
+    });
+    let drop = document.getElementById(id);
+    drop.style.display = drop.style.display === 'block' ? 'none' : 'block';
+}
+
+window.onclick = function(event) {
+    if (!event.target.matches('.dot-btn')) {
+        document.querySelectorAll('.dropdown-content').forEach(d => d.style.display = 'none');
+    }
+}
+
+function showBiodataModal(id) {
+    let m = appData.members.find(item => item.id === id);
+    if(m) {
+        document.getElementById('modal-body').innerHTML = `
+            <p><strong>নাম:</strong> ${m.name}</p>
+            <p><strong>পিতার নাম:</strong> ${m.father}</p>
+            <p><strong>ঠিকানা:</strong> ${m.address}</p>
+            <p><strong>ওয়ার্ড নম্বর:</strong> ${m.ward}</p>
+            <p><strong>পড়ালেখা:</strong> ${m.edu}</p>
+            <p><strong>পেশা:</strong> ${m.job}</p>
+            <p><strong>মোবাইল নম্বর:</strong> ${m.mobile}</p>
+        `;
+        document.getElementById('bioModal').style.display = 'block';
+    }
+}
+
+function closeBioModal() {
+    document.getElementById('bioModal').style.display = 'none';
+}
+
+function deleteMember(id) {
+    if(isAdmin && confirm("আপনি কি নিশ্চিত এই সদস্যের তথ্য মুছে ফেলবেন?")) {
+        appData.members = appData.members.filter(m => m.id !== id);
+        saveToLocalStorage();
+        renderMembers();
+    }
+}
+
+// Gallery System
+function uploadGalleryPhoto(event) {
+    let reader = new FileReader();
+    reader.onload = function(){
+        appData.gallery.push({ id: Date.now(), img: reader.result });
+        saveToLocalStorage();
+        renderGallery();
+    };
+    if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
+}
+
+function deleteGallery(id) {
+    if(isAdmin && confirm("ছবিটি মুছে ফেলতে চান?")) {
+        appData.gallery = appData.gallery.filter(g => g.id !== id);
+        saveToLocalStorage();
+        renderGallery();
+    }
+}
+
+function renderGallery() {
+    let container = document.getElementById('gallery-container');
+    container.innerHTML = '';
+    appData.gallery.forEach(g => {
+        let delBtn = isAdmin ? `<button class="btn-delete" style="position:absolute; top:5px; right:5px;" onclick="deleteGallery(${g.id})">✕</button>` : '';
+        let item = `<div class="gallery-item"><img src="${g.img}">${delBtn}</div>`;
+        container.innerHTML += item;
+    });
+}
+
+// Social Documentaries System
+function toggleSocialForm() {
+    let f = document.getElementById('social-form');
+    f.style.display = f.style.display === 'block' ? 'none' : 'block';
+}
+
+function addSocialDoc() {
+    let title = document.getElementById('soc-title').value;
+    let desc = document.getElementById('soc-desc').value;
+    let fileInput = document.getElementById('soc-img-input');
+
+    if(!title || !fileInput.files[0]) return alert("ছবি এবং শিরোনাম প্রদান আবশ্যক!");
+
+    let reader = new FileReader();
+    reader.onload = function(){
+        appData.social.push({ id: Date.now(), title, desc, img: reader.result });
+        saveToLocalStorage();
+        renderSocial();
+        toggleSocialForm();
+    };
+    reader.readAsDataURL(fileInput.files[0]);
+}
+
+function deleteSocial(id) {
+    if(isAdmin && confirm("কার্যক্রমের তথ্যটি মুছে ফেলতে চান?")) {
+        appData.social = appData.social.filter(s => s.id !== id);
+        saveToLocalStorage();
+        renderSocial();
+    }
+}
+
+function renderSocial() {
+    let container = document.getElementById('social-container');
+    container.innerHTML = '';
+    appData.social.forEach(s => {
+        let delBtn = isAdmin ? `<button class="btn-delete" style="margin-top:8px;" onclick="deleteSocial(${s.id})">মুছে ফেলুন</button>` : '';
+        let card = `
+            <div class="doc-card">
+                <img src="${s.img}">
+                <div class="doc-card-body">
+                    <h4>${s.title}</h4>
+                    <p style="font-size:0.95rem; color:#555;">${s.desc}</p>
+                    ${delBtn}
+                </div>
+            </div>
+        `;
+        container.innerHTML += card;
+    });
+}
+
+// Backup JSON Download/Upload (Admin Feature)
+function exportDataBackup() {
+    let blob = new Blob([JSON.stringify(appData, null, 2)], { type: 'application/json' });
+    let a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `TSC_Master_Backup_${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+}
+
+function importDataBackup(event) {
+    let file = event.target.files[0];
+    if (!file) return;
+    let reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            let imported = JSON.parse(e.target.result);
+            if (imported) {
+                appData = imported;
+                saveToLocalStorage();
+                renderAllData();
+                alert('সকল তথ্য সফলভাবে রিস্টোর করা হয়েছে!');
+            }
+        } catch (err) {
+            alert('ভুল বা ক্ষতিগ্রস্ত ফাইল!');
+        }
+    };
+    reader.readAsText(file);
+}
+</script>
+</body>
 </html>
