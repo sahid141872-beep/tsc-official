@@ -4,8 +4,9 @@
 <meta charset="UTF-8"> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 <title>থিমছড়ি স্পোর্টস ক্লাব</title> 
+<link href="https://fonts.maateen.me/kalpurush/font.css" rel="stylesheet">
 <style> 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; } 
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kalpurush', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; } 
 body { background-color: #f0f2f5; color: #333; } 
 
 /* Backup Control Bar */
@@ -16,7 +17,7 @@ body { background-color: #f0f2f5; color: #333; }
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     flex-wrap: wrap;
     gap: 10px;
 }
@@ -24,28 +25,28 @@ body { background-color: #f0f2f5; color: #333; }
 
 /* Undo Redo Bar */ 
 .action-bar { background: #263238; color: white; padding: 8px 15px; display: flex; justify-content: flex-end; gap: 10px; } 
-.btn-action { background: #455a64; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: bold; } 
+.btn-action { background: #455a64; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: bold; font-family: 'Kalpurush', sans-serif; } 
 .btn-action:hover { background: #607d8b; } 
 
 /* Breaking News Ticker */ 
 .breaking-news { background: #d32f2f; color: white; display: flex; align-items: center; padding: 8px 15px; font-weight: bold; } 
 .breaking-label { background: #9a0007; padding: 4px 10px; border-radius: 4px; margin-right: 15px; white-space: nowrap; } 
-marquee { font-size: 1rem; } 
+marquee { font-size: 1.05rem; } 
 
 /* Cover & Profile Header */ 
 .cover-container { position: relative; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('https://via.placeholder.com/1200x350?text=Thimchory+Sports+Club+Cover'); background-size: cover; background-position: center; color: white; text-align: center; padding: 50px 20px 30px; } 
-.cover-edit-btn { position: absolute; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.7); color: white; border: 1px solid #fff; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: bold; } 
+.cover-edit-btn { position: absolute; top: 15px; right: 15px; background: rgba(0, 0, 0, 0.7); color: white; border: 1px solid #fff; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; font-weight: bold; } 
 .profile-img-box { position: relative; display: inline-block; } 
 .profile-img { width: 130px; height: 130px; border-radius: 50%; border: 4px solid #fff; margin-bottom: 10px; object-fit: cover; background: #fff; } 
-.logo-edit-btn { position: absolute; bottom: 15px; right: -10px; background: #ff9800; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: bold; } 
-.club-title { font-size: 2.2rem; margin-bottom: 5px; } 
-.slogan { font-style: italic; color: #e8f5e9; font-size: 1.1rem; margin-bottom: 5px; } 
-.established { font-size: 0.9rem; background: rgba(255,255,255,0.2); display: inline-block; padding: 3px 12px; border-radius: 15px; } 
+.logo-edit-btn { position: absolute; bottom: 15px; right: -10px; background: #ff9800; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: bold; } 
+.club-title { font-size: 2.3rem; margin-bottom: 5px; } 
+.slogan { font-style: italic; color: #e8f5e9; font-size: 1.15rem; margin-bottom: 5px; } 
+.established { font-size: 0.95rem; background: rgba(255,255,255,0.2); display: inline-block; padding: 3px 12px; border-radius: 15px; } 
 input[type="file"] { display: none; } 
 
 /* Navigation */ 
 nav { background: #1b5e20; display: flex; justify-content: center; flex-wrap: wrap; position: sticky; top: 0; z-index: 100; } 
-nav a { color: white; padding: 12px 18px; text-decoration: none; font-weight: bold; transition: 0.3s; } 
+nav a { color: white; padding: 12px 18px; text-decoration: none; font-weight: bold; transition: 0.3s; font-size: 1.05rem; } 
 nav a:hover { background: #2e7d32; } 
 
 /* Main Layout */ 
@@ -54,31 +55,31 @@ nav a:hover { background: #2e7d32; }
 .card h2 { color: #1b5e20; border-bottom: 3px solid #2e7d32; padding-bottom: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; } 
 
 /* Buttons & Forms */ 
-.btn-edit { background: #ff9800; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; } 
-.btn-add { background: #1b5e20; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; } 
-.btn-delete { background: #d32f2f; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: bold; } 
+.btn-edit { background: #ff9800; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; } 
+.btn-add { background: #1b5e20; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.95rem; } 
+.btn-delete { background: #d32f2f; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: bold; } 
 
 /* Dynamic Custom Forms */ 
 .custom-form { display: none; background: #e8f5e9; padding: 20px; border-radius: 8px; border: 1px solid #c8e6c9; margin-bottom: 20px; } 
 .custom-form h3 { color: #1b5e20; margin-bottom: 15px; } 
 .form-group { margin-bottom: 12px; } 
 .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #2e7d32; } 
-.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #a5d6a7; border-radius: 4px; outline: none; } 
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #a5d6a7; border-radius: 4px; outline: none; font-size: 1rem; } 
 .form-row { display: flex; gap: 15px; flex-wrap: wrap; } 
 .form-row .form-group { flex: 1; min-width: 220px; } 
 .form-btns { display: flex; gap: 10px; margin-top: 10px; } 
-.btn-cancel { background: #757575; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; } 
+.btn-cancel { background: #757575; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.95rem; } 
 
 /* Three Dot Menu System */ 
 .three-dots { cursor: pointer; font-size: 1.3rem; padding: 0 8px; position: relative; } 
 .menu-dropdown { display: none; position: absolute; right: 0; top: 25px; background: white; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 10; min-width: 120px; } 
-.menu-dropdown button { display: block; width: 100%; text-align: left; padding: 8px 12px; background: none; border: none; cursor: pointer; } 
+.menu-dropdown button { display: block; width: 100%; text-align: left; padding: 8px 12px; background: none; border: none; cursor: pointer; font-size: 0.9rem; } 
 .menu-dropdown button:hover { background: #f0f0f0; } 
 
 /* Schedule & Lineup Tables */ 
 table { width: 100%; border-collapse: collapse; margin-top: 10px; } 
 table, th, td { border: 1px solid #ddd; } 
-th, td { padding: 10px; text-align: center; } 
+th, td { padding: 10px; text-align: center; font-size: 1rem; } 
 th { background: #e8f5e9; color: #1b5e20; } 
 
 /* Squad Card Grid */ 
@@ -96,7 +97,7 @@ th { background: #e8f5e9; color: #1b5e20; }
 .gallery-item .btn-delete { position: absolute; top: 5px; right: 5px; } 
 
 /* Footer */ 
-footer { background: #1b5e20; color: white; text-align: center; padding: 15px; margin-top: 30px; } 
+footer { background: #1b5e20; color: white; text-align: center; padding: 15px; margin-top: 30px; font-size: 0.95rem; } 
 </style> 
 </head> 
 <body> 
@@ -355,13 +356,11 @@ const STORAGE_KEY = 'tsc_site_data_v1';
 let historyStack = []; 
 let redoStack = []; 
 
-// ডাটা লোড করা ও সেভ রাখার মূল লজিক
 function saveState() { 
     historyStack.push(document.getElementById('main-content').innerHTML); 
     redoStack = []; 
     try {
         localStorage.setItem(STORAGE_KEY, document.getElementById('main-content').innerHTML); 
-        // কভার ফটো ও লোগো ব্যাকআপ রাখা
         const cover = document.getElementById('cover-header').style.backgroundImage;
         const logo = document.getElementById('club-logo').src;
         const breaking = document.getElementById('breaking-text').innerText;
@@ -611,7 +610,7 @@ function deleteMember(btn) {
     document.getElementById('member-count').innerText = totalMembers; 
 } 
 
-/* ব্যাকআপ ফাইল ডাউনলোড (Export) */
+/* Export Backup */
 function exportDataBackup() {
     const data = localStorage.getItem(STORAGE_KEY);
     const assets = localStorage.getItem(STORAGE_KEY + '_assets');
@@ -626,7 +625,7 @@ function exportDataBackup() {
     a.click();
 }
 
-/* ব্যাকআপ ফাইল রিস্টোর (Import) */
+/* Import Backup */
 function importDataBackup(event) {
     const file = event.target.files[0];
     if (!file) return;
