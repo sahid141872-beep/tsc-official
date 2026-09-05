@@ -4,7 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THIMCHORY SPORTS CLUB</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #1b5e20;
+            --primary-light: #2e7d32;
+            --accent: #ffc107;
+            --bg: #f4f7f6;
+            --card-bg: #ffffff;
+            --text: #333333;
+            --danger: #d32f2f;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -13,98 +25,173 @@
         }
 
         body {
-            background-color: #f4f7f6;
-            color: #333;
-            padding: 20px;
+            background-color: var(--bg);
+            color: var(--text);
+            padding-bottom: 40px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 25px 15px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
         }
 
         .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 15px;
         }
 
-        h1 {
-            text-align: center;
-            color: #1b5e20;
-            margin-bottom: 20px;
-        }
-
-        .backup-section {
+        /* Backup Control Card */
+        .backup-card {
             background: #e8f5e9;
+            border: 1px solid #c8e6c9;
             padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
             display: flex;
-            gap: 10px;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
+            gap: 10px;
         }
 
-        .backup-section p {
-            font-size: 0.9rem;
-            color: #2e7d32;
+        .backup-card p {
+            font-size: 0.88rem;
+            color: var(--primary);
+            font-weight: 600;
             width: 100%;
-            margin-bottom: 8px;
-            font-weight: bold;
         }
 
-        .btn {
-            background-color: #2e7d32;
-            color: white;
+        /* Navigation Tabs */
+        .tabs {
+            display: flex;
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px 5px;
             border: none;
-            padding: 10px 16px;
-            border-radius: 6px;
+            background: transparent;
+            font-weight: 600;
+            color: #666;
             cursor: pointer;
+            transition: 0.3s;
             font-size: 0.9rem;
-            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
-        .btn:hover {
-            background-color: #1b5e20;
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid #2e7d32;
-            color: #2e7d32;
-        }
-
-        .btn-outline:hover {
-            background-color: #2e7d32;
+        .tab-btn.active {
+            background: var(--primary);
             color: white;
         }
 
+        /* Content Sections */
+        .tab-content {
+            display: none;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Form Styles */
         .form-group {
             margin-bottom: 15px;
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             font-weight: 600;
+            font-size: 0.9rem;
         }
 
-        input[type="text"] {
+        input, select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 6px;
-            font-size: 1rem;
+            font-size: 0.95rem;
+            outline: none;
         }
 
-        .data-list {
-            margin-top: 25px;
+        input:focus, select:focus {
+            border-color: var(--primary-light);
         }
 
-        .data-item {
-            background: #f9f9f9;
+        .btn {
+            background: var(--primary-light);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            background: var(--primary);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-light);
+            color: var(--primary-light);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-light);
+            color: white;
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: #b71c1c;
+        }
+
+        /* Data Items & Tables */
+        .item-card {
+            background: #fafafa;
+            border-left: 4px solid var(--primary-light);
             padding: 12px;
-            border-left: 4px solid #2e7d32;
             margin-bottom: 10px;
             border-radius: 4px;
             display: flex;
@@ -112,47 +199,106 @@
             align-items: center;
         }
 
+        .item-info h4 {
+            font-size: 1rem;
+            color: #222;
+        }
+
+        .item-info p {
+            font-size: 0.82rem;
+            color: #666;
+            margin-top: 2px;
+        }
+
         .file-input {
             display: none;
+        }
+
+        @media (max-width: 600px) {
+            .backup-card {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .tab-btn {
+                font-size: 0.8rem;
+                padding: 10px 2px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+<header>
     <h1>THIMCHORY SPORTS CLUB</h1>
+    <p>অফিশিয়াল ওয়েবসাইট ও ক্লাব ম্যানেজমেন্ট</p>
+</header>
 
-    <!-- ডাটা ব্যাকআপ ও রিস্টোর সেকশন -->
-    <div class="backup-section">
-        <p>🛡️ ডাটা সুরক্ষা টুল (কোড আপডেট করার আগে বা পরে ব্যবহার করুন):</p>
-        <button class="btn" onclick="exportDataBackup()">📥 ব্যাকআপ ডাউনলোড করুন</button>
-        
-        <label for="importFile" class="btn btn-outline">📤 ব্যাকআপ আপলোড করুন</label>
+<div class="container">
+
+    <!-- Data Security & Backup Bar -->
+    <div class="backup-card">
+        <p><i class="fa-solid fa-shield-halved"></i> ডাটা সুরক্ষা অপশন (কোড আপডেট করার আগে বা পরে ডাটা নিরাপদ রাখতে):</p>
+        <button class="btn btn-sm" onclick="exportDataBackup()"><i class="fa-solid fa-download"></i> ব্যাকআপ সেভ করুন</button>
+        <label for="importFile" class="btn btn-outline btn-sm"><i class="fa-solid fa-upload"></i> ব্যাকআপ রি-লোড করুন</label>
         <input type="file" id="importFile" class="file-input" accept=".json" onchange="importDataBackup(event)">
     </div>
 
-    <!-- প্লেয়ার যুক্ত করার ফর্ম -->
-    <div class="form-group">
-        <label for="playerName">প্লেয়ারের নাম লিখুন:</label>
-        <div style="display: flex; gap: 10px;">
-            <input type="text" id="playerName" placeholder="উদাহরণ: রহিম আহমেদ">
-            <button class="btn" onclick="addPlayer()">যুক্ত করুন</button>
-        </div>
+    <!-- Navigation -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('players')"><i class="fa-solid fa-users"></i> স্কোয়াড / প্লেয়ার</button>
+        <button class="tab-btn" onclick="switchTab('matches')"><i class="fa-solid fa-trophy"></i> ম্যাচ তালিকা</button>
+        <button class="tab-btn" onclick="switchTab('notice')"><i class="fa-solid fa-bullhorn"></i> নোটিশ বোর্ড</button>
     </div>
 
-    <!-- প্লেয়ারদের তালিকা -->
-    <div class="data-list">
-        <h3>ক্লাব সদস্য ও প্লেয়ার তালিকা:</h3>
-        <div id="playerList" style="margin-top: 15px;"></div>
+    <!-- TAB 1: Players Management -->
+    <div id="tab-players" class="tab-content active">
+        <h3 style="margin-bottom: 15px; color: var(--primary);"><i class="fa-solid fa-user-plus"></i> নতুন প্লেয়ার বা সদস্য যোগ করুন</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;" class="form-group">
+            <input type="text" id="pName" placeholder="প্লেয়ারের নাম">
+            <input type="text" id="pRole" placeholder="রোল (যেমন: অলরাউন্ডার/ক্যাপ্টেন)">
+            <input type="text" id="pPhone" placeholder="মোবাইল নম্বর (ঐচ্ছিক)">
+        </div>
+        <button class="btn" onclick="addPlayer()"><i class="fa-solid fa-plus"></i> সেভ করুন</button>
+
+        <h3 style="margin: 25px 0 12px 0; color: var(--primary);">বর্তমান প্লেয়ার তালিকা</h3>
+        <div id="playersList"></div>
     </div>
+
+    <!-- TAB 2: Match Management -->
+    <div id="tab-matches" class="tab-content">
+        <h3 style="margin-bottom: 15px; color: var(--primary);"><i class="fa-solid fa-calendar-plus"></i> নতুন ম্যাচ যুক্ত করুন</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;" class="form-group">
+            <input type="text" id="mOpponent" placeholder="বিপক্ষ দল">
+            <input type="text" id="mDate" placeholder="তারিখ ও সময়">
+            <input type="text" id="mVenue" placeholder="মাঠের নাম / ভেন্যু">
+        </div>
+        <button class="btn" onclick="addMatch()"><i class="fa-solid fa-plus"></i> ম্যাচ সেভ করুন</button>
+
+        <h3 style="margin: 25px 0 12px 0; color: var(--primary);">ম্যাচ শিডিউল</h3>
+        <div id="matchesList"></div>
+    </div>
+
+    <!-- TAB 3: Notice Board -->
+    <div id="tab-notice" class="tab-content">
+        <h3 style="margin-bottom: 15px; color: var(--primary);"><i class="fa-solid fa-pen"></i> নতুন নোটিশ প্রকাশ করুন</h3>
+        <div class="form-group">
+            <input type="text" id="nTitle" placeholder="নোটিশের শিরোনাম" style="margin-bottom: 10px;">
+            <input type="text" id="nDesc" placeholder="বিস্তারিত বর্ণনা">
+        </div>
+        <button class="btn" onclick="addNotice()"><i class="fa-solid fa-paper-plane"></i> নোটিশ পোস্ট করুন</button>
+
+        <h3 style="margin: 25px 0 12px 0; color: var(--primary);">সাম্প্রতিক নোটিশসমূহ</h3>
+        <div id="noticeList"></div>
+    </div>
+
 </div>
 
 <script>
-    // ১. ডাটা কি (Key) নাম স্থায়ী রাখা (যা কখনো পরিবর্তন হবে না)
+    // ১. ডাটা কি (Key) নাম যা অপরিবর্তিত থাকবে
     const STORAGE_KEY = 'tsc_official_club_data_v1';
 
-    // ২. ডাটা সেভ করার নিরাপদ ফাংশন
-    function saveClubData(data) {
+    // ২. ডাটা সেভ করার ফাংশন
+    function saveData(data) {
         try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
         } catch (e) {
@@ -160,107 +306,193 @@
         }
     }
 
-    // ৩. ডাটা লোড করার ফাংশন
-    function loadClubData() {
-        const savedData = localStorage.getItem(STORAGE_KEY);
-        if (!savedData) {
-            return { players: [] };
+    // ৩. ডাটা লোড করার ফাংশন (নিরাপদ লজিক)
+    function loadData() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (!saved) {
+            return { players: [], matches: [], notices: [] };
         }
         try {
-            return JSON.parse(savedData);
+            const parsed = JSON.parse(saved);
+            return {
+                players: parsed.players || [],
+                matches: parsed.matches || [],
+                notices: parsed.notices || []
+            };
         } catch (e) {
-            console.error('ডাটা লোড করতে সমস্যা হয়েছে:', e);
-            return { players: [] };
+            return { players: [], matches: [], notices: [] };
         }
     }
 
-    // ৪. স্ক্রিনে প্লেয়ার তালিকা দেখানো
-    function renderPlayers() {
-        const data = loadClubData();
-        const listElement = document.getElementById('playerList');
-        listElement.innerHTML = '';
+    // ৪. ট্যাব সুইচিং
+    function switchTab(tabName) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
 
-        if (data.players.length === 0) {
-            listElement.innerHTML = '<p style="color: #777;">এখনো কোনো নাম যুক্ত করা হয়নি।</p>';
-            return;
-        }
+        event.currentTarget.classList.add('active');
+        document.getElementById(`tab-${tabName}`).classList.add('active');
+    }
 
-        data.players.forEach((player, index) => {
-            const item = document.createElement('div');
-            item.className = 'data-item';
-            item.innerHTML = `
-                <span><strong>${index + 1}.</strong> ${player}</span>
-                <button style="background:#d32f2f; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;" onclick="deletePlayer(${index})">মুছুন</button>
+    // ৫. প্লেয়ার হ্যান্ডলিং
+    function addPlayer() {
+        const name = document.getElementById('pName').value.trim();
+        const role = document.getElementById('pRole').value.trim();
+        const phone = document.getElementById('pPhone').value.trim();
+
+        if (!name) return alert('প্লেয়ারের নাম লিখুন!');
+
+        const data = loadData();
+        data.players.push({ name, role: role || 'সদস্য', phone: phone || 'N/A' });
+        saveData(data);
+
+        document.getElementById('pName').value = '';
+        document.getElementById('pRole').value = '';
+        document.getElementById('pPhone').value = '';
+        renderAll();
+    }
+
+    function deletePlayer(index) {
+        const data = loadData();
+        data.players.splice(index, 1);
+        saveData(data);
+        renderAll();
+    }
+
+    // ৬. ম্যাচ হ্যান্ডলিং
+    function addMatch() {
+        const opponent = document.getElementById('mOpponent').value.trim();
+        const date = document.getElementById('mDate').value.trim();
+        const venue = document.getElementById('mVenue').value.trim();
+
+        if (!opponent) return alert('বিপক্ষ দলের নাম লিখুন!');
+
+        const data = loadData();
+        data.matches.push({ opponent, date: date || 'শীঘ্রই আসছে', venue: venue || 'টিএসসি গ্রাউন্ড' });
+        saveData(data);
+
+        document.getElementById('mOpponent').value = '';
+        document.getElementById('mDate').value = '';
+        document.getElementById('mVenue').value = '';
+        renderAll();
+    }
+
+    function deleteMatch(index) {
+        const data = loadData();
+        data.matches.splice(index, 1);
+        saveData(data);
+        renderAll();
+    }
+
+    // ৭. নোটিশ হ্যান্ডলিং
+    function addNotice() {
+        const title = document.getElementById('nTitle').value.trim();
+        const desc = document.getElementById('nDesc').value.trim();
+
+        if (!title) return alert('শিরোনাম লিখুন!');
+
+        const data = loadData();
+        data.notices.push({ title, desc, date: new Date().toLocaleDateString('bn-BD') });
+        saveData(data);
+
+        document.getElementById('nTitle').value = '';
+        document.getElementById('nDesc').value = '';
+        renderAll();
+    }
+
+    function deleteNotice(index) {
+        const data = loadData();
+        data.notices.splice(index, 1);
+        saveData(data);
+        renderAll();
+    }
+
+    // ৮. ডাটা স্ক্রিনে রেন্ডার করা
+    function renderAll() {
+        const data = loadData();
+
+        // Players List
+        const pList = document.getElementById('playersList');
+        pList.innerHTML = data.players.length === 0 ? '<p style="color:#888;">কোনো প্লেয়ার যুক্ত করা হয়নি।</p>' : '';
+        data.players.forEach((p, i) => {
+            pList.innerHTML += `
+                <div class="item-card">
+                    <div class="item-info">
+                        <h4>${p.name}</h4>
+                        <p>রোল: ${p.role} | ফোন: ${p.phone}</p>
+                    </div>
+                    <button class="btn btn-sm btn-danger" onclick="deletePlayer(${i})"><i class="fa-solid fa-trash"></i></button>
+                </div>
             `;
-            listElement.appendChild(item);
+        });
+
+        // Matches List
+        const mList = document.getElementById('matchesList');
+        mList.innerHTML = data.matches.length === 0 ? '<p style="color:#888;">কোনো ম্যাচ নেই।</p>' : '';
+        data.matches.forEach((m, i) => {
+            mList.innerHTML += `
+                <div class="item-card">
+                    <div class="item-info">
+                        <h4>TSC vs ${m.opponent}</h4>
+                        <p>তারিখ: ${m.date} | ভেন্যু: ${m.venue}</p>
+                    </div>
+                    <button class="btn btn-sm btn-danger" onclick="deleteMatch(${i})"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `;
+        });
+
+        // Notice List
+        const nList = document.getElementById('noticeList');
+        nList.innerHTML = data.notices.length === 0 ? '<p style="color:#888;">কোনো নোটিশ নেই।</p>' : '';
+        data.notices.forEach((n, i) => {
+            nList.innerHTML += `
+                <div class="item-card">
+                    <div class="item-info">
+                        <h4>${n.title}</h4>
+                        <p>${n.desc}</p>
+                        <p style="font-size:0.75rem; color:#999;">তারিখ: ${n.date}</p>
+                    </div>
+                    <button class="btn btn-sm btn-danger" onclick="deleteNotice(${i})"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `;
         });
     }
 
-    // ৫. নতুন প্লেয়ার যোগ করা
-    function addPlayer() {
-        const input = document.getElementById('playerName');
-        const name = input.value.trim();
-
-        if (name === '') {
-            alert('অনুগ্রহ করে একটি নাম লিখুন!');
-            return;
-        }
-
-        const data = loadClubData();
-        data.players.push(name);
-        saveClubData(data);
-        input.value = '';
-        renderPlayers();
-    }
-
-    // ৬. প্লেয়ার ডিলিট করা
-    function deletePlayer(index) {
-        const data = loadClubData();
-        data.players.splice(index, 1);
-        saveClubData(data);
-        renderPlayers();
-    }
-
-    // ৭. ব্যাকআপ ফাইল ডাউনলোড (Export)
+    // ৯. ব্যাকআপ ডাউনলোড (Export)
     function exportDataBackup() {
         const data = localStorage.getItem(STORAGE_KEY);
-        if (!data || JSON.parse(data).players.length === 0) {
-            return alert('ডাউনলোড করার মতো কোনো ডাটা পাওয়া যায়নি!');
-        }
-        
+        if (!data) return alert('ডাউনলোড করার মতো কোনো ডাটা পাওয়া যায়নি!');
+
         const blob = new Blob([data], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `TSC_Club_Data_Backup.json`;
+        a.download = `TSC_Data_Backup.json`;
         a.click();
     }
 
-    // ৮. ব্যাকআপ ফাইল থেকে ডাটা রিস্টোর (Import)
+    // ১০. ব্যাকআপ রিস্টোর (Import)
     function importDataBackup(event) {
         const file = event.target.files[0];
         if (!file) return;
-        
+
         const reader = new FileReader();
         reader.onload = function(e) {
             try {
                 const data = JSON.parse(e.target.result);
-                if (data && Array.isArray(data.players)) {
-                    saveClubData(data);
+                if (data) {
+                    saveData(data);
                     alert('ডাটা সফলভাবে রিস্টোর হয়েছে!');
-                    renderPlayers();
-                } else {
-                    alert('সঠিক ব্যাকআপ ফাইল নির্বাচন করুন!');
+                    renderAll();
                 }
             } catch (err) {
-                alert('ফাইলটি পড়া যাচ্ছে না!');
+                alert('ভুল বা ক্ষতিগ্রস্ত ব্যাকআপ ফাইল!');
             }
         };
         reader.readAsText(file);
     }
 
-    // পেজ লোড হলে ডাটা দেখাবে
-    window.onload = renderPlayers;
+    // ইনিশিয়াল লোড
+    window.onload = renderAll;
 </script>
 
 </body>
