@@ -256,4 +256,338 @@
                 </div>
                 <div class="form-btns">
                     <button class="btn-add" onclick="saveSquad()">সেভ করুন</button>
-                    <button
+                    <button class="btn-cancel" onclick="toggleSquadForm()">বাতিল</button>
+                </div>
+            </div>
+
+            <div class="squad-grid" id="squad-container">
+                <div class="squad-card">
+                    <h3>
+                        <span>দল A (সদস্য: ১১ জন)</span>
+                        <div class="three-dots" onclick="toggleMenu(this)">⋮
+                            <div class="menu-dropdown">
+                                <button onclick="deleteSquad(this)">ডিলিট করুন</button>
+                            </div>
+                        </div>
+                    </h3>
+                    <ol class="squad-list">
+                        <li>রফিক (অধিনায়ক)</li>
+                        <li>শফিক</li>
+                        <li>করিম</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div id="members" class="card">
+            <h2>
+                ক্লাব সদস্য বায়োডাটা (মোট সদস্য: <span id="member-count">১</span> জন)
+                <button class="btn-add" onclick="toggleMemberForm()">+ নতুন সদস্য যোগ করুন</button>
+            </h2>
+
+            <div id="member-form" class="custom-form">
+                <h3>নতুন সদস্য বায়োডাটা ফর্ম</h3>
+                <div class="form-row">
+                    <div class="form-group"><label>নাম:</label><input type="text" id="m-name"></div>
+                    <div class="form-group"><label>গ্রাম:</label><input type="text" id="m-village"></div>
+                    <div class="form-group"><label>পিতার নাম:</label><input type="text" id="m-father"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>মাতার নাম:</label><input type="text" id="m-mother"></div>
+                    <div class="form-group"><label>মোবাইল:</label><input type="text" id="m-mobile"></div>
+                    <div class="form-group"><label>পড়ালেখা:</label><input type="text" id="m-edu"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>পেশা:</label><input type="text" id="m-job"></div>
+                    <div class="form-group"><label>ব্লাড গ্রুপ:</label><input type="text" id="m-blood"></div>
+                </div>
+                <div class="form-btns">
+                    <button class="btn-add" onclick="saveMember()">সেভ করুন</button>
+                    <button class="btn-cancel" onclick="toggleMemberForm()">বাতিল</button>
+                </div>
+            </div>
+
+            <div class="grid" id="member-list">
+                <div class="member-card">
+                    <div class="three-dots" style="position: absolute; right: 10px; top: 10px;" onclick="toggleMenu(this)">⋮
+                        <div class="menu-dropdown">
+                            <button onclick="deleteMember(this)">ডিলিট করুন</button>
+                        </div>
+                    </div>
+                    <h3>মোহাম্মদ আলী</h3>
+                    <p><strong>গ্রাম:</strong> থিমছড়ি</p>
+                    <p><strong>পিতা:</strong> রফিক উল্লাহ</p>
+                    <p><strong>মাতা:</strong> আমেনা বেগম</p>
+                    <p><strong>মোবাইল:</strong> ০১৮XXXXXXXX</p>
+                    <p><strong>পড়ালেখা:</strong> বিএ (অনার্স)</p>
+                    <p><strong>পেশা:</strong> ব্যবসায়ী</p>
+                    <p><strong>ব্লাড গ্রুপ:</strong> B+</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="gallery" class="card">
+            <h2>
+                ছবি গ্যালারি
+                <button class="btn-add" onclick="document.getElementById('gallery-file-input').click()">+ ছবি যোগ করুন</button>
+                <input type="file" id="gallery-file-input" accept="image/*" onchange="addGalleryPhoto(event)">
+            </h2>
+            <div class="gallery-grid" id="gallery-container">
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/300x200?text=Match+Photo+1" alt="Gallery">
+                    <button class="btn-delete" onclick="deleteGalleryItem(this)">✕</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="donation" class="card">
+            <h2>ডোনেশন ও সামাজিক কার্যক্রম</h2>
+            <p>আমাদের ক্লাব ক্রীড়ার পাশাপাশি সামাজিক উন্নয়নমূলক কাজে জড়িত। আপনিও আমাদের ফান্ডে অনুদান দিতে পারেন।</p>
+            <br>
+            <p><strong>বিকাশ/নগদ (পার্সোনাল):</strong> ০১৮XXXXXXXX</p>
+            <p><strong>ব্যাংক অ্যাকাউন্ট:</strong> থিমছড়ি স্পোর্টস ক্লাব, অ্যাকাউন্ট নং: ১২৩৪৫৬৭৮৯</p>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; ২০২৬ থিমছড়ি স্পোর্টস ক্লাব. সর্বস্বত্ব সংরক্ষিত।</p>
+    </footer>
+
+    <script>
+        let historyStack = [];
+        let redoStack = [];
+
+        function saveState() {
+            historyStack.push(document.getElementById('main-content').innerHTML);
+            redoStack = [];
+            localStorage.setItem('tsc_site_data', document.getElementById('main-content').innerHTML);
+        }
+
+        window.onload = function() {
+            let savedData = localStorage.getItem('tsc_site_data');
+            if(savedData) {
+                document.getElementById('main-content').innerHTML = savedData;
+            }
+        }
+
+        function undo() {
+            if (historyStack.length > 0) {
+                redoStack.push(document.getElementById('main-content').innerHTML);
+                let prevState = historyStack.pop();
+                document.getElementById('main-content').innerHTML = prevState;
+                localStorage.setItem('tsc_site_data', prevState);
+            } else {
+                alert("আর কোনো পূর্বাবস্থা নেই!");
+            }
+        }
+
+        function redo() {
+            if (redoStack.length > 0) {
+                historyStack.push(document.getElementById('main-content').innerHTML);
+                let nextState = redoStack.pop();
+                document.getElementById('main-content').innerHTML = nextState;
+                localStorage.setItem('tsc_site_data', nextState);
+            } else {
+                alert("আর কোনো রিডু করার অবস্থা নেই!");
+            }
+        }
+
+        function toggleMenu(elem) {
+            let menu = elem.querySelector('.menu-dropdown');
+            let isVisible = menu.style.display === 'block';
+            document.querySelectorAll('.menu-dropdown').forEach(m => m.style.display = 'none');
+            menu.style.display = isVisible ? 'none' : 'block';
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.three-dots')) {
+                document.querySelectorAll('.menu-dropdown').forEach(m => m.style.display = 'none');
+            }
+        }
+
+        /* Breaking News */
+        function toggleBreakingForm() {
+            let form = document.getElementById('breaking-form');
+            form.style.display = form.style.display === 'block' ? 'none' : 'block';
+        }
+        function saveBreaking() {
+            let val = document.getElementById('breaking-input').value;
+            if(val) {
+                saveState();
+                document.getElementById('breaking-text').innerText = val;
+                document.getElementById('breaking-input').value = '';
+                toggleBreakingForm();
+            }
+        }
+
+        /* Notice Board */
+        function toggleNoticeForm() {
+            let form = document.getElementById('notice-form');
+            form.style.display = form.style.display === 'block' ? 'none' : 'block';
+        }
+        function saveNotice() {
+            let curr = document.getElementById('notice-curr-input').value;
+            let fut = document.getElementById('notice-fut-input').value;
+            if(curr || fut) {
+                saveState();
+                document.getElementById('notice-content').innerHTML = `
+                    <p><strong>বর্তমান ইভেন্ট:</strong> ${curr || '(নাই)'}</p>
+                    <p><strong>ভবিষ্যৎ ইভেন্ট:</strong> ${fut || '(নাই)'}</p>
+                `;
+                toggleNoticeForm();
+            }
+        }
+
+        /* Schedule Form */
+        function toggleScheduleForm() {
+            let form = document.getElementById('schedule-form');
+            form.style.display = form.style.display === 'block' ? 'none' : 'block';
+        }
+        function saveSchedule() {
+            let tournament = document.getElementById('sched-tournament').value;
+            let game = document.getElementById('sched-game').value;
+            let teams = document.getElementById('sched-teams').value;
+            let time = document.getElementById('sched-time').value;
+            let venue = document.getElementById('sched-venue').value;
+
+            if(!teams || !tournament) {
+                alert("অনুগ্রহ করে টুর্নামেন্ট ও দলের নাম লিখুন!");
+                return;
+            }
+
+            saveState();
+            let table = document.getElementById('schedule-table').getElementsByTagName('tbody')[0];
+            let row = table.insertRow();
+            row.innerHTML = `<td>${game}</td><td>${tournament}</td><td>${teams}</td><td>${time}</td><td>${venue}</td><td><button class="btn-delete" onclick="deleteRow(this)">ডিলিট</button></td>`;
+
+            document.getElementById('sched-tournament').value = '';
+            document.getElementById('sched-teams').value = '';
+            document.getElementById('sched-time').value = '';
+            document.getElementById('sched-venue').value = '';
+            toggleScheduleForm();
+        }
+        function deleteRow(btn) {
+            saveState();
+            let row = btn.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        /* Squad Form */
+        function toggleSquadForm() {
+            let form = document.getElementById('squad-form');
+            form.style.display = form.style.display === 'block' ? 'none' : 'block';
+        }
+        function saveSquad() {
+            let teamName = document.getElementById('sq-team-name').value;
+            let memberCount = document.getElementById('sq-member-count').value;
+            let playersInput = document.getElementById('sq-players').value;
+
+            if(!teamName || !playersInput) {
+                alert("অনুগ্রহ করে দলের নাম ও খেলোয়াড়দের নাম লিখুন!");
+                return;
+            }
+
+            saveState();
+            let players = playersInput.split(',');
+            let playerListHtml = players.map(p => `<li>${p.trim()}</li>`).join('');
+            
+            let squadCard = document.createElement('div');
+            squadCard.className = 'squad-card';
+            squadCard.innerHTML = `
+                <h3>
+                    <span>${teamName} (সদস্য: ${memberCount || players.length} জন)</span>
+                    <div class="three-dots" onclick="toggleMenu(this)">⋮
+                        <div class="menu-dropdown">
+                            <button onclick="deleteSquad(this)">ডিলিট করুন</button>
+                        </div>
+                    </div>
+                </h3>
+                <ol class="squad-list">${playerListHtml}</ol>
+            `;
+            document.getElementById('squad-container').appendChild(squadCard);
+
+            document.getElementById('sq-team-name').value = '';
+            document.getElementById('sq-member-count').value = '';
+            document.getElementById('sq-players').value = '';
+            toggleSquadForm();
+        }
+        function deleteSquad(btn) {
+            saveState();
+            btn.closest('.squad-card').remove();
+        }
+
+        /* Images */
+        function changeLogoPhoto(event) {
+            saveState();
+            let reader = new FileReader();
+            reader.onload = function(){ document.getElementById('club-logo').src = reader.result; };
+            if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
+        }
+        function changeCoverPhoto(event) {
+            saveState();
+            let reader = new FileReader();
+            reader.onload = function(){
+                document.getElementById('cover-header').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('${reader.result}')`;
+            };
+            if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
+        }
+        function addGalleryPhoto(event) {
+            saveState();
+            let reader = new FileReader();
+            reader.onload = function(){
+                let div = document.createElement('div');
+                div.className = 'gallery-item';
+                div.innerHTML = `<img src="${reader.result}"><button class="btn-delete" onclick="deleteGalleryItem(this)">✕</button>`;
+                document.getElementById('gallery-container').appendChild(div);
+            };
+            if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
+        }
+        function deleteGalleryItem(btn) {
+            saveState();
+            btn.parentElement.remove();
+        }
+
+        /* Members Section */
+        function toggleMemberForm() {
+            let form = document.getElementById('member-form');
+            form.style.display = form.style.display === 'block' ? 'none' : 'block';
+        }
+        let totalMembers = 1;
+        function saveMember() {
+            let name = document.getElementById('m-name').value;
+            if(!name) { alert("নাম অবশ্যই লিখতে হবে!"); return; }
+
+            saveState();
+            let card = document.createElement('div');
+            card.className = 'member-card';
+            card.innerHTML = `
+                <div class="three-dots" style="position: absolute; right: 10px; top: 10px;" onclick="toggleMenu(this)">⋮
+                    <div class="menu-dropdown">
+                        <button onclick="deleteMember(this)">ডিলিট করুন</button>
+                    </div>
+                </div>
+                <h3>${name}</h3>
+                <p><strong>গ্রাম:</strong> ${document.getElementById('m-village').value}</p>
+                <p><strong>পিতা:</strong> ${document.getElementById('m-father').value}</p>
+                <p><strong>মাতা:</strong> ${document.getElementById('m-mother').value}</p>
+                <p><strong>মোবাইল:</strong> ${document.getElementById('m-mobile').value}</p>
+                <p><strong>পড়ালেখা:</strong> ${document.getElementById('m-edu').value}</p>
+                <p><strong>পেশা:</strong> ${document.getElementById('m-job').value}</p>
+                <p><strong>ব্লাড গ্রুপ:</strong> ${document.getElementById('m-blood').value}</p>
+            `;
+
+            document.getElementById('member-list').appendChild(card);
+            totalMembers++;
+            document.getElementById('member-count').innerText = totalMembers;
+            toggleMemberForm();
+        }
+        function deleteMember(btn) {
+            saveState();
+            btn.closest('.member-card').remove();
+            totalMembers--;
+            document.getElementById('member-count').innerText = totalMembers;
+        }
+    </script>
+</body>
+</html>
